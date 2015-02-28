@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -70,16 +71,19 @@ public class MainActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        @InjectView(R.id.toolbar) Toolbar mToolbar;
+        @InjectView(R.id.editor) EditText mEditor;
+
         public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-            ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
-            return rootView;
+            View root = inflater.inflate(R.layout.fragment_main, container, false);
+            ButterKnife.inject(this, root);
+            ((ActionBarActivity) getActivity()).setSupportActionBar(mToolbar);
+            return root;
         }
     }
 }
