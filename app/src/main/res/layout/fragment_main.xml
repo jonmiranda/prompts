@@ -17,6 +17,7 @@
         android:minHeight="?android:attr/actionBarSize"
         android:hint="What's up?"
         android:textSize="20sp"
+        android:fontFamily="monospace"
         android:padding="@dimen/half_spacer"
         android:gravity="center"/>
 
@@ -25,6 +26,7 @@
         android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="monospace"
         android:gravity="top|left"
         android:padding="@dimen/full_spacer"
         android:layout_below="@id/prompt"/>
