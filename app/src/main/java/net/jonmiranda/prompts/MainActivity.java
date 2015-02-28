@@ -6,13 +6,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -24,6 +23,8 @@ public class MainActivity extends ActionBarActivity {
 
     private PagerAdapter mPagerAdapter;
 
+    private String[] PROMPTS = {"What's up?", "How are you feeling today?"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,12 +34,16 @@ public class MainActivity extends ActionBarActivity {
         mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return new PlaceholderFragment();
+                Fragment fragment = new PlaceholderFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString(PlaceholderFragment.PROMPT_KEY, PROMPTS[position]);
+                fragment.setArguments(bundle);
+                return fragment;
             }
 
             @Override
             public int getCount() {
-                return 2;
+                return PROMPTS.length;
             }
         };
         mViewPager.setAdapter(mPagerAdapter);
@@ -71,8 +76,9 @@ public class MainActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
-        @InjectView(R.id.toolbar) Toolbar mToolbar;
-        @InjectView(R.id.editor) EditText mEditor;
+        @InjectView(R.id.prompt) TextView mPrompt;
+
+        public static final String PROMPT_KEY = "PROMPT_KEY";
 
         public PlaceholderFragment() {
         }
@@ -82,7 +88,10 @@ public class MainActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
             View root = inflater.inflate(R.layout.fragment_main, container, false);
             ButterKnife.inject(this, root);
-            ((ActionBarActivity) getActivity()).setSupportActionBar(mToolbar);
+            Bundle arguments = getArguments();
+            if (arguments != null) {
+                mPrompt.setText(arguments.getString(PROMPT_KEY, "No prompt."));
+            }
             return root;
         }
     }

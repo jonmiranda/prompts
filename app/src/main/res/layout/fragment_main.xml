@@ -5,15 +5,18 @@
               android:orientation="vertical"
               tools:context=".MainActivity$PlaceholderFragment">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <TextView
+        android:id="@+id/prompt"
         android:background="@color/primary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?android:attr/actionBarSize" />
+        android:minHeight="?android:attr/actionBarSize"
+        android:hint="What's up?"
+        android:textSize="20sp"
+        android:padding="@dimen/half_spacer"
+        android:gravity="center"/>
 
     <EditText
-        android:id="@+id/editor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top|left"
