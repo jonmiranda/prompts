@@ -1,8 +1,10 @@
 package net.jonmiranda.prompts;
 
+import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -12,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -90,6 +94,7 @@ public class MainActivity extends ActionBarActivity {
 
         @InjectView(R.id.prompt) TextView mPrompt;
         @InjectView(R.id.editor) EditText mEditor;
+        @InjectView(R.id.footer) View mFooter;
 
         public static final String PROMPT_KEY = "PROMPT_KEY";
         public static final String COLOR_KEY = "COLOR_KEY";
@@ -113,7 +118,26 @@ public class MainActivity extends ActionBarActivity {
 
                 mEditor.setHighlightColor(color);
             }
+
             return root;
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+            mFooter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO: A bit hacky
+                    FragmentActivity context = getActivity();
+                    context.getWindow().setSoftInputMode(
+                            WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                    InputMethodManager imm = (InputMethodManager)
+                            context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(mEditor, InputMethodManager.SHOW_IMPLICIT);
+                }
+            });
         }
     }
 }
