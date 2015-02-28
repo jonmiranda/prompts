@@ -1,5 +1,6 @@
 package net.jonmiranda.prompts;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import butterknife.ButterKnife;
@@ -23,7 +25,15 @@ public class MainActivity extends ActionBarActivity {
 
     private PagerAdapter mPagerAdapter;
 
-    private String[] PROMPTS = {"What's up?", "How are you feeling today?"};
+    private String[] PROMPTS = {
+            "What is something you learned today?",
+            "What made you laugh today?",
+            "What three things will you focus on today?",
+            "What am I looking forward to most today?",
+            "What are three things I'm grateful for?",
+            "How are you feeling today?"
+    };
+    private int[] mColors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +41,14 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
+        mColors = getResources().getIntArray(R.array.colors);
         mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 Fragment fragment = new PlaceholderFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString(PlaceholderFragment.PROMPT_KEY, PROMPTS[position]);
+                bundle.putString(PlaceholderFragment.PROMPT_KEY, PROMPTS[position % PROMPTS.length]);
+                bundle.putInt(PlaceholderFragment.COLOR_KEY, mColors[position % mColors.length]);
                 fragment.setArguments(bundle);
                 return fragment;
             }
@@ -77,8 +89,10 @@ public class MainActivity extends ActionBarActivity {
     public static class PlaceholderFragment extends Fragment {
 
         @InjectView(R.id.prompt) TextView mPrompt;
+        @InjectView(R.id.editor) EditText mEditor;
 
         public static final String PROMPT_KEY = "PROMPT_KEY";
+        public static final String COLOR_KEY = "COLOR_KEY";
 
         public PlaceholderFragment() {
         }
@@ -91,6 +105,13 @@ public class MainActivity extends ActionBarActivity {
             Bundle arguments = getArguments();
             if (arguments != null) {
                 mPrompt.setText(arguments.getString(PROMPT_KEY, "No prompt."));
+
+                GradientDrawable shape = (GradientDrawable) mPrompt.getBackground();
+                int color = arguments.getInt(COLOR_KEY);
+                shape.setColor(color);
+                shape.invalidateSelf();
+
+                mEditor.setHighlightColor(color);
             }
             return root;
         }
