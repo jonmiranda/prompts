@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="concrete">#95a5a6</color>
+    <color name="asbestos">#7f8c8d</color>
+    <color name="wet_asphalt">#34495e</color>
+
+    <color name="primary">@color/concrete</color>
+    <color name="primary_dark">@color/asbestos</color>
+    <color name="accent">@color/wet_asphalt</color>
+</resources>
