@@ -5,10 +5,6 @@
     <!-- view background color -->
     <solid android:color="@color/primary" />
 
-    <!-- view border color and width -->
-    <stroke android:width="3dp"
-            android:color="@color/primary" />
-
     <!-- Here is the corner radius -->
     <corners android:radius="20dp"
              android:topRightRadius="20dp"
