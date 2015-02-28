@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -122,22 +123,18 @@ public class MainActivity extends ActionBarActivity {
             return root;
         }
 
-        @Override
-        public void onResume() {
-            super.onResume();
-
-            mFooter.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO: A bit hacky
-                    FragmentActivity context = getActivity();
-                    context.getWindow().setSoftInputMode(
-                            WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                    InputMethodManager imm = (InputMethodManager)
-                            context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(mEditor, InputMethodManager.SHOW_IMPLICIT);
-                }
-            });
+        /**
+         * The footer takes up the rest of the Editor content area so users may expect
+         * that they're clicking within the TextEditor.
+         */
+        @OnClick(R.id.footer)
+        public void onFooterClicked(View view) {
+            FragmentActivity context = getActivity();
+            context.getWindow().setSoftInputMode(
+                    WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+            InputMethodManager imm = (InputMethodManager)
+                    context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(mEditor, InputMethodManager.SHOW_IMPLICIT);
         }
     }
 }
