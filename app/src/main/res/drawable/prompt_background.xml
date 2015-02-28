@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- view background color -->
+    <solid android:color="@color/primary" />
+
+    <!-- view border color and width -->
+    <stroke android:width="3dp"
+            android:color="@color/primary" />
+
+    <!-- Here is the corner radius -->
+    <corners android:radius="20dp"
+             android:topRightRadius="20dp"
+             android:topLeftRadius="20dp"
+             android:bottomRightRadius="0dp"
+             android:bottomLeftRadius="0dp" />
+
+</shape>

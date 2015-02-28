@@ -1,13 +1,17 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
+              android:background="@color/primary_dark"
+              android:paddingTop="@dimen/full_spacer"
+              android:paddingLeft="@dimen/full_spacer"
+              android:paddingRight="@dimen/full_spacer"
+              android:paddingBottom="@dimen/zero"
               tools:context=".MainActivity$PlaceholderFragment">
 
     <TextView
         android:id="@+id/prompt"
-        android:background="@color/primary"
+        android:background="@drawable/prompt_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?android:attr/actionBarSize"
@@ -17,9 +21,21 @@
         android:gravity="center"/>
 
     <EditText
+        android:id="@+id/editor"
+        android:background="@android:color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="top|left"
-        android:padding="@dimen/full_spacer"/>
+        android:padding="@dimen/full_spacer"
+        android:layout_below="@id/prompt"/>
 
-</LinearLayout>
+    <View
+        android:id="@+id/footer"
+        android:background="@drawable/footer_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/full_spacer"
+        android:padding="@dimen/half_spacer"
+        android:layout_below="@id/editor"/>
+
+</RelativeLayout>
