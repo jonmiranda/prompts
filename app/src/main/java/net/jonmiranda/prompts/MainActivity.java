@@ -130,12 +130,24 @@ public class MainActivity extends ActionBarActivity {
          */
         @OnClick(R.id.footer)
         public void onFooterClicked(View view) {
+           showKeyboard();
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            showKeyboard();
+        }
+
+        private void showKeyboard() {
             FragmentActivity context = getActivity();
             context.getWindow().setSoftInputMode(
                     WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
             InputMethodManager imm = (InputMethodManager)
                     context.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(mEditor, InputMethodManager.SHOW_IMPLICIT);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
+                    InputMethodManager.HIDE_IMPLICIT_ONLY);
         }
     }
 
