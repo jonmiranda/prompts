@@ -19,9 +19,17 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Calendar;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -101,6 +109,7 @@ public class MainActivity extends ActionBarActivity {
         public static final String PROMPT_KEY = "PROMPT_KEY";
         public static final String COLOR_KEY = "COLOR_KEY";
 
+        private Realm mRealm;
         public PlaceholderFragment() {
         }
 
@@ -121,7 +130,23 @@ public class MainActivity extends ActionBarActivity {
                 mEditor.setHighlightColor(color);
             }
 
+            mRealm = Realm.getInstance(getActivity());
             return root;
+        }
+
+        private void createOrUpdatePrompt() {
+            Calendar date = Calendar.getInstance();
+            JSONObject object = new JSONObject();
+            try {
+                object.put("date", String.format("%d-%d-%d", date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)));
+                object.put("prompt", mPrompt.getText());
+                object.put("key", object.getString("date") + object.getString("prompt"));
+                object.put("response", mEditor.getText());
+            } catch (JSONException e) {
+            }
+            mRealm.beginTransaction();
+            mRealm.createOrUpdateObjectFromJson(Prompt.class, object);
+            mRealm.commitTransaction();
         }
 
         /**
@@ -133,9 +158,29 @@ public class MainActivity extends ActionBarActivity {
            showKeyboard();
         }
 
+        @OnTextChanged(R.id.editor)
+        public void onEditorChanged(CharSequence text) {
+            createOrUpdatePrompt(); // TODO: Heavy(?)
+        }
+
         @Override
         public void onResume() {
             super.onResume();
+
+            Calendar date = Calendar.getInstance();
+            String dateKey = String.format("%d-%d-%d", date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR));
+            String prompt = mPrompt.getText().toString();
+            RealmResults<Prompt> results = mRealm.where(Prompt.class)
+                    .equalTo("date", dateKey)
+                    .equalTo("prompt", prompt)
+                    .equalTo("key", dateKey + prompt)
+                    .findAll();
+
+            if (results.size() > 0) {
+                mEditor.setText(results.get(0).getResponse());
+                mEditor.setSelection(mEditor.getText().length());
+            }
+
             showKeyboard();
         }
 
