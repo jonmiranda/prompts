@@ -4,9 +4,12 @@
     <color name="asbestos">#7f8c8d</color>
     <color name="wet_asphalt">#34495e</color>
 
-    <color name="primary">@color/concrete</color>
-    <color name="primary_dark">@color/asbestos</color>
-    <color name="accent">@color/wet_asphalt</color>
+    <color name="light_gray">#eeeeee</color>
+    <color name="background">@color/light_gray</color>
+
+    <color name="primary">@color/light_gray</color>
+    <color name="primary_dark">@color/light_gray</color>
+    <color name="accent">@color/concrete</color>
 
     <array name="colors">
         <item name="green_sea_light">#44cab8</item>
