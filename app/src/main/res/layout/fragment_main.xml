@@ -29,6 +29,8 @@
         android:fontFamily="monospace"
         android:gravity="top|left"
         android:padding="@dimen/full_spacer"
+        android:inputType="textCapSentences|textMultiLine"
+        android:scrollHorizontally="false"
         android:layout_below="@id/prompt"/>
 
     <View
