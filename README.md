@@ -1,5 +1,3 @@
-# prompts
-
 An app that prompts you to write everyday. (in progress).
 
 ![Demo](http://jonmiranda.net/content/images/2015/03/demo.gif)
