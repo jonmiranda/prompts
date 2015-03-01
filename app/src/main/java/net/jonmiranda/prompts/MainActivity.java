@@ -191,8 +191,6 @@ public class MainActivity extends ActionBarActivity {
             InputMethodManager imm = (InputMethodManager)
                     context.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(mEditor, InputMethodManager.SHOW_IMPLICIT);
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
-                    InputMethodManager.HIDE_IMPLICIT_ONLY);
         }
     }
 
