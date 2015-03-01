@@ -6,7 +6,7 @@
               android:paddingTop="@dimen/full_spacer"
               android:paddingLeft="@dimen/full_spacer"
               android:paddingRight="@dimen/full_spacer"
-              android:paddingBottom="@dimen/zero"
+              android:paddingBottom="0dp"
               tools:context=".MainActivity$PlaceholderFragment">
 
     <TextView
