@@ -9,8 +9,13 @@ import io.realm.annotations.PrimaryKey;
 public class Prompt extends RealmObject {
 
     @PrimaryKey
+    /**
+     * Realm does not support auto increment or compound keys.
+     * Format: {@link date} + {@link prompt}
+     * */
     private String key;
 
+    /** Hand made date until Realm supports more versions */
     private String date;
 
     private String prompt;

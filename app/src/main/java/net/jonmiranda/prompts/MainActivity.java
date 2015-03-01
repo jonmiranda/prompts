@@ -58,10 +58,10 @@ public class MainActivity extends ActionBarActivity {
         mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                Fragment fragment = new PlaceholderFragment();
+                Fragment fragment = new PromptFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString(PlaceholderFragment.PROMPT_KEY, PROMPTS[position % PROMPTS.length]);
-                bundle.putInt(PlaceholderFragment.COLOR_KEY, mColors[position % mColors.length]);
+                bundle.putString(PromptFragment.PROMPT_KEY, PROMPTS[position % PROMPTS.length]);
+                bundle.putInt(PromptFragment.COLOR_KEY, mColors[position % mColors.length]);
                 fragment.setArguments(bundle);
                 return fragment;
             }
@@ -100,7 +100,7 @@ public class MainActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PromptFragment extends Fragment {
 
         @InjectView(R.id.prompt) TextView mPrompt;
         @InjectView(R.id.editor) EditText mEditor;
@@ -110,7 +110,7 @@ public class MainActivity extends ActionBarActivity {
         public static final String COLOR_KEY = "COLOR_KEY";
 
         private Realm mRealm;
-        public PlaceholderFragment() {
+        public PromptFragment() {
         }
 
         @Override
@@ -134,11 +134,19 @@ public class MainActivity extends ActionBarActivity {
             return root;
         }
 
-        private void createOrUpdatePrompt() {
+        /**
+         * @return Today's date as a string to be used in the database.
+         */
+        private String getTodaysDate() {
             Calendar date = Calendar.getInstance();
+            return String.format("%d-%d-%d",
+                    date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR));
+        }
+
+        private void createOrUpdatePrompt() {
             JSONObject object = new JSONObject();
             try {
-                object.put("date", String.format("%d-%d-%d", date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)));
+                object.put("date", getTodaysDate());
                 object.put("prompt", mPrompt.getText());
                 object.put("key", object.getString("date") + object.getString("prompt"));
                 object.put("response", mEditor.getText());
@@ -167,13 +175,12 @@ public class MainActivity extends ActionBarActivity {
         public void onResume() {
             super.onResume();
 
-            Calendar date = Calendar.getInstance();
-            String dateKey = String.format("%d-%d-%d", date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR));
+            String date = getTodaysDate();
             String prompt = mPrompt.getText().toString();
             RealmResults<Prompt> results = mRealm.where(Prompt.class)
-                    .equalTo("date", dateKey)
+                    .equalTo("date", date)
                     .equalTo("prompt", prompt)
-                    .equalTo("key", dateKey + prompt)
+                    .equalTo("key", date + prompt)
                     .findAll();
 
             if (results.size() > 0) {
