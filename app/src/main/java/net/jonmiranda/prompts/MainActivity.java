@@ -151,11 +151,11 @@ public class MainActivity extends ActionBarActivity {
 
         /**
          * The footer takes up the rest of the Editor content area so users may expect
-         * that they're clicking within the TextEditor.
+         * that they're clicking within the EditText.
          */
         @OnClick(R.id.footer)
         public void onFooterClicked(View view) {
-           showKeyboard();
+            showKeyboard();
         }
 
         @OnTextChanged(R.id.editor)
