@@ -38,7 +38,7 @@ public class MainActivity extends ActionBarActivity {
 
     private PagerAdapter mPagerAdapter;
 
-    private String[] PROMPTS = {
+    private static final String[] PROMPTS = {
             "What is something you learned today?",
             "What made you laugh today?",
             "What three things will you focus on today?",
