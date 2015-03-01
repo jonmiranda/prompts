@@ -80,7 +80,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
+     * Fragment that displays a prompt.
      */
     public static class PromptFragment extends Fragment {
 
@@ -117,7 +117,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         /**
-         * @return Today's date as a string to be used in the database.
+         * @return Today's date as a string.
          */
         private String getTodaysDate() {
             Calendar date = Calendar.getInstance();
