@@ -11,6 +11,9 @@
     <color name="primary_dark">@color/light_gray</color>
     <color name="accent">@color/concrete</color>
 
+
+    <color name="midnight_blue_light">#6a7e8f</color>
+
     <array name="colors">
         <item name="green_sea_light">#44cab8</item>
         <item name="belize_hole_light">#66b5d9</item>
@@ -20,7 +23,6 @@
         <item name="wisteria_light">#be84d2</item>
         <item name="wet_asphalt_light">#73889b</item>
 
-        <item name="midnight_blue_light">#6a7e8f</item>
         <item name="amethyst_light">#c797d7</item>
         <item name="pomegranate_light">#dd7969</item>
         <item name="pumpkin_light">#e89200</item>
