@@ -13,6 +13,8 @@
 
 
     <color name="midnight_blue_light">#6a7e8f</color>
+    <color name="wet_asphalt_light">#73889b</color>
+    <color name="nephritis_light">#63d39c</color>
 
     <array name="colors">
         <item name="green_sea_light">#44cab8</item>
@@ -21,16 +23,14 @@
         <item name="orange_light">#f9c73a</item>
         <item name="alizarin_light">#f38b7c</item>
         <item name="wisteria_light">#be84d2</item>
-        <item name="wet_asphalt_light">#73889b</item>
 
-        <item name="amethyst_light">#c797d7</item>
-        <item name="pomegranate_light">#dd7969</item>
-        <item name="pumpkin_light">#e89200</item>
-        <item name="carrot_light">#f2b35b</item>
-        <item name="peter_river_light">#73c5ec</item>
-        <item name="turquoise_light">#4ddbc7</item>
         <item name="emerald_light">#6ce4aa</item>
-        <item name="nephritis_light">#63d39c</item>
+        <item name="turquoise_light">#4ddbc7</item>
+        <item name="peter_river_light">#73c5ec</item>
+        <item name="carrot_light">#f2b35b</item>
+        <item name="pumpkin_light">#e89200</item>
+        <item name="pomegranate_light">#dd7969</item>
+        <item name="amethyst_light">#c797d7</item>
     </array>
 </resources>
 
