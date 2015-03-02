@@ -38,12 +38,14 @@ public class MainActivity extends ActionBarActivity {
     private PagerAdapter mPagerAdapter;
 
     private static final String[] PROMPTS = {
+            "What three things will you focus on today?",
+            "What are you looking forward to most today?",
+            "How are you feeling today?",
+            "What did you do today?",
+            "Did anything special happen today?",
             "What is something you learned today?",
             "What made you laugh today?",
-            "What three things will you focus on today?",
-            "What am I looking forward to most today?",
-            "What are three things I'm grateful for?",
-            "How are you feeling today?"
+            "What three things are you grateful for today?",
     };
     private int[] mColors;
 
