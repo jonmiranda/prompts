@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts;
+package net.jonmiranda.prompts.models;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
