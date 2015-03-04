@@ -22,11 +22,14 @@ public class PromptPresenter {
     private PromptView mView;
     @Inject Realm mRealm;
 
+    private String mPrompt;
+
     public PromptPresenter(PromptView view, Bundle arguments) {
         mView = view;
 
         if (arguments != null) {
-            mView.setPrompt(arguments.getString(PromptView.PROMPT_KEY, "No prompt."));
+            mPrompt = arguments.getString(PromptView.PROMPT_KEY, "No prompt.");
+            mView.setPrompt(mPrompt);
             mView.setColor(arguments.getInt(PromptView.COLOR_KEY, 0));
         }
     }
@@ -37,7 +40,7 @@ public class PromptPresenter {
      */
     public void tryGetResponse() {
         String date = getTodaysDate();
-        String prompt = mView.getPrompt();
+        String prompt = mPrompt;
         RealmResults<Prompt> results = mRealm.where(Prompt.class)
                 .equalTo("date", date)
                 .equalTo("prompt", prompt)
@@ -58,13 +61,13 @@ public class PromptPresenter {
                 date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR));
     }
 
-    public void createOrUpdatePrompt() {
+    public void createOrUpdatePrompt(CharSequence response) {
         JSONObject object = new JSONObject();
         try {
             object.put("date", getTodaysDate());
-            object.put("prompt", mView.getPrompt());
+            object.put("prompt", mPrompt);
             object.put("key", object.getString("date") + object.getString("prompt"));
-            object.put("response", mView.getResponse());
+            object.put("response", response);
         } catch (JSONException e) {
         }
         mRealm.beginTransaction();

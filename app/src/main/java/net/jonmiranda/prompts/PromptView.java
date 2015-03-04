@@ -9,9 +9,5 @@ public interface PromptView {
 
     void setPrompt(String prompt);
 
-    String getPrompt();
-
     void setResponse(String response);
-
-    String getResponse();
 }

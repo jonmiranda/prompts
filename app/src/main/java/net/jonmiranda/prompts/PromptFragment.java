@@ -77,7 +77,7 @@ public class PromptFragment extends Fragment implements PromptView {
 
     @OnTextChanged(R.id.editor)
     public void onEditorChanged(CharSequence text) {
-        mPresenter.createOrUpdatePrompt(); // TODO: Heavy(?)
+        mPresenter.createOrUpdatePrompt(text); // TODO: Heavy(?)
     }
 
     @Override
@@ -90,16 +90,6 @@ public class PromptFragment extends Fragment implements PromptView {
     public void onResume() {
         super.onResume();
         mPresenter.tryGetResponse();
-    }
-
-    @Override
-    public String getPrompt() {
-        return mPrompt.getText().toString();
-    }
-
-    @Override
-    public String getResponse() {
-        return mEditor.getText().toString();
     }
 }
 
