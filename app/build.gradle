@@ -28,4 +28,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.jakewharton:butterknife:6.0.0'
     compile 'io.realm:realm-android:0.79.1'
+
+    compile group:'com.squareup.dagger', name:'dagger', version:'1.2.2'
+    provided group:'com.squareup.dagger', name:'dagger-compiler', version:'1.2.2'
 }
