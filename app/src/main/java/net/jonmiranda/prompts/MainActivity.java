@@ -19,7 +19,7 @@ public class MainActivity extends FragmentActivity {
 
     private PagerAdapter mPagerAdapter;
 
-    private static final String[] PROMPTS = {
+    public static final String[] PROMPTS = {
             "What three things will you focus on today?",
             "What are you looking forward to most today?",
             "How are you feeling today?",
