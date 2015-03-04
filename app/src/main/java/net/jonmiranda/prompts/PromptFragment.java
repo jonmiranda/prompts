@@ -13,77 +13,44 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Calendar;
+import net.jonmiranda.prompts.app.PromptApplication;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 /**
  * Fragment that displays a prompt.
  */
-public class PromptFragment extends Fragment {
+public class PromptFragment extends Fragment implements PromptView {
 
     @InjectView(R.id.prompt) TextView mPrompt;
     @InjectView(R.id.editor) EditText mEditor;
 
-    public static final String PROMPT_KEY = "PROMPT_KEY";
-    public static final String COLOR_KEY = "COLOR_KEY";
-
-    private Realm mRealm;
     private PromptPresenter mPresenter;
-
-    public PromptFragment() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.inject(this, root);
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            mPrompt.setText(arguments.getString(PROMPT_KEY, "No prompt."));
-
-            GradientDrawable shape = (GradientDrawable) mPrompt.getBackground();
-            int color = arguments.getInt(COLOR_KEY);
-            shape.setColor(color);
-            shape.invalidateSelf();
-
-            mEditor.setHighlightColor(color);
-        }
-
-        mRealm = Realm.getInstance(getActivity());
+        mPresenter = new PromptPresenter(this, getArguments());
+        ((PromptApplication) getActivity().getApplication()).inject(mPresenter);
         return root;
     }
 
-    /**
-     * @return Today's date as a string.
-     */
-    private String getTodaysDate() {
-        Calendar date = Calendar.getInstance();
-        return String.format("%d-%d-%d",
-                date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR));
+    @Override
+    public void setColor(int color) {
+        GradientDrawable shape = (GradientDrawable) mPrompt.getBackground();
+        shape.setColor(color);
+        shape.invalidateSelf();
+        mEditor.setHighlightColor(color);
     }
 
-    private void createOrUpdatePrompt() {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("date", getTodaysDate());
-            object.put("prompt", mPrompt.getText());
-            object.put("key", object.getString("date") + object.getString("prompt"));
-            object.put("response", mEditor.getText());
-        } catch (JSONException e) {
-        }
-        mRealm.beginTransaction();
-        mRealm.createOrUpdateObjectFromJson(Prompt.class, object);
-        mRealm.commitTransaction();
+    @Override
+    public void setPrompt(String prompt) {
+        mPrompt.setText(prompt);
     }
 
     /**
@@ -95,38 +62,44 @@ public class PromptFragment extends Fragment {
         showKeyboard();
     }
 
-    @OnTextChanged(R.id.editor)
-    public void onEditorChanged(CharSequence text) {
-        createOrUpdatePrompt(); // TODO: Heavy(?)
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        String date = getTodaysDate();
-        String prompt = mPrompt.getText().toString();
-        RealmResults<Prompt> results = mRealm.where(Prompt.class)
-                .equalTo("date", date)
-                .equalTo("prompt", prompt)
-                .equalTo("key", date + prompt)
-                .findAll();
-
-        if (results.size() > 0) {
-            mEditor.setText(results.get(0).getResponse());
-            mEditor.setSelection(mEditor.getText().length());
-        }
-
-        showKeyboard();
-    }
-
-    private void showKeyboard() {
+    /**
+     * TODO: Move this to the presenter.. or probably even the Activity
+     */
+    public void showKeyboard() {
         FragmentActivity context = getActivity();
         context.getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         InputMethodManager imm = (InputMethodManager)
                 context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(mEditor, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+
+    @OnTextChanged(R.id.editor)
+    public void onEditorChanged(CharSequence text) {
+        mPresenter.createOrUpdatePrompt(); // TODO: Heavy(?)
+    }
+
+    @Override
+    public void setResponse(String response) {
+        mEditor.setText(response);
+        mEditor.setSelection(mEditor.getText().length());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.tryGetResponse();
+    }
+
+    @Override
+    public String getPrompt() {
+        return mPrompt.getText().toString();
+    }
+
+    @Override
+    public String getResponse() {
+        return mEditor.getText().toString();
     }
 }
 
