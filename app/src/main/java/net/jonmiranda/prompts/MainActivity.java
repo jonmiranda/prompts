@@ -8,6 +8,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
+
+import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -16,6 +19,7 @@ import butterknife.InjectView;
 public class MainActivity extends FragmentActivity {
 
     @InjectView(R.id.container) ViewPager mViewPager;
+    @InjectView(R.id.date) TextView mDate;
 
     private PagerAdapter mPagerAdapter;
 
@@ -37,6 +41,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
+        mDate.setText(String.format("%1$tA %1$tB %1$te, %1$tY", Calendar.getInstance()));
         mColors = getResources().getIntArray(R.array.colors);
         mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
