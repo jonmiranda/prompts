@@ -7,8 +7,6 @@ import net.jonmiranda.prompts.models.Prompt;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Calendar;
-
 import javax.inject.Inject;
 
 import io.realm.Realm;
@@ -23,6 +21,7 @@ public class PromptPresenter {
     @Inject Realm mRealm;
 
     private String mPrompt;
+    private String mDate;
 
     public PromptPresenter(PromptView view, Bundle arguments) {
         mView = view;
@@ -31,6 +30,7 @@ public class PromptPresenter {
             mPrompt = arguments.getString(PromptView.PROMPT_KEY, "No prompt.");
             mView.setPrompt(mPrompt);
             mView.setColor(arguments.getInt(PromptView.COLOR_KEY, 0));
+            mDate = arguments.getString(PromptView.DATE_KEY, "No date.");
         }
     }
 
@@ -39,12 +39,11 @@ public class PromptPresenter {
      * and if true it updates the view with the response.
      */
     public void tryGetResponse() {
-        String date = getTodaysDate();
         String prompt = mPrompt;
         RealmResults<Prompt> results = mRealm.where(Prompt.class)
-                .equalTo("date", date)
+                .equalTo("date", mDate)
                 .equalTo("prompt", prompt)
-                .equalTo("key", date + prompt)
+                .equalTo("key", mDate + prompt)
                 .findAll();
 
         if (results.size() > 0) {
@@ -52,19 +51,10 @@ public class PromptPresenter {
         }
     }
 
-    /**
-     * @return Today's date as a string.
-     */
-    private String getTodaysDate() {
-        Calendar date = Calendar.getInstance();
-        return String.format("%d-%d-%d",
-                date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR));
-    }
-
     public void createOrUpdatePrompt(CharSequence response) {
         JSONObject object = new JSONObject();
         try {
-            object.put("date", getTodaysDate());
+            object.put("date", mDate);
             object.put("prompt", mPrompt);
             object.put("key", object.getString("date") + object.getString("prompt"));
             object.put("response", response);

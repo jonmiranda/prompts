@@ -35,6 +35,8 @@ public class MainActivity extends FragmentActivity {
     };
     private int[] mColors;
 
+    private String mRealmDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,10 @@ public class MainActivity extends FragmentActivity {
         ButterKnife.inject(this);
 
         mDate.setText(String.format("%1$tA %1$tB %1$te, %1$tY", Calendar.getInstance()));
+        Calendar date = Calendar.getInstance();
+        mRealmDate = String.format("%d-%d-%d", // TODO: Migrate Realm's date format
+                date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR));
+
         mColors = getResources().getIntArray(R.array.colors);
         mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -50,6 +56,7 @@ public class MainActivity extends FragmentActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString(PromptFragment.PROMPT_KEY, PROMPTS[position % PROMPTS.length]);
                 bundle.putInt(PromptFragment.COLOR_KEY, mColors[position % mColors.length]);
+                bundle.putString(PromptFragment.DATE_KEY, mRealmDate);
                 fragment.setArguments(bundle);
                 return fragment;
             }
