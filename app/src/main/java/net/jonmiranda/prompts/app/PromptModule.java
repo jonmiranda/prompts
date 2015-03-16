@@ -1,7 +1,9 @@
 package net.jonmiranda.prompts.app;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.ThreadEnforcer;
+
 import net.jonmiranda.prompts.MainActivity;
-import net.jonmiranda.prompts.PromptFragment;
 import net.jonmiranda.prompts.PromptPresenter;
 
 import javax.inject.Singleton;
@@ -14,7 +16,6 @@ import io.realm.Realm;
         injects = {
                 PromptPresenter.class,
                 MainActivity.class,
-                PromptFragment.class
         },
         library = true
 )
@@ -28,5 +29,9 @@ public class PromptModule {
 
     @Provides @Singleton Realm provideRealm() {
         return Realm.getInstance(mApplication);
+    }
+
+    @Provides @Singleton Bus provideBus() {
+        return new Bus(ThreadEnforcer.ANY);
     }
 }
