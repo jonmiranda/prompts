@@ -1,7 +1,12 @@
 package net.jonmiranda.prompts;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
+import net.jonmiranda.prompts.events.DateEvent;
 import net.jonmiranda.prompts.models.Prompt;
 
 import org.json.JSONException;
@@ -15,10 +20,11 @@ import io.realm.RealmResults;
 /**
  * Presentation logic for a {@link PromptView}.
  */
-public class PromptPresenter {
+public class PromptPresenter implements DateEvent.Listener {
 
     private PromptView mView;
     @Inject Realm mRealm;
+    @Inject Bus mBus;
 
     private String mPrompt;
     private String mDate;
@@ -48,6 +54,8 @@ public class PromptPresenter {
 
         if (results.size() > 0) {
             mView.setResponse(results.get(0).getResponse());
+        } else {
+            mView.setResponse("");
         }
     }
 
@@ -63,5 +71,21 @@ public class PromptPresenter {
         mRealm.beginTransaction();
         mRealm.createOrUpdateObjectFromJson(Prompt.class, object);
         mRealm.commitTransaction();
+    }
+
+    @Override @Subscribe
+    public void onDateChanged(DateEvent event) {
+        Log.d("onDateChanged", "PromptPresenter: " + event.date + " - " + mPrompt);
+        mDate = event.date;
+        tryGetResponse();
+    }
+
+    public void onResume() {
+        mBus.register(this);
+        tryGetResponse();
+    }
+
+    public void onPause() {
+        mBus.unregister(this);
     }
 }

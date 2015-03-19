@@ -3,7 +3,7 @@ package net.jonmiranda.prompts.app;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
-import net.jonmiranda.prompts.DatePickerFragment;
+import net.jonmiranda.prompts.datepicker.DatePickerFragment;
 import net.jonmiranda.prompts.MainActivity;
 import net.jonmiranda.prompts.PromptPresenter;
 
@@ -34,7 +34,7 @@ public class PromptModule {
     }
 
     @Provides @Singleton Bus provideBus() {
-        return new Bus(ThreadEnforcer.ANY);
+        return new Bus(ThreadEnforcer.MAIN);
     }
 
     @Provides @Singleton PromptApplication provieApplication() {

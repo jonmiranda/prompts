@@ -1,6 +1,7 @@
 package net.jonmiranda.prompts;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -10,16 +11,31 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.Produce;
+import com.squareup.otto.Subscribe;
+
+import net.jonmiranda.prompts.app.PromptApplication;
+import net.jonmiranda.prompts.app.Utils;
+import net.jonmiranda.prompts.events.DateEvent;
+import net.jonmiranda.prompts.datepicker.DatePickerFragment;
+
 import java.util.Calendar;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements DateEvent.Listener {
 
     @InjectView(R.id.container) ViewPager mViewPager;
     @InjectView(R.id.date) TextView mDate;
+
+    @Inject PromptApplication mApplication;
+    @Inject Bus mBus;
 
     private PagerAdapter mPagerAdapter;
 
@@ -42,11 +58,9 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+        ((PromptApplication) getApplication()).inject(this);
 
-        mDate.setText(String.format("%1$tA %1$tB %1$te, %1$tY", Calendar.getInstance()));
-        Calendar date = Calendar.getInstance();
-        mRealmDate = String.format("%d-%d-%d", // TODO: Migrate Realm's date format
-                date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR));
+        showDate(Calendar.getInstance());
 
         mColors = getResources().getIntArray(R.array.colors);
         mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
@@ -68,6 +82,29 @@ public class MainActivity extends FragmentActivity {
         };
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+    }
+
+    public void showDate(Calendar date) {
+        mDate.setText(Utils.getPrettyDateString(date));
+        mRealmDate = Utils.getRealmDateString(date);
+    }
+
+    @OnClick(R.id.date)
+    public void showDatePicker() {
+        DialogFragment datePickerFragment = new DatePickerFragment();
+        mApplication.inject(datePickerFragment);
+        datePickerFragment.show(getSupportFragmentManager(), "DatePicker");
+    }
+
+    @Override @Subscribe
+    public void onDateChanged(DateEvent event) {
+        mDate.setText(event.pretty);
+        mRealmDate = event.date;
+    }
+
+    @Produce
+    public DateEvent produceDate() {
+        return new DateEvent(mRealmDate, mDate.getText().toString());
     }
 
     @Override
@@ -99,5 +136,17 @@ public class MainActivity extends FragmentActivity {
                 view.setScaleY(scaleFactor);
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mBus.register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mBus.unregister(this);
     }
 }

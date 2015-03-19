@@ -5,6 +5,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,6 @@ import net.jonmiranda.prompts.app.PromptApplication;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 
 /**
  * Fragment that displays a prompt.
@@ -30,6 +31,8 @@ public class PromptFragment extends Fragment implements PromptView {
 
     private PromptPresenter mPresenter;
 
+    private TextWatcher mTextWatcher;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,6 +40,22 @@ public class PromptFragment extends Fragment implements PromptView {
         ButterKnife.inject(this, root);
         mPresenter = new PromptPresenter(this, getArguments());
         ((PromptApplication) getActivity().getApplication()).inject(mPresenter);
+        mTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPresenter.createOrUpdatePrompt(s); // TODO: Heavy(?)
+            }
+        };
         return root;
     }
 
@@ -74,12 +93,6 @@ public class PromptFragment extends Fragment implements PromptView {
         imm.showSoftInput(mEditor, InputMethodManager.SHOW_IMPLICIT);
     }
 
-
-    @OnTextChanged(R.id.editor)
-    public void onEditorChanged(CharSequence text) {
-        mPresenter.createOrUpdatePrompt(text); // TODO: Heavy(?)
-    }
-
     @Override
     public void setResponse(String response) {
         mEditor.setText(response);
@@ -88,8 +101,16 @@ public class PromptFragment extends Fragment implements PromptView {
 
     @Override
     public void onResume() {
+        mPresenter.onResume();
+        mEditor.addTextChangedListener(mTextWatcher);
         super.onResume();
-        mPresenter.tryGetResponse();
+    }
+
+    @Override
+    public void onPause() {
+        mPresenter.onPause();
+        mEditor.removeTextChangedListener(mTextWatcher);
+        super.onPause();
     }
 }
 
