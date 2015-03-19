@@ -3,6 +3,7 @@ package net.jonmiranda.prompts.app;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
+import net.jonmiranda.prompts.DatePickerFragment;
 import net.jonmiranda.prompts.MainActivity;
 import net.jonmiranda.prompts.PromptPresenter;
 
@@ -16,12 +17,13 @@ import io.realm.Realm;
         injects = {
                 PromptPresenter.class,
                 MainActivity.class,
+                DatePickerFragment.class,
         },
         library = true
 )
 public class PromptModule {
 
-    PromptApplication mApplication;
+    final PromptApplication mApplication;
 
     public PromptModule(PromptApplication application) {
         mApplication = application;
@@ -33,5 +35,9 @@ public class PromptModule {
 
     @Provides @Singleton Bus provideBus() {
         return new Bus(ThreadEnforcer.ANY);
+    }
+
+    @Provides @Singleton PromptApplication provieApplication() {
+        return mApplication;
     }
 }
