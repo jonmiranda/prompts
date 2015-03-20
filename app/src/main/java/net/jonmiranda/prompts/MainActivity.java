@@ -113,6 +113,18 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
         return false;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mBus.register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mBus.unregister(this);
+    }
+
     // http://developer.android.com/training/animation/screen-slide.html
     public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
         private static final float MIN_SCALE = 0.85f;
@@ -137,17 +149,5 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
                 view.setScaleY(scaleFactor);
             }
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mBus.register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mBus.unregister(this);
     }
 }
