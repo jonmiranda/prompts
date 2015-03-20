@@ -1,13 +1,13 @@
 package net.jonmiranda.prompts.events;
 
+import java.util.Calendar;
+
 public class DateEvent {
 
-    public final String date; // TODO: Use dates properly so we can avoid this 'pretty' nonsense
-    public final String pretty; // Pretty String representation of the Date.
+    public final Calendar date;
 
-    public DateEvent(String date, String pretty) {
+    public DateEvent(Calendar date) {
         this.date = date;
-        this.pretty = pretty;
     }
 
     public static interface Listener {

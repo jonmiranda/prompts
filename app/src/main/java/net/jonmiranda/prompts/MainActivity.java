@@ -37,6 +37,7 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
     @Inject PromptApplication mApplication;
     @Inject Bus mBus;
 
+    private Calendar mCalendarDate;
     private PagerAdapter mPagerAdapter;
 
     public static final String[] PROMPTS = {
@@ -85,6 +86,7 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
     }
 
     public void showDate(Calendar date) {
+        mCalendarDate = date;
         mDate.setText(Utils.getPrettyDateString(date));
         mRealmDate = Utils.getRealmDateString(date);
     }
@@ -98,13 +100,12 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
 
     @Override @Subscribe
     public void onDateChanged(DateEvent event) {
-        mDate.setText(event.pretty);
-        mRealmDate = event.date;
+        showDate(event.date);
     }
 
     @Produce
     public DateEvent produceDate() {
-        return new DateEvent(mRealmDate, mDate.getText().toString());
+        return new DateEvent(mCalendarDate);
     }
 
     @Override

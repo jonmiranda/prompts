@@ -1,11 +1,11 @@
 package net.jonmiranda.prompts;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.events.DateEvent;
 import net.jonmiranda.prompts.models.Prompt;
 
@@ -75,8 +75,7 @@ public class PromptPresenter implements DateEvent.Listener {
 
     @Override @Subscribe
     public void onDateChanged(DateEvent event) {
-        Log.d("onDateChanged", "PromptPresenter: " + event.date + " - " + mPrompt);
-        mDate = event.date;
+        mDate = Utils.getRealmDateString(event.date);
         tryGetResponse();
     }
 
