@@ -1,7 +1,5 @@
 package net.jonmiranda.prompts;
 
-import android.os.Bundle;
-
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -29,15 +27,13 @@ public class PromptPresenter implements DateEvent.Listener {
     private String mPrompt;
     private String mDate;
 
-    public PromptPresenter(PromptView view, Bundle arguments) {
+    public PromptPresenter(PromptView view, String prompt, String date, int color) {
         mView = view;
+        mPrompt = prompt;
+        mDate = date;
 
-        if (arguments != null) {
-            mPrompt = arguments.getString(PromptView.PROMPT_KEY, "No prompt.");
-            mView.setPrompt(mPrompt);
-            mView.setColor(arguments.getInt(PromptView.COLOR_KEY, 0));
-            mDate = arguments.getString(PromptView.DATE_KEY, "No date.");
-        }
+        mView.setPrompt(mPrompt);
+        mView.setColor(color);
     }
 
     /**

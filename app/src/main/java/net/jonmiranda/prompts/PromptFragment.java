@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import net.jonmiranda.prompts.app.PromptApplication;
+import net.jonmiranda.prompts.app.Utils;
+
+import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -38,7 +41,19 @@ public class PromptFragment extends Fragment implements PromptView {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.inject(this, root);
-        mPresenter = new PromptPresenter(this, getArguments());
+
+        String prompt = getString(R.string.untitled);
+        String date = Utils.getRealmDateString(Calendar.getInstance());
+        int color = getResources().getColor(R.color.light_gray);
+
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            prompt = arguments.getString(PromptView.PROMPT_KEY, prompt);
+            date = arguments.getString(PromptView.DATE_KEY, date);
+            color = arguments.getInt(PromptView.COLOR_KEY, color);
+        }
+
+        mPresenter = new PromptPresenter(this, prompt, date, color);
         ((PromptApplication) getActivity().getApplication()).inject(mPresenter);
         mTextWatcher = new TextWatcher() {
             @Override
