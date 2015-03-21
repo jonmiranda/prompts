@@ -29,4 +29,12 @@
     <style name="AppTheme" parent="AppBaseTheme">
     </style>
 
+    <style name="DateArrow">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:tint">@color/concrete</item>
+    </style>
+
 </resources>

@@ -17,8 +17,8 @@ import com.squareup.otto.Subscribe;
 
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
-import net.jonmiranda.prompts.events.DateEvent;
 import net.jonmiranda.prompts.datepicker.DatePickerFragment;
+import net.jonmiranda.prompts.events.DateEvent;
 
 import java.util.Calendar;
 
@@ -96,6 +96,21 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
         DialogFragment datePickerFragment = new DatePickerFragment();
         mApplication.inject(datePickerFragment);
         datePickerFragment.show(getSupportFragmentManager(), "DatePicker");
+    }
+
+    public void updateDate(int offset) {
+        mCalendarDate.add(Calendar.DATE, offset);
+        mBus.post(new DateEvent(mCalendarDate));
+    }
+
+    @OnClick(R.id.arrow_left)
+    public void showPreviousDate() {
+        updateDate(-1);
+    }
+
+    @OnClick(R.id.arrow_right)
+    public void showNextDate() {
+        updateDate(1);
     }
 
     @Override @Subscribe
