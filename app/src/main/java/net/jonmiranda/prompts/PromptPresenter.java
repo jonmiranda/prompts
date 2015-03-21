@@ -47,8 +47,6 @@ public class PromptPresenter implements DateEvent.Listener {
     public void tryGetResponse() {
         String prompt = mPrompt;
         RealmResults<Prompt> results = mRealm.where(Prompt.class)
-                .equalTo("date", mDate)
-                .equalTo("prompt", prompt)
                 .equalTo("key", mDate + prompt)
                 .findAll();
 
