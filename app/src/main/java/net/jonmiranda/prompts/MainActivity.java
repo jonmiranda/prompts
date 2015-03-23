@@ -175,7 +175,7 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
     }
 
     // http://developer.android.com/training/animation/screen-slide.html
-    public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
+    public static class ZoomOutPageTransformer implements ViewPager.PageTransformer {
         private static final float MIN_SCALE = 0.85f;
 
         public void transformPage(View view, float position) {
