@@ -5,7 +5,8 @@ import com.squareup.otto.ThreadEnforcer;
 
 import net.jonmiranda.prompts.datepicker.DatePickerFragment;
 import net.jonmiranda.prompts.MainActivity;
-import net.jonmiranda.prompts.PromptPresenter;
+import net.jonmiranda.prompts.presenters.MainPresenter;
+import net.jonmiranda.prompts.presenters.PromptPresenter;
 
 import javax.inject.Singleton;
 
@@ -17,6 +18,7 @@ import io.realm.Realm;
         injects = {
                 PromptPresenter.class,
                 MainActivity.class,
+                MainPresenter.class,
                 DatePickerFragment.class,
         },
         library = true

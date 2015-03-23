@@ -11,14 +11,11 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-import com.squareup.otto.Bus;
-import com.squareup.otto.Produce;
-import com.squareup.otto.Subscribe;
-
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.datepicker.DatePickerFragment;
-import net.jonmiranda.prompts.events.DateEvent;
+import net.jonmiranda.prompts.presenters.MainPresenter;
+import net.jonmiranda.prompts.views.MainView;
 
 import java.util.Calendar;
 
@@ -29,18 +26,17 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 
-public class MainActivity extends FragmentActivity implements DateEvent.Listener {
+public class MainActivity extends FragmentActivity implements MainView {
 
     @InjectView(R.id.container) ViewPager mViewPager;
     @InjectView(R.id.date) TextView mDate;
 
     @Inject PromptApplication mApplication;
-    @Inject Bus mBus;
+    private MainPresenter mPresenter;
 
-    private Calendar mCalendarDate;
     private PagerAdapter mPagerAdapter;
-    private int mPosition = 0;
 
+    private int mPosition = 0;
     private String mRealmDate;
 
     public static final String[] PROMPTS = {
@@ -64,6 +60,17 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
         ((PromptApplication) getApplication()).inject(this);
+        if (savedInstanceState == null) {
+            mPresenter = new MainPresenter(this, Calendar.getInstance());
+        } else {
+            Calendar date = Calendar.getInstance();
+            mPosition = savedInstanceState.getInt(POSITION_KEY, 0);
+            if (savedInstanceState.getSerializable(DATE_KEY) != null) {
+                date = (Calendar) savedInstanceState.getSerializable(DATE_KEY);
+            }
+            mPresenter = new MainPresenter(this, date);
+        }
+        mApplication.inject(mPresenter);
 
         mColors = getResources().getIntArray(R.array.colors);
         mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
@@ -100,55 +107,29 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
         });
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-
-        Calendar date = Calendar.getInstance();
-        mPosition = 0;
-        if (savedInstanceState != null) {
-            if (savedInstanceState.getSerializable(DATE_KEY) != null) {
-                date = (Calendar) savedInstanceState.getSerializable(DATE_KEY);
-            }
-            mPosition = savedInstanceState.getInt(POSITION_KEY, 0);
-        }
-        showDate(date);
-        mViewPager.setCurrentItem(mPosition);
     }
 
+    @Override
     public void showDate(Calendar date) {
-        mCalendarDate = date;
         mDate.setText(Utils.getPrettyDateString(date));
         mRealmDate = Utils.getRealmDateString(date);
     }
 
-    @OnClick(R.id.date)
+    @Override @OnClick(R.id.date)
     public void showDatePicker() {
         DialogFragment datePickerFragment = new DatePickerFragment();
         mApplication.inject(datePickerFragment);
         datePickerFragment.show(getSupportFragmentManager(), "DatePicker");
     }
 
-    public void updateDate(int offset) {
-        mCalendarDate.add(Calendar.DATE, offset);
-        mBus.post(new DateEvent(mCalendarDate));
-    }
-
-    @OnClick(R.id.arrow_left)
+    @Override @OnClick(R.id.arrow_left)
     public void showPreviousDate() {
-        updateDate(-1);
+        mPresenter.updateDate(-1);
     }
 
-    @OnClick(R.id.arrow_right)
+    @Override @OnClick(R.id.arrow_right)
     public void showNextDate() {
-        updateDate(1);
-    }
-
-    @Override @Subscribe
-    public void onDateChanged(DateEvent event) {
-        showDate(event.date);
-    }
-
-    @Produce
-    public DateEvent produceDate() {
-        return new DateEvent(mCalendarDate);
+        mPresenter.updateDate(1);
     }
 
     @Override
@@ -159,18 +140,18 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
     @Override
     public void onResume() {
         super.onResume();
-        mBus.register(this);
+        mPresenter.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mBus.unregister(this);
+        mPresenter.onPause();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(DATE_KEY, mCalendarDate);
+        outState.putSerializable(DATE_KEY, mPresenter.getDate());
         outState.putInt(POSITION_KEY, mPosition);
     }
 
