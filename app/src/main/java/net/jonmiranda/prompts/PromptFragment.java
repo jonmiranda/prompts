@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
+import net.jonmiranda.prompts.presenters.PromptPresenter;
+import net.jonmiranda.prompts.views.PromptView;
 
 import java.util.Calendar;
 

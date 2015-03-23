@@ -1,8 +1,9 @@
-package net.jonmiranda.prompts;
+package net.jonmiranda.prompts.presenters;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import net.jonmiranda.prompts.views.PromptView;
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.events.DateEvent;
 import net.jonmiranda.prompts.models.Prompt;
@@ -16,9 +17,9 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 /**
- * Presentation logic for a {@link PromptView}.
+ * Presentation logic for a {@link net.jonmiranda.prompts.views.PromptView}.
  */
-public class PromptPresenter implements DateEvent.Listener {
+public class PromptPresenter implements BasePresenter, DateEvent.Listener {
 
     private PromptView mView;
     @Inject Realm mRealm;
@@ -73,11 +74,13 @@ public class PromptPresenter implements DateEvent.Listener {
         tryGetResponse();
     }
 
+    @Override
     public void onResume() {
         mBus.register(this);
         tryGetResponse();
     }
 
+    @Override
     public void onPause() {
         mBus.unregister(this);
     }
