@@ -39,6 +39,9 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
 
     private Calendar mCalendarDate;
     private PagerAdapter mPagerAdapter;
+    private int mPosition = 0;
+
+    private String mRealmDate;
 
     public static final String[] PROMPTS = {
             "What three things will you focus on today?",
@@ -52,7 +55,8 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
     };
     private int[] mColors;
 
-    private String mRealmDate;
+    private static final String DATE_KEY = "DATE_KEY";
+    private static final String POSITION_KEY = "POSITION_KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +64,6 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
         ((PromptApplication) getApplication()).inject(this);
-
-        showDate(Calendar.getInstance());
 
         mColors = getResources().getIntArray(R.array.colors);
         mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
@@ -81,8 +83,34 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
                 return PROMPTS.length;
             }
         };
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mPosition = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+
+        Calendar date = Calendar.getInstance();
+        mPosition = 0;
+        if (savedInstanceState != null) {
+            if (savedInstanceState.getSerializable(DATE_KEY) != null) {
+                date = (Calendar) savedInstanceState.getSerializable(DATE_KEY);
+            }
+            mPosition = savedInstanceState.getInt(POSITION_KEY, 0);
+        }
+        showDate(date);
+        mViewPager.setCurrentItem(mPosition);
     }
 
     public void showDate(Calendar date) {
@@ -138,6 +166,12 @@ public class MainActivity extends FragmentActivity implements DateEvent.Listener
     public void onPause() {
         super.onPause();
         mBus.unregister(this);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(DATE_KEY, mCalendarDate);
+        outState.putInt(POSITION_KEY, mPosition);
     }
 
     // http://developer.android.com/training/animation/screen-slide.html
