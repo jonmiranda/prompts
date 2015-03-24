@@ -4,4 +4,15 @@
     <string name="action_settings">Settings</string>
 
     <string name="untitled">Untitled</string>
+
+    <array name="prompts">
+        <item>What three things will you focus on today?</item>
+        <item>What are you looking forward to most today?</item>
+        <item>How are you feeling today?</item>
+        <item>What did you do today?</item>
+        <item>Did anything special happen today?</item>
+        <item>What is something you learned today?</item>
+        <item>What made you laugh today?</item>
+        <item>What three things are you grateful for today?</item>
+    </array>
 </resources>

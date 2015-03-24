@@ -39,16 +39,7 @@ public class MainActivity extends FragmentActivity implements MainView {
     private int mPosition = 0;
     private String mRealmDate;
 
-    public static final String[] PROMPTS = {
-            "What three things will you focus on today?",
-            "What are you looking forward to most today?",
-            "How are you feeling today?",
-            "What did you do today?",
-            "Did anything special happen today?",
-            "What is something you learned today?",
-            "What made you laugh today?",
-            "What three things are you grateful for today?",
-    };
+    public String[] mPrompts;
     private int[] mColors;
 
     private static final String DATE_KEY = "DATE_KEY";
@@ -73,12 +64,14 @@ public class MainActivity extends FragmentActivity implements MainView {
         mApplication.inject(mPresenter);
 
         mColors = getResources().getIntArray(R.array.colors);
+        mPrompts = getResources().getStringArray(R.array.prompts);
+
         mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 Fragment fragment = new PromptFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString(PromptFragment.PROMPT_KEY, PROMPTS[position % PROMPTS.length]);
+                bundle.putString(PromptFragment.PROMPT_KEY, mPrompts[position % mPrompts.length]);
                 bundle.putInt(PromptFragment.COLOR_KEY, mColors[position % mColors.length]);
                 bundle.putString(PromptFragment.DATE_KEY, mRealmDate);
                 fragment.setArguments(bundle);
@@ -87,7 +80,7 @@ public class MainActivity extends FragmentActivity implements MainView {
 
             @Override
             public int getCount() {
-                return PROMPTS.length;
+                return mPrompts.length;
             }
         };
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -158,7 +151,7 @@ public class MainActivity extends FragmentActivity implements MainView {
 
     // http://developer.android.com/training/animation/screen-slide.html
     public static class ZoomOutPageTransformer implements ViewPager.PageTransformer {
-        private static final float MIN_SCALE = 0.85f;
+        private static final float MIN_SCALE = 0.90f;
 
         public void transformPage(View view, float position) {
             int pageWidth = view.getWidth();
