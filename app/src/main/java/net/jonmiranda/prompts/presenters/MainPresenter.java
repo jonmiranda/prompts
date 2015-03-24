@@ -5,6 +5,7 @@ import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
 import net.jonmiranda.prompts.events.DateEvent;
+import net.jonmiranda.prompts.events.ShowKeyboardEvent;
 import net.jonmiranda.prompts.views.MainView;
 
 import java.util.Calendar;
@@ -41,6 +42,10 @@ public class MainPresenter implements BasePresenter, DateEvent.Listener {
 
     public Calendar getDate() {
         return mCalendarDate;
+    }
+
+    public void onPageSelected() {
+        mBus.post(new ShowKeyboardEvent());
     }
 
     @Override

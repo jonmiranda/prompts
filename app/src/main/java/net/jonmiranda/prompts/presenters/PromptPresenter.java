@@ -3,10 +3,11 @@ package net.jonmiranda.prompts.presenters;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import net.jonmiranda.prompts.views.PromptView;
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.events.DateEvent;
+import net.jonmiranda.prompts.events.ShowKeyboardEvent;
 import net.jonmiranda.prompts.models.Prompt;
+import net.jonmiranda.prompts.views.PromptView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,6 +73,11 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
     public void onDateChanged(DateEvent event) {
         mDate = Utils.getRealmDateString(event.date);
         tryGetResponse();
+    }
+
+    @Subscribe
+    public void showKeyboard(ShowKeyboardEvent event) {
+        mView.showKeyboard();
     }
 
     @Override

@@ -98,9 +98,7 @@ public class PromptFragment extends Fragment implements PromptView {
         showKeyboard();
     }
 
-    /**
-     * TODO: Move this to the presenter.. or probably even the Activity
-     */
+    @Override
     public void showKeyboard() {
         FragmentActivity context = getActivity();
         context.getWindow().setSoftInputMode(

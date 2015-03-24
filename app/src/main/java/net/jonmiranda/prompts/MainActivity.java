@@ -98,6 +98,7 @@ public class MainActivity extends FragmentActivity implements MainView {
             @Override
             public void onPageSelected(int position) {
                 mPosition = position;
+                mPresenter.onPageSelected();
             }
 
             @Override

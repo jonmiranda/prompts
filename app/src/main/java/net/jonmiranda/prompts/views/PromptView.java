@@ -11,4 +11,6 @@ public interface PromptView {
     void setPrompt(String prompt);
 
     void setResponse(String response);
+
+    void showKeyboard();
 }
