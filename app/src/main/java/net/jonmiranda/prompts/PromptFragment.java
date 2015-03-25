@@ -127,5 +127,15 @@ public class PromptFragment extends Fragment implements PromptView {
         mEditor.removeTextChangedListener(mTextWatcher);
         super.onPause();
     }
+
+    public static PromptFragment newInstance(String prompt, int color, String date) {
+        PromptFragment fragment = new PromptFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(PROMPT_KEY, prompt);
+        bundle.putInt(COLOR_KEY, color);
+        bundle.putString(DATE_KEY, date);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 }
 

@@ -69,13 +69,8 @@ public class MainActivity extends FragmentActivity implements MainView {
         mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                Fragment fragment = new PromptFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString(PromptFragment.PROMPT_KEY, mPrompts[position % mPrompts.length]);
-                bundle.putInt(PromptFragment.COLOR_KEY, mColors[position % mColors.length]);
-                bundle.putString(PromptFragment.DATE_KEY, mRealmDate);
-                fragment.setArguments(bundle);
-                return fragment;
+                return PromptFragment.newInstance(mPrompts[position],
+                        mColors[position % mColors.length], mRealmDate);
             }
 
             @Override
