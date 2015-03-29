@@ -6,16 +6,10 @@ import com.squareup.otto.Subscribe;
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.events.DateEvent;
 import net.jonmiranda.prompts.events.ShowKeyboardEvent;
-import net.jonmiranda.prompts.models.Prompt;
+import net.jonmiranda.prompts.storage.Storage;
 import net.jonmiranda.prompts.views.PromptView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import javax.inject.Inject;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 /**
  * Presentation logic for a {@link net.jonmiranda.prompts.views.PromptView}.
@@ -23,10 +17,10 @@ import io.realm.RealmResults;
 public class PromptPresenter implements BasePresenter, DateEvent.Listener {
 
     private PromptView mView;
-    @Inject Realm mRealm;
     @Inject Bus mBus;
+    @Inject Storage mStorage;
 
-    private String mPrompt;
+    private final String mPrompt;
     private String mDate;
 
     public PromptPresenter(PromptView view, String prompt, String date, int color) {
@@ -43,30 +37,12 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
      * and if true it updates the view with the response.
      */
     public void tryGetResponse() {
-        String prompt = mPrompt;
-        RealmResults<Prompt> results = mRealm.where(Prompt.class)
-                .equalTo("key", mDate + prompt)
-                .findAll();
-
-        if (results.size() > 0) {
-            mView.setResponse(results.get(0).getResponse());
-        } else {
-            mView.setResponse("");
-        }
+        String response = mStorage.getResponse(mDate, mPrompt);
+        mView.setResponse(response);
     }
 
     public void createOrUpdatePrompt(CharSequence response) {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("date", mDate);
-            object.put("prompt", mPrompt);
-            object.put("key", object.getString("date") + object.getString("prompt"));
-            object.put("response", response);
-        } catch (JSONException e) {
-        }
-        mRealm.beginTransaction();
-        mRealm.createOrUpdateObjectFromJson(Prompt.class, object);
-        mRealm.commitTransaction();
+        mStorage.save(mDate, mPrompt, response);
     }
 
     @Override @Subscribe

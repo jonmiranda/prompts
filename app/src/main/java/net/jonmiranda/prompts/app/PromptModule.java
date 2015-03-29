@@ -7,6 +7,8 @@ import net.jonmiranda.prompts.datepicker.DatePickerFragment;
 import net.jonmiranda.prompts.MainActivity;
 import net.jonmiranda.prompts.presenters.MainPresenter;
 import net.jonmiranda.prompts.presenters.PromptPresenter;
+import net.jonmiranda.prompts.storage.RealmStorage;
+import net.jonmiranda.prompts.storage.Storage;
 
 import javax.inject.Singleton;
 
@@ -33,6 +35,10 @@ public class PromptModule {
 
     @Provides @Singleton Realm provideRealm() {
         return Realm.getInstance(mApplication);
+    }
+
+    @Provides @Singleton Storage provideStorage() {
+        return new RealmStorage(provideRealm());
     }
 
     @Provides @Singleton Bus provideBus() {
