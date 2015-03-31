@@ -6,9 +6,9 @@
     <solid android:color="@android:color/white" />
 
     <!-- Here is the corner radius -->
-    <corners android:radius="20dp"
-             android:bottomLeftRadius="20dp"
-             android:bottomRightRadius="20dp"
+    <corners android:radius="5dp"
+             android:bottomLeftRadius="5dp"
+             android:bottomRightRadius="5dp"
              android:topRightRadius="0dp"
              android:topLeftRadius="0dp" />
 

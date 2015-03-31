@@ -1,7 +1,6 @@
 package net.jonmiranda.prompts;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.jonmiranda.prompts.app.PromptApplication;
@@ -33,6 +33,7 @@ public class PromptFragment extends Fragment implements PromptView {
 
     @InjectView(R.id.prompt) TextView mPrompt;
     @InjectView(R.id.editor) EditText mEditor;
+    @InjectView(R.id.border) View mBorder;
 
     private PromptPresenter mPresenter;
 
@@ -78,9 +79,7 @@ public class PromptFragment extends Fragment implements PromptView {
 
     @Override
     public void setColor(int color) {
-        GradientDrawable shape = (GradientDrawable) mPrompt.getBackground();
-        shape.setColor(color);
-        shape.invalidateSelf();
+        mBorder.setBackgroundColor(color);
         mEditor.setHighlightColor(color);
     }
 

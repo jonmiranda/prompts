@@ -2,24 +2,45 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/background"
-              android:paddingTop="@dimen/full_spacer"
-              android:paddingLeft="@dimen/full_spacer"
-              android:paddingRight="@dimen/full_spacer"
+              android:paddingTop="0dp"
+              android:paddingLeft="@dimen/half_spacer"
+              android:paddingRight="@dimen/half_spacer"
               android:paddingBottom="0dp"
               tools:context=".MainActivity$PlaceholderFragment">
 
-    <TextView
-        android:id="@+id/prompt"
+    <RelativeLayout
+        android:id="@+id/header"
         android:background="@drawable/prompt_background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?android:attr/actionBarSize"
-        android:hint="What's up?"
-        android:textSize="20sp"
-        android:fontFamily="monospace"
-        android:padding="@dimen/half_spacer"
-        android:gravity="center"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/prompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:minHeight="?android:attr/actionBarSize"
+            android:hint="What's up?"
+            android:textSize="16sp"
+            android:fontFamily="monospace"
+            android:padding="@dimen/half_spacer"
+            android:paddingTop="0dp"
+            android:layout_centerInParent="true"
+            android:gravity="center"/>
+
+        <View
+            android:id="@+id/border"
+            android:layout_below="@id/prompt"
+            android:background="@color/primary"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <View
+            android:layout_below="@id/border"
+            android:background="@color/primary"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/editor"
@@ -31,14 +52,14 @@
         android:padding="@dimen/full_spacer"
         android:inputType="textCapSentences|textMultiLine"
         android:scrollHorizontally="false"
-        android:layout_below="@id/prompt"/>
+        android:layout_below="@id/header"/>
 
     <View
         android:id="@+id/footer"
         android:background="@drawable/footer_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/full_spacer"
+        android:layout_marginBottom="@dimen/half_spacer"
         android:padding="@dimen/half_spacer"
         android:layout_below="@id/editor"/>
 

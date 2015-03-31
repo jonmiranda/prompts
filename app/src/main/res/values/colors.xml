@@ -4,11 +4,13 @@
     <color name="asbestos">#7f8c8d</color>
     <color name="wet_asphalt">#34495e</color>
 
+    <color name="brand">#5981f4</color>
+
     <color name="light_gray">#eeeeee</color>
     <color name="background">@color/light_gray</color>
 
     <color name="primary">@color/light_gray</color>
-    <color name="primary_dark">@color/light_gray</color>
+    <color name="primary_dark">#ff4f7be4</color>
     <color name="accent">@color/concrete</color>
 
 
@@ -16,19 +18,31 @@
     <color name="wet_asphalt_light">#73889b</color>
     <color name="nephritis_light">#63d39c</color>
 
+    <color name="sun_flower_light">#f8e032</color>
+    <color name="orange_light">#f9c73a</color>
+    <color name="emerald_light">#6ce4aa</color>
+    <color name="carrot_light">#f2b35b</color>
+
+    <array name="blueColors">
+        <item name="90x">#90CAF9</item>
+        <item name="64x">#64B5F6</item>
+        <item name="42x">#42A5F5</item>
+        <item name="21x">#2196F3</item>
+        <item name="1Ex">#1E88E5</item>
+        <item name="19x">#1976D2</item>
+        <item name="15x">#1565C0</item>
+        <item name="0Dx">#0D47A1</item>
+    </array>
+
     <array name="colors">
         <item name="green_sea_light">#44cab8</item>
         <item name="belize_hole_light">#66b5d9</item>
-        <item name="sun_flower_light">#f8e032</item>
-        <item name="orange_light">#f9c73a</item>
         <item name="alizarin_light">#f38b7c</item>
+        <item name="pumpkin_light">#e89200</item>
         <item name="wisteria_light">#be84d2</item>
 
-        <item name="emerald_light">#6ce4aa</item>
         <item name="turquoise_light">#4ddbc7</item>
         <item name="peter_river_light">#73c5ec</item>
-        <item name="carrot_light">#f2b35b</item>
-        <item name="pumpkin_light">#e89200</item>
         <item name="pomegranate_light">#dd7969</item>
         <item name="amethyst_light">#c797d7</item>
     </array>
