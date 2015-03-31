@@ -107,6 +107,7 @@ public class MainActivity extends FragmentActivity implements MainView {
     @Override @OnClick(R.id.date)
     public void showDatePicker() {
         DialogFragment datePickerFragment = new DatePickerFragment();
+        datePickerFragment.setCancelable(true);
         mApplication.inject(datePickerFragment);
         datePickerFragment.show(getSupportFragmentManager(), "DatePicker");
     }
