@@ -9,7 +9,7 @@
     <color name="light_gray">#eeeeee</color>
     <color name="background">@color/light_gray</color>
 
-    <color name="primary">@color/light_gray</color>
+    <color name="primary">@color/brand</color>
     <color name="primary_dark">#ff4f7be4</color>
     <color name="accent">@color/concrete</color>
 

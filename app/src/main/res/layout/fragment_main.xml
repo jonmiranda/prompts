@@ -37,7 +37,7 @@
             android:layout_height="1dp"/>
         <View
             android:layout_below="@id/border"
-            android:background="@color/primary"
+            android:background="@color/light_gray"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
     </RelativeLayout>
