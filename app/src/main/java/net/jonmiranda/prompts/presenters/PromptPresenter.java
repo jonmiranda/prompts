@@ -9,6 +9,8 @@ import net.jonmiranda.prompts.events.ShowKeyboardEvent;
 import net.jonmiranda.prompts.storage.Storage;
 import net.jonmiranda.prompts.views.PromptView;
 
+import java.util.Calendar;
+
 import javax.inject.Inject;
 
 /**
@@ -23,6 +25,9 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
     private final String mPrompt;
     private String mDate;
 
+    // only force-show the keyboard if on today's date
+    private boolean mShowKeyboard = true;
+
     public PromptPresenter(PromptView view, String prompt, String date, int color) {
         mView = view;
         mPrompt = prompt;
@@ -30,6 +35,7 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
 
         mView.setPrompt(mPrompt);
         mView.setColor(color);
+        mShowKeyboard = Utils.getRealmDateString(Calendar.getInstance()).equals(date);
     }
 
     /**
@@ -48,12 +54,15 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
     @Override @Subscribe
     public void onDateChanged(DateEvent event) {
         mDate = Utils.getRealmDateString(event.date);
+        mShowKeyboard = Utils.getRealmDateString(Calendar.getInstance()).equals(mDate);
         tryGetResponse();
     }
 
     @Subscribe
     public void showKeyboard(ShowKeyboardEvent event) {
-        mView.showKeyboard();
+        if (mShowKeyboard) {
+            mView.showKeyboard();
+        }
     }
 
     @Override
