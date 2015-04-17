@@ -13,7 +13,7 @@ import java.util.Calendar;
 
 import javax.inject.Inject;
 
-public class MainPresenter implements BasePresenter, DateEvent.Listener {
+public class MainPresenter implements BasePresenter, DateEvent.Listener, LoggedInEvent.Listener {
 
     private static final int TIMEOUT_MILLISECONDS = 300000; // 5 minutes
 
@@ -58,7 +58,7 @@ public class MainPresenter implements BasePresenter, DateEvent.Listener {
         return mShowLogin;
     }
 
-    @Subscribe
+    @Override @Subscribe
     public void onLoggedIn(LoggedInEvent event) {
         mShowLogin = false;
         mView.showPrompts();
