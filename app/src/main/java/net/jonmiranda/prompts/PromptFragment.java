@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.jonmiranda.prompts.app.PromptApplication;
@@ -42,7 +41,7 @@ public class PromptFragment extends Fragment implements PromptView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_main, container, false);
+        View root = inflater.inflate(R.layout.prompt_layout, container, false);
         ButterKnife.inject(this, root);
 
         String prompt = getString(R.string.untitled);
