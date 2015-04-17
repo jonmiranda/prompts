@@ -18,6 +18,7 @@ import net.jonmiranda.prompts.views.PasscodeView;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.InjectViews;
 import butterknife.OnClick;
 
@@ -29,6 +30,8 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
             R.id.five, R.id.six, R.id.seven, R.id.eight, R.id.nine
     })
     List<TextView> mKeys;
+
+    @InjectView(R.id.user_input) TextView mUserInput;
 
     PasscodePresenter mPresenter;
 
@@ -49,13 +52,14 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
             mKeys.get(key).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
+                    mUserInput.setText(mUserInput.getText() + Integer.toString(key));
                     mPresenter.addKey(key);
                     mPresenter.tryPasscode();
                     ValueAnimator animator = new ValueAnimator();
                     animator.setDuration(300).addListener(new Animator.AnimatorListener() {
                         @Override
                         public void onAnimationStart(Animator animation) {
-                            view.getBackground().setColorFilter(0xFFCDCDCD, PorterDuff.Mode.MULTIPLY);
+                            view.getBackground().setColorFilter(0xFFEEEEEE, PorterDuff.Mode.MULTIPLY);
                         }
 
                         @Override
@@ -80,8 +84,9 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
         }
     }
 
-    @OnClick(R.id.clear)
-    public void onClearClicked() {
+    @Override @OnClick(R.id.clear)
+    public void clearInput() {
+        mUserInput.setText("");
         mPresenter.clearInput();
     }
 

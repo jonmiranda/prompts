@@ -3,7 +3,6 @@ package net.jonmiranda.prompts.presenters;
 import com.squareup.otto.Bus;
 
 import net.jonmiranda.prompts.events.LoggedInEvent;
-import net.jonmiranda.prompts.storage.Storage;
 import net.jonmiranda.prompts.views.PasscodeView;
 
 import javax.inject.Inject;
@@ -36,6 +35,7 @@ public class PasscodePresenter implements BasePresenter {
             mBus.post(new LoggedInEvent());
         } else if (input.length() == PASSCODE_LENGTH) {
             mView.showMessage("Wrong password.");
+            mView.clearInput();
             clearInput();
         }
     }
