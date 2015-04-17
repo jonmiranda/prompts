@@ -98,6 +98,7 @@ public class PromptFragment extends Fragment implements PromptView {
 
     @Override
     public void showKeyboard() {
+        mEditor.requestFocus();
         FragmentActivity context = getActivity();
         context.getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
