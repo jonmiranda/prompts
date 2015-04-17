@@ -9,7 +9,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
@@ -30,6 +32,8 @@ public class MainActivity extends FragmentActivity implements MainView {
 
     @InjectView(R.id.container) ViewPager mViewPager;
     @InjectView(R.id.date) TextView mDate;
+    @InjectView(R.id.navigation) LinearLayout mNavigation;
+    @InjectView(R.id.settings) TextView mSettings;
 
     @Inject PromptApplication mApplication;
     private MainPresenter mPresenter;
@@ -101,6 +105,11 @@ public class MainActivity extends FragmentActivity implements MainView {
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
     }
 
+    @OnClick(R.id.settings)
+    public void openSettings() {
+        Toast.makeText(this, "SETTINGS", Toast.LENGTH_SHORT).show();
+    }
+
     private void resetAdapter() {
         mViewPager.setAdapter(mPagerAdapter);
         mPagerAdapter.notifyDataSetChanged();
@@ -109,11 +118,15 @@ public class MainActivity extends FragmentActivity implements MainView {
     @Override
     public void showPrompts() {
         resetAdapter();
+        mSettings.setVisibility(TextView.VISIBLE);
+        mNavigation.setVisibility(LinearLayout.VISIBLE);
     }
 
     @Override
     public void showLogin() {
         resetAdapter();
+        mSettings.setVisibility(TextView.INVISIBLE);
+        mNavigation.setVisibility(LinearLayout.INVISIBLE);
     }
 
     @Override
