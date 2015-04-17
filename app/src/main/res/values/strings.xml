@@ -4,6 +4,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="untitled">Untitled</string>
+    <string name="enter_passcode_instructions">Enter Pin</string>
 
     <array name="prompts">
         <item>What three things will you focus on today?</item>
