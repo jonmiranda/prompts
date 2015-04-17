@@ -69,13 +69,16 @@ public class MainActivity extends FragmentActivity implements MainView {
         mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
+                if (mPresenter.showLogin()) {
+                    return new PasscodeFragment().newInstance();
+                }
                 return PromptFragment.newInstance(mPrompts[position],
                         mColors[position % mColors.length], mRealmDate);
             }
 
             @Override
             public int getCount() {
-                return mPrompts.length;
+                return mPresenter.showLogin() ? 1 : mPrompts.length;
             }
         };
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -96,6 +99,21 @@ public class MainActivity extends FragmentActivity implements MainView {
         });
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+    }
+
+    private void resetAdapter() {
+        mViewPager.setAdapter(mPagerAdapter);
+        mPagerAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showPrompts() {
+        resetAdapter();
+    }
+
+    @Override
+    public void showLogin() {
+        resetAdapter();
     }
 
     @Override

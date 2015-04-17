@@ -6,6 +6,7 @@ import com.squareup.otto.ThreadEnforcer;
 import net.jonmiranda.prompts.datepicker.DatePickerFragment;
 import net.jonmiranda.prompts.MainActivity;
 import net.jonmiranda.prompts.presenters.MainPresenter;
+import net.jonmiranda.prompts.presenters.PasscodePresenter;
 import net.jonmiranda.prompts.presenters.PromptPresenter;
 import net.jonmiranda.prompts.storage.RealmStorage;
 import net.jonmiranda.prompts.storage.Storage;
@@ -22,6 +23,7 @@ import io.realm.Realm;
                 MainActivity.class,
                 MainPresenter.class,
                 DatePickerFragment.class,
+                PasscodePresenter.class,
         },
         library = true
 )

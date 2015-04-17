@@ -12,4 +12,8 @@ public interface MainView {
 
     void showDatePicker();
 
+    void showPrompts();
+
+    void showLogin();
+
 }
