@@ -29,6 +29,11 @@
     <style name="AppTheme" parent="AppBaseTheme">
     </style>
 
+    <style name="ActionBarTheme" parent="AppBaseTheme">
+        <item name="android:windowActionBar">true</item>
+        <item name="windowActionBar">true</item>
+    </style>
+
     <style name="DateArrow">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -36,4 +41,13 @@
         <item name="android:tint">@android:color/white</item>
     </style>
 
+    <style name="PasscodeStyle">
+        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_height">75dp</item>
+        <item name="android:background">@drawable/passcode_circle</item>
+        <item name="android:layout_margin">@dimen/half_spacer</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>
