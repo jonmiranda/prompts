@@ -5,6 +5,11 @@
 
     <string name="untitled">Untitled</string>
     <string name="enter_passcode_instructions">Enter Pin</string>
+    <string name="passcode_enabled_key">PASSCODE_ENABLED_KEY</string>
+    <string name="set_passcode_key">SET_PASSCODE_KEY</string>
+    <string name="wrong_passcode">Wrong passcode.</string>
+    <string name="security">Security</string>
+    <string name="invalid_passcode_error">Passcodes must be 4 digits.</string>
 
     <array name="prompts">
         <item>What three things will you focus on today?</item>
