@@ -23,11 +23,14 @@ public class MainPresenter implements BasePresenter, DateEvent.Listener, LoggedI
     private MainView mView;
 
     private long mLastOnPause = 0;
-    private boolean mShowLogin = true;
 
-    public MainPresenter(MainView view, Calendar date) {
+    private boolean mPasscodeEnabled = false;
+    private boolean mShowLogin = false;
+
+    public MainPresenter(MainView view, Calendar date, boolean passcodeEnabled) {
         mView = view;
         mCalendarDate = date;
+        mPasscodeEnabled = passcodeEnabled;
     }
 
     @Override @Subscribe
@@ -55,7 +58,7 @@ public class MainPresenter implements BasePresenter, DateEvent.Listener, LoggedI
     }
 
     public boolean showLogin() {
-        return mShowLogin;
+        return mPasscodeEnabled && mShowLogin;
     }
 
     @Override @Subscribe
@@ -73,7 +76,7 @@ public class MainPresenter implements BasePresenter, DateEvent.Listener, LoggedI
             long now = Calendar.getInstance().getTimeInMillis();
             mShowLogin = now - mLastOnPause > TIMEOUT_MILLISECONDS;
         }
-        if (mShowLogin) {
+        if (mPasscodeEnabled && mShowLogin) {
             mView.showLogin();
         } else {
             mView.showPrompts();

@@ -1,5 +1,6 @@
 package net.jonmiranda.prompts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -9,9 +10,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
@@ -33,7 +34,7 @@ public class MainActivity extends FragmentActivity implements MainView {
     @InjectView(R.id.container) ViewPager mViewPager;
     @InjectView(R.id.date) TextView mDate;
     @InjectView(R.id.navigation) LinearLayout mNavigation;
-    @InjectView(R.id.settings) TextView mSettings;
+    @InjectView(R.id.settings) ImageButton mSettings;
 
     @Inject PromptApplication mApplication;
     private MainPresenter mPresenter;
@@ -56,14 +57,14 @@ public class MainActivity extends FragmentActivity implements MainView {
         ButterKnife.inject(this);
         ((PromptApplication) getApplication()).inject(this);
         if (savedInstanceState == null) {
-            mPresenter = new MainPresenter(this, Calendar.getInstance());
+            mPresenter = new MainPresenter(this, Calendar.getInstance(), mApplication.hasPasscodeEnabled());
         } else {
             Calendar date = Calendar.getInstance();
             mPosition = savedInstanceState.getInt(POSITION_KEY, 0);
             if (savedInstanceState.getSerializable(DATE_KEY) != null) {
                 date = (Calendar) savedInstanceState.getSerializable(DATE_KEY);
             }
-            mPresenter = new MainPresenter(this, date);
+            mPresenter = new MainPresenter(this, date, mApplication.hasPasscodeEnabled());
         }
         mApplication.inject(mPresenter);
 
@@ -107,7 +108,8 @@ public class MainActivity extends FragmentActivity implements MainView {
 
     @OnClick(R.id.settings)
     public void openSettings() {
-        Toast.makeText(this, "SETTINGS", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     private void resetAdapter() {
@@ -201,4 +203,5 @@ public class MainActivity extends FragmentActivity implements MainView {
             }
         }
     }
+
 }

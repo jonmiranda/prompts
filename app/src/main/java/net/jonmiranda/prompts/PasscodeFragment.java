@@ -40,8 +40,9 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.passcode_layout, container, false);
         ButterKnife.inject(this, root);
-        mPresenter = new PasscodePresenter(this);
-        ((PromptApplication) getActivity().getApplication()).inject(mPresenter);
+        PromptApplication application = (PromptApplication) getActivity().getApplication();
+        mPresenter = new PasscodePresenter(this, application.getPasscode());
+        application.inject(mPresenter);
         initListeners();
         return root;
     }
@@ -91,8 +92,9 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
     }
 
     @Override
-    public void showMessage(String text) {
-        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+    public void showErrorMessage() {
+        Toast.makeText(getActivity(), getString(R.string.wrong_passcode),
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override

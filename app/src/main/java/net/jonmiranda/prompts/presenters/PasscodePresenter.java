@@ -15,10 +15,12 @@ public class PasscodePresenter implements BasePresenter {
     @Inject Bus mBus;
 
     StringBuilder mInput = null;
+    String mPasscode;
 
-    public PasscodePresenter(PasscodeView view) {
+    public PasscodePresenter(PasscodeView view, String passcode) {
         mView = view;
         mInput = new StringBuilder(PASSCODE_LENGTH);
+        mPasscode = passcode;
     }
 
     public void clearInput() {
@@ -31,10 +33,10 @@ public class PasscodePresenter implements BasePresenter {
 
     public void tryPasscode() {
         String input = mInput.toString();
-        if (input.equals("1234")) {
+        if (input.equals(mPasscode)) {
             mBus.post(new LoggedInEvent());
         } else if (input.length() == PASSCODE_LENGTH) {
-            mView.showMessage("Wrong password.");
+            mView.showErrorMessage();
             mView.clearInput();
             clearInput();
         }
