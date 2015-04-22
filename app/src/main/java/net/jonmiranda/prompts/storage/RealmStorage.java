@@ -39,4 +39,9 @@ public class RealmStorage implements Storage {
         mRealm.createOrUpdateObjectFromJson(Prompt.class, object);
         mRealm.commitTransaction();
     }
+
+    @Override
+    public RealmResults<Prompt> getAllResponses() {
+        return mRealm.allObjects(Prompt.class);
+    }
 }
