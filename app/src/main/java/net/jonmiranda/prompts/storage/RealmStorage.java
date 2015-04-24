@@ -45,7 +45,7 @@ public class RealmStorage implements Storage {
 
     @Override
     public RealmResults<Prompt> getPrompts() {
-        return mRealm.where(Prompt.class).equalTo("isHidden", false).findAll();
+        return mRealm.where(Prompt.class).equalTo("isVisible", true).findAll();
     }
 
     @Override
