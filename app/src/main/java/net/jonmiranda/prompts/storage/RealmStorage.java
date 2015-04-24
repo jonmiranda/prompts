@@ -23,7 +23,7 @@ public class RealmStorage implements Storage {
         if (results.size() == 0) {
             mRealm.beginTransaction();
             for (String title : titles) {
-                mRealm.copyToRealm(Prompt.newInstance(title, false));
+                mRealm.copyToRealm(Prompt.newInstance(title, true));
             }
             mRealm.commitTransaction();
         }

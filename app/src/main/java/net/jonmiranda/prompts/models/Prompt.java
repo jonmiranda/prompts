@@ -8,7 +8,7 @@ public class Prompt extends RealmObject {
 
     private String title;
 
-    private boolean isHidden;
+    private boolean isVisible;
 
     public String getTitle() {
         return title;
@@ -18,18 +18,18 @@ public class Prompt extends RealmObject {
         this.title = title;
     }
 
-    public boolean getIsHidden() {
-        return isHidden;
+    public boolean getIsVisible() {
+        return isVisible;
     }
 
-    public void setIsHidden(boolean hidden) {
-        this.isHidden = hidden;
+    public void setIsVisible(boolean hidden) {
+        this.isVisible = hidden;
     }
 
-    public static Prompt newInstance(String title, boolean hide) {
+    public static Prompt newInstance(String title, boolean visible) {
         Prompt prompt = new Prompt();
         prompt.setTitle(title);
-        prompt.setIsHidden(hide);
+        prompt.setIsVisible(visible);
         return prompt;
     }
 }
