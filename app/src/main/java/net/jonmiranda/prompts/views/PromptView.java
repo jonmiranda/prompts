@@ -8,7 +8,7 @@ public interface PromptView {
 
     void setColor(int color);
 
-    void setPrompt(String prompt);
+    void setPromptTitle(String prompt);
 
     void setResponse(String response);
 

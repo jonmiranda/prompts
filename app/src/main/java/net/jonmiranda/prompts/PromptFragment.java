@@ -20,6 +20,7 @@ import net.jonmiranda.prompts.presenters.PromptPresenter;
 import net.jonmiranda.prompts.views.PromptView;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -45,18 +46,20 @@ public class PromptFragment extends Fragment implements PromptView {
         ButterKnife.inject(this, root);
 
         String prompt = getString(R.string.untitled);
-        String date = Utils.getRealmDateString(Calendar.getInstance());
+        Date date = Utils.stripDate(Calendar.getInstance());
         int color = getResources().getColor(R.color.light_gray);
 
         Bundle arguments = getArguments();
         if (arguments != null) {
             prompt = arguments.getString(PromptView.PROMPT_KEY, prompt);
-            date = arguments.getString(PromptView.DATE_KEY, date);
+//            date = (Date) arguments.getSerializable(PromptView.DATE_KEY);
             color = arguments.getInt(PromptView.COLOR_KEY, color);
         }
 
-        mPresenter = new PromptPresenter(this, prompt, date, color);
+        mPresenter = new PromptPresenter(this, color);
         ((PromptApplication) getActivity().getApplication()).inject(mPresenter);
+        mPresenter.bind(prompt, date);
+
         mTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -70,7 +73,7 @@ public class PromptFragment extends Fragment implements PromptView {
 
             @Override
             public void afterTextChanged(Editable s) {
-                mPresenter.createOrUpdatePrompt(s); // TODO: Heavy(?)
+                mPresenter.createOrUpdatePrompt(s.toString()); // TODO: Heavy(?)
             }
         };
         return root;
@@ -83,7 +86,7 @@ public class PromptFragment extends Fragment implements PromptView {
     }
 
     @Override
-    public void setPrompt(String prompt) {
+    public void setPromptTitle(String prompt) {
         mPrompt.setText(prompt);
     }
 
@@ -127,12 +130,12 @@ public class PromptFragment extends Fragment implements PromptView {
         super.onPause();
     }
 
-    public static PromptFragment newInstance(String prompt, int color, String date) {
+    public static PromptFragment newInstance(String prompt, int color, Date date) {
         PromptFragment fragment = new PromptFragment();
         Bundle bundle = new Bundle();
         bundle.putString(PROMPT_KEY, prompt);
         bundle.putInt(COLOR_KEY, color);
-        bundle.putString(DATE_KEY, date);
+        bundle.putSerializable(DATE_KEY, date);
         fragment.setArguments(bundle);
         return fragment;
     }

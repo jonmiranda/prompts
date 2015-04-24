@@ -8,6 +8,7 @@ import android.widget.DatePicker;
 
 import com.squareup.otto.Bus;
 
+import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.events.DateEvent;
 
 import java.util.Calendar;
@@ -31,7 +32,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public void onDateSet(DatePicker view, int year, int month, int day) {
         final Calendar date = Calendar.getInstance();
         date.set(year, month, day);
-        mBus.post(new DateEvent(date));
+        mBus.post(new DateEvent(Utils.stripDate(date)));
     }
 
     @Override

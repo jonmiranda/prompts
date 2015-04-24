@@ -1,12 +1,12 @@
 package net.jonmiranda.prompts.events;
 
-import java.util.Calendar;
+import java.util.Date;
 
 public class DateEvent {
 
-    public final Calendar date;
+    public final Date date;
 
-    public DateEvent(Calendar date) {
+    public DateEvent(Date date) {
         this.date = date;
     }
 

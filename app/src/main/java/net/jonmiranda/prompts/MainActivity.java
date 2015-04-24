@@ -17,10 +17,13 @@ import android.widget.TextView;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.datepicker.DatePickerFragment;
+import net.jonmiranda.prompts.models.Prompt;
 import net.jonmiranda.prompts.presenters.MainPresenter;
 import net.jonmiranda.prompts.views.MainView;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -42,7 +45,7 @@ public class MainActivity extends FragmentActivity implements MainView {
     private PagerAdapter mPagerAdapter;
 
     private int mPosition = 0;
-    private String mRealmDate;
+    private Date mRealmDate;
 
     public String[] mPrompts;
     private int[] mColors;
@@ -67,25 +70,11 @@ public class MainActivity extends FragmentActivity implements MainView {
             mPresenter = new MainPresenter(this, date, mApplication.hasPasscodeEnabled());
         }
         mApplication.inject(mPresenter);
+        mPresenter.bind();
 
         mColors = getResources().getIntArray(R.array.colors);
-        mPrompts = getResources().getStringArray(R.array.prompts);
+        mPrompts = getResources().getStringArray(R.array.initial_prompts);
 
-        mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                if (mPresenter.showLogin()) {
-                    return new PasscodeFragment().newInstance();
-                }
-                return PromptFragment.newInstance(mPrompts[position],
-                        mColors[position % mColors.length], mRealmDate);
-            }
-
-            @Override
-            public int getCount() {
-                return mPresenter.showLogin() ? 1 : mPrompts.length;
-            }
-        };
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -102,8 +91,27 @@ public class MainActivity extends FragmentActivity implements MainView {
 
             }
         });
-        mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+    }
+
+    @Override
+    public void initializeAdapter(final List<Prompt> prompts) {
+        mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                if (mPresenter.showLogin()) {
+                    return new PasscodeFragment().newInstance();
+                }
+                return PromptFragment.newInstance(prompts.get(position).getTitle(),
+                        mColors[position % mColors.length], mRealmDate);
+            }
+
+            @Override
+            public int getCount() {
+                return mPresenter.showLogin() ? 1 : prompts.size();
+            }
+        };
+        mViewPager.setAdapter(mPagerAdapter);
     }
 
     @OnClick(R.id.settings)
@@ -114,7 +122,9 @@ public class MainActivity extends FragmentActivity implements MainView {
 
     private void resetAdapter() {
         mViewPager.setAdapter(mPagerAdapter);
-        mPagerAdapter.notifyDataSetChanged();
+        if (mPagerAdapter != null) {
+            mPagerAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -134,7 +144,7 @@ public class MainActivity extends FragmentActivity implements MainView {
     @Override
     public void showDate(Calendar date) {
         mDate.setText(Utils.getPrettyDateString(date));
-        mRealmDate = Utils.getRealmDateString(date);
+        mRealmDate = Utils.stripDate(date);
     }
 
     @Override @OnClick(R.id.date)

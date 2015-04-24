@@ -23,8 +23,12 @@
     <PreferenceCategory
         android:title="Export">
         <Preference
-            android:key="@string/export_key"
+            android:key="@string/export_json_key"
             android:title="Export as JSON"/>
+
+        <Preference
+            android:key="@string/export_text_key"
+            android:title="Export as Text"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

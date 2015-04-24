@@ -1,55 +1,35 @@
 package net.jonmiranda.prompts.models;
 
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
-/**
- * Database model of a Prompt.
- */
+@RealmClass
 public class Prompt extends RealmObject {
 
-    @PrimaryKey
-    /**
-     * Realm does not support auto increment or compound keys.
-     * Format: {@link date} + {@link prompt}
-     * */
-    private String key;
+    private String title;
 
-    /** Hand made date until Realm supports more versions */
-    private String date;
+    private boolean isHidden;
 
-    private String prompt;
-    private String response;
-
-    public String getKey() {
-        return key;
+    public String getTitle() {
+        return title;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getDate() {
-        return date;
+    public boolean getIsHidden() {
+        return isHidden;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setIsHidden(boolean hidden) {
+        this.isHidden = hidden;
     }
 
-    public String getPrompt() {
+    public static Prompt newInstance(String title, boolean hide) {
+        Prompt prompt = new Prompt();
+        prompt.setTitle(title);
+        prompt.setIsHidden(hide);
         return prompt;
-    }
-
-    public void setPrompt(String prompt) {
-        this.prompt = prompt;
-    }
-
-    public String getResponse() {
-        return response;
-    }
-
-    public void setResponse(String response) {
-        this.response = response;
     }
 }

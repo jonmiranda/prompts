@@ -78,8 +78,8 @@ public class SettingsActivity extends ActionBarActivity implements SettingsView 
                 }
             });
 
-            final Preference export = findPreference(getString(R.string.export_key));
-            export.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            final Preference json = findPreference(getString(R.string.export_json_key));
+            json.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     boolean error = false;
@@ -112,6 +112,22 @@ public class SettingsActivity extends ActionBarActivity implements SettingsView 
                         mPresenter.passMessageToView(errorMessage.toString());
                     }
                     return true;
+                }
+            });
+
+            final Preference text = findPreference(getString(R.string.export_text_key));
+            text.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, mPresenter.createTextBody());
+                    sendIntent.setType("plain/text");
+                    boolean error = sendIntent.resolveActivity(getActivity().getPackageManager()) == null;
+                    if (!error) {
+                        startActivity(Intent.createChooser(sendIntent, getActivity().getString(R.string.share)));
+                    }
+                    return error;
                 }
             });
         }

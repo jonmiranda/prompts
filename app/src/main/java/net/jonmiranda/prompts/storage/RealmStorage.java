@@ -1,9 +1,10 @@
 package net.jonmiranda.prompts.storage;
 
 import net.jonmiranda.prompts.models.Prompt;
+import net.jonmiranda.prompts.models.UserResponse;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.Calendar;
+import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -17,31 +18,61 @@ public class RealmStorage implements Storage {
     }
 
     @Override
-    public String getResponse(CharSequence date, CharSequence prompt) {
-        RealmResults<Prompt> results = mRealm.where(Prompt.class)
-                .equalTo("key", date.toString() + prompt.toString())
-                .findAll();
-
-        return results.size() <= 0 ? "" : results.get(0).getResponse();
-    }
-
-    @Override
-    public void save(CharSequence date, CharSequence prompt, CharSequence response) {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("date", date);
-            object.put("prompt", prompt);
-            object.put("key", object.getString("date") + object.getString("prompt"));
-            object.put("response", response);
-        } catch (JSONException e) {
+    public void initializePrompts(String[] titles) {
+        RealmResults<Prompt> results = mRealm.allObjects(Prompt.class);
+        if (results.size() == 0) {
+            mRealm.beginTransaction();
+            for (String title : titles) {
+                mRealm.copyToRealm(Prompt.newInstance(title, false));
+            }
+            mRealm.commitTransaction();
         }
-        mRealm.beginTransaction();
-        mRealm.createOrUpdateObjectFromJson(Prompt.class, object);
-        mRealm.commitTransaction();
     }
 
     @Override
-    public RealmResults<Prompt> getAllResponses() {
-        return mRealm.allObjects(Prompt.class);
+    public UserResponse getResponse(Date date, Prompt prompt) {
+        UserResponse response = mRealm.where(UserResponse.class)
+                .equalTo("prompt.title", prompt.getTitle())
+                .equalTo("created", date)
+                .findFirst();
+
+        if (response == null) {
+            response = UserResponse.newInstance(prompt, date);
+        }
+
+        return response;
+    }
+
+    @Override
+    public RealmResults<Prompt> getPrompts() {
+        return mRealm.where(Prompt.class).equalTo("isHidden", false).findAll();
+    }
+
+    @Override
+    public Prompt getPrompt(String title) {
+        return mRealm.where(Prompt.class)
+                .equalTo("title", title)
+                .findFirst();
+    }
+
+    @Override
+    public UserResponse save(UserResponse userResponse, String response) {
+        mRealm.beginTransaction();
+        userResponse.setResponse(response);
+        userResponse.setLastModified(Calendar.getInstance().getTime());
+
+        if (!userResponse.isValid()) {
+            userResponse = mRealm.copyToRealm(userResponse);
+        }
+        mRealm.commitTransaction();
+
+        return userResponse;
+    }
+
+    @Override
+    public RealmResults<UserResponse> getAllResponses() {
+        RealmResults<UserResponse> results = mRealm.allObjects(UserResponse.class);
+        results.sort("created");
+        return results;
     }
 }

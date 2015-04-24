@@ -6,10 +6,13 @@ import com.squareup.otto.Subscribe;
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.events.DateEvent;
 import net.jonmiranda.prompts.events.ShowKeyboardEvent;
+import net.jonmiranda.prompts.models.Prompt;
+import net.jonmiranda.prompts.models.UserResponse;
 import net.jonmiranda.prompts.storage.Storage;
 import net.jonmiranda.prompts.views.PromptView;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -22,20 +25,23 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
     @Inject Bus mBus;
     @Inject Storage mStorage;
 
-    private final String mPrompt;
-    private String mDate;
+    private Prompt mPrompt;
+    private UserResponse mResponse;
+    private Date mDate;
 
     // only force-show the keyboard if on today's date
     private boolean mShowKeyboard = true;
 
-    public PromptPresenter(PromptView view, String prompt, String date, int color) {
+    public PromptPresenter(PromptView view, int color) {
         mView = view;
-        mPrompt = prompt;
-        mDate = date;
-
-        mView.setPrompt(mPrompt);
         mView.setColor(color);
-        mShowKeyboard = Utils.getRealmDateString(Calendar.getInstance()).equals(date);
+    }
+
+    public void bind(String prompt, Date date) {
+        mPrompt = mStorage.getPrompt(prompt);
+        mView.setPromptTitle(mPrompt.getTitle());
+        mDate = date;
+        mShowKeyboard = Calendar.getInstance().getTime().equals(date);
     }
 
     /**
@@ -43,18 +49,18 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
      * and if true it updates the view with the response.
      */
     public void tryGetResponse() {
-        String response = mStorage.getResponse(mDate, mPrompt);
-        mView.setResponse(response);
+        mResponse = mStorage.getResponse(mDate, mPrompt);
+        mView.setResponse(mResponse.getResponse());
     }
 
-    public void createOrUpdatePrompt(CharSequence response) {
-        mStorage.save(mDate, mPrompt, response);
+    public void createOrUpdatePrompt(String response) {
+        mResponse = mStorage.save(mResponse, response);
     }
 
     @Override @Subscribe
     public void onDateChanged(DateEvent event) {
-        mDate = Utils.getRealmDateString(event.date);
-        mShowKeyboard = Utils.getRealmDateString(Calendar.getInstance()).equals(mDate);
+        mDate = event.date;
+        mShowKeyboard = Utils.stripDate(Calendar.getInstance()).equals(mDate);
         tryGetResponse();
     }
 

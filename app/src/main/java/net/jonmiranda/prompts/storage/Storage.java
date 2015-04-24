@@ -1,14 +1,23 @@
 package net.jonmiranda.prompts.storage;
 
 import net.jonmiranda.prompts.models.Prompt;
+import net.jonmiranda.prompts.models.UserResponse;
+
+import java.util.Date;
 
 import io.realm.RealmResults;
 
 public interface Storage {
 
-    String getResponse(CharSequence date, CharSequence prompt);
+    UserResponse getResponse(Date date, Prompt prompt);
 
-    void save(CharSequence date, CharSequence prompt, CharSequence response);
+    UserResponse save(UserResponse userResponse, String response);
 
-    RealmResults<Prompt> getAllResponses();
+    Prompt getPrompt(String title);
+
+    RealmResults<UserResponse> getAllResponses();
+
+    RealmResults<Prompt> getPrompts();
+
+    void initializePrompts(String[] prompts);
 }

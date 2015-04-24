@@ -4,17 +4,30 @@ import android.app.Application;
 import android.preference.PreferenceManager;
 
 import net.jonmiranda.prompts.R;
+import net.jonmiranda.prompts.storage.Storage;
 
 import dagger.ObjectGraph;
+import io.realm.Realm;
 
 public class PromptApplication extends Application {
+
+    Storage mStorage;
 
     private ObjectGraph mObjectGraph;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mObjectGraph = ObjectGraph.create(new PromptModule(this));
+        Realm.deleteRealmFile(this);
+        PromptModule module = new PromptModule(this);
+        mObjectGraph = ObjectGraph.create(module);
+        mStorage = module.provideStorage();
+
+        initializePrompts();
+    }
+
+    public void initializePrompts() {
+        mStorage.initializePrompts(getResources().getStringArray(R.array.initial_prompts));
     }
 
     public void inject(Object object) {

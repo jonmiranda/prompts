@@ -1,12 +1,14 @@
 package net.jonmiranda.prompts.presenters;
 
-import net.jonmiranda.prompts.models.Prompt;
+import net.jonmiranda.prompts.app.Utils;
+import net.jonmiranda.prompts.models.UserResponse;
 import net.jonmiranda.prompts.storage.Storage;
 import net.jonmiranda.prompts.views.SettingsView;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -42,16 +44,39 @@ public class SettingsPresenter implements BasePresenter {
         mView.showMessage(message);
     }
 
+    public String createTextBody() {
+        StringBuilder jsonBuilder = new StringBuilder();
+        RealmResults<UserResponse> prompts = mStorage.getAllResponses();
+
+        if (prompts.size() > 0) {
+            Date date = null;
+            for (UserResponse prompt : prompts) {
+                if (date == null || !date.equals(prompt.getCreated())) {
+                    date = prompt.getCreated();
+                    jsonBuilder.append(Utils.getPrettyDateString(prompt.getCreated()) + "\n");
+                }
+                if (prompt.getResponse() != null && !prompt.getResponse().isEmpty()) {
+                    jsonBuilder.append(String.format("\n%s\n%s\n",
+                            prompt.getPrompt().getTitle(),
+                            prompt.getResponse()));
+                }
+            }
+        }
+        return jsonBuilder.toString();
+    }
+
     public File createJsonFile(File root) {
-        RealmResults<Prompt> prompts = mStorage.getAllResponses();
+        RealmResults<UserResponse> prompts = mStorage.getAllResponses();
         StringBuilder jsonBuilder = new StringBuilder();
         jsonBuilder.append("[");
-        for (Prompt prompt : prompts) {
+        for (UserResponse prompt : prompts) {
             jsonBuilder.append(
                     String.format("\n  {\n    \"date\" : \"%s\",\n    \"prompt\" : \"%s\",\n    \"response\" : \"%s\"\n  },",
-                    prompt.getDate(), prompt.getPrompt(), prompt.getResponse().replace("\n", "\\n").replace("\"", "\\\"")));
+                    prompt.getCreated(), prompt.getPrompt().getTitle(), prompt.getResponse().replace("\n", "\\n").replace("\"", "\\\"")));
         }
-        jsonBuilder.deleteCharAt(jsonBuilder.lastIndexOf(","));
+        if (jsonBuilder.lastIndexOf(",") >= 0) {
+            jsonBuilder.deleteCharAt(jsonBuilder.lastIndexOf(","));
+        }
         jsonBuilder.append("\n]");
         final String json = jsonBuilder.toString();
         final File jsonFile = new File(root, "prompts.json");

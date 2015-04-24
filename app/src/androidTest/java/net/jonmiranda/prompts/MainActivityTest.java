@@ -25,7 +25,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     public void testAllPromptsAreSwipeable() {
-        String[] prompts = getActivity().getResources().getStringArray(R.array.prompts);
+        String[] prompts = getActivity().getResources().getStringArray(R.array.initial_prompts);
 
         for (String prompt : prompts) {
             onView(withText(prompt)).check(matches(isDisplayed()));

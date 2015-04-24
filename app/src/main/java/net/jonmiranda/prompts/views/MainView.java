@@ -1,6 +1,9 @@
 package net.jonmiranda.prompts.views;
 
+import net.jonmiranda.prompts.models.Prompt;
+
 import java.util.Calendar;
+import java.util.List;
 
 public interface MainView {
 
@@ -11,6 +14,8 @@ public interface MainView {
     void showNextDate();
 
     void showDatePicker();
+
+    void initializeAdapter(List<Prompt> prompts);
 
     void showPrompts();
 

@@ -10,12 +10,13 @@
     <string name="wrong_passcode">Wrong passcode.</string>
     <string name="security">Security</string>
     <string name="invalid_passcode_error">Passcodes must be 4 digits.</string>
-    <string name="export_key">EXPORT_KEY</string>
+    <string name="export_json_key">EXPORT_KEY</string>
     <string name="share">Share</string>
     <string name="cant_export_json_error">"Trouble finding a way to export JSON. "</string>
     <string name="cant_export_json_permissions_error">"Unable to create JSON file due to permissions. "</string>
+    <string name="export_text_key">EXPORT_EMAIL_KEY</string>
 
-    <array name="prompts">
+    <array name="initial_prompts">
         <item>What did you dream about today?</item>
         <item>What three things will you focus on today?</item>
         <item>What are you looking forward to most today?</item>
