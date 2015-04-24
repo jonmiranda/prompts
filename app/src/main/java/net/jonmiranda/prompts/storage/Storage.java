@@ -4,8 +4,7 @@ import net.jonmiranda.prompts.models.Prompt;
 import net.jonmiranda.prompts.models.UserResponse;
 
 import java.util.Date;
-
-import io.realm.RealmResults;
+import java.util.List;
 
 public interface Storage {
 
@@ -15,9 +14,9 @@ public interface Storage {
 
     Prompt getPrompt(String title);
 
-    RealmResults<UserResponse> getAllResponses();
+    List<UserResponse> getAllResponses();
 
-    RealmResults<Prompt> getPrompts();
+    List<Prompt> getPrompts();
 
     void initializePrompts(String[] prompts);
 }

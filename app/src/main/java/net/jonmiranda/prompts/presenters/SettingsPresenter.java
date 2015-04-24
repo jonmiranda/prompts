@@ -9,10 +9,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
-
-import io.realm.RealmResults;
 
 public class SettingsPresenter implements BasePresenter {
 
@@ -46,7 +45,7 @@ public class SettingsPresenter implements BasePresenter {
 
     public String createTextBody() {
         StringBuilder jsonBuilder = new StringBuilder();
-        RealmResults<UserResponse> prompts = mStorage.getAllResponses();
+        List<UserResponse> prompts = mStorage.getAllResponses();
 
         if (prompts.size() > 0) {
             Date date = null;
@@ -66,7 +65,7 @@ public class SettingsPresenter implements BasePresenter {
     }
 
     public File createJsonFile(File root) {
-        RealmResults<UserResponse> prompts = mStorage.getAllResponses();
+        List<UserResponse> prompts = mStorage.getAllResponses();
         StringBuilder jsonBuilder = new StringBuilder();
         jsonBuilder.append("[");
         for (UserResponse prompt : prompts) {

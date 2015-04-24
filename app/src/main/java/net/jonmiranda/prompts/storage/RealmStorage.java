@@ -5,6 +5,7 @@ import net.jonmiranda.prompts.models.UserResponse;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -44,7 +45,7 @@ public class RealmStorage implements Storage {
     }
 
     @Override
-    public RealmResults<Prompt> getPrompts() {
+    public List<Prompt> getPrompts() {
         return mRealm.where(Prompt.class).equalTo("isVisible", true).findAll();
     }
 
@@ -70,7 +71,7 @@ public class RealmStorage implements Storage {
     }
 
     @Override
-    public RealmResults<UserResponse> getAllResponses() {
+    public List<UserResponse> getAllResponses() {
         RealmResults<UserResponse> results = mRealm.allObjects(UserResponse.class);
         results.sort("created");
         return results;
