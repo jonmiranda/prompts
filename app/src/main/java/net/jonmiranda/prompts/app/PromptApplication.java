@@ -18,7 +18,7 @@ public class PromptApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Realm.deleteRealmFile(this);
+        Realm.deleteRealmFile(this); // TODO: Remove this before merging to master
         PromptModule module = new PromptModule(this);
         mObjectGraph = ObjectGraph.create(module);
         mStorage = module.provideStorage();
