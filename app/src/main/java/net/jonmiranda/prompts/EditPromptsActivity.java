@@ -40,7 +40,7 @@ public class EditPromptsActivity extends ActionBarActivity implements PromptUpda
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.prompts_settings_layout);
+        setContentView(R.layout.edit_prompts_layout);
         ButterKnife.inject(this);
         application = ((PromptApplication) getApplication());
         application.inject(this);
