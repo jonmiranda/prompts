@@ -3,10 +3,10 @@ package net.jonmiranda.prompts.app;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
-import net.jonmiranda.prompts.MainActivity;
-import net.jonmiranda.prompts.PromptItemDialog;
-import net.jonmiranda.prompts.EditPromptsActivity;
-import net.jonmiranda.prompts.datepicker.DatePickerFragment;
+import net.jonmiranda.prompts.ui.main.MainActivity;
+import net.jonmiranda.prompts.ui.settings.PromptItemDialog;
+import net.jonmiranda.prompts.ui.settings.EditPromptsActivity;
+import net.jonmiranda.prompts.ui.main.DatePickerFragment;
 import net.jonmiranda.prompts.presenters.MainPresenter;
 import net.jonmiranda.prompts.presenters.PasscodePresenter;
 import net.jonmiranda.prompts.presenters.PromptPresenter;

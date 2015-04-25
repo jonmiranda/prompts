@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts;
+package net.jonmiranda.prompts.ui.settings;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.squareup.otto.Bus;
 
+import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.events.PromptUpdateEvent;
 
 import javax.inject.Inject;

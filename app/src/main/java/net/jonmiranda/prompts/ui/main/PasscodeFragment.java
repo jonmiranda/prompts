@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts;
+package net.jonmiranda.prompts.ui.main;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.presenters.PasscodePresenter;
 import net.jonmiranda.prompts.views.PasscodeView;

@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts;
+package net.jonmiranda.prompts.ui.settings;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
 
+import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.presenters.SettingsPresenter;
 import net.jonmiranda.prompts.views.SettingsView;

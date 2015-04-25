@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts;
+package net.jonmiranda.prompts.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,11 +14,12 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
-import net.jonmiranda.prompts.datepicker.DatePickerFragment;
 import net.jonmiranda.prompts.models.Prompt;
 import net.jonmiranda.prompts.presenters.MainPresenter;
+import net.jonmiranda.prompts.ui.settings.SettingsActivity;
 import net.jonmiranda.prompts.views.MainView;
 
 import java.util.Calendar;

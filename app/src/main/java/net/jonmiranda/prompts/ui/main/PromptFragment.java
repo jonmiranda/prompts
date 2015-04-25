@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts;
+package net.jonmiranda.prompts.ui.main;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.presenters.PromptPresenter;
@@ -114,6 +115,12 @@ public class PromptFragment extends Fragment implements PromptView {
     public void setResponse(String response) {
         mEditor.setText(response);
         mEditor.setSelection(mEditor.getText().length());
+    }
+
+    @Override
+    public void onDateChanged() {
+        mEditor.removeTextChangedListener(mTextWatcher);
+        mEditor.addTextChangedListener(mTextWatcher);
     }
 
     @Override

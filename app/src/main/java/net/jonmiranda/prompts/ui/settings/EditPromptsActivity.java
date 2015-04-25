@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts;
+package net.jonmiranda.prompts.ui.settings;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.events.PromptUpdateEvent;
 import net.jonmiranda.prompts.models.Prompt;
