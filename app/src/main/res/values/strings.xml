@@ -8,13 +8,22 @@
     <string name="passcode_enabled_key">PASSCODE_ENABLED_KEY</string>
     <string name="set_passcode_key">SET_PASSCODE_KEY</string>
     <string name="wrong_passcode">Wrong passcode.</string>
-    <string name="security">Security</string>
+    <string name="settings_security_title">Security</string>
     <string name="invalid_passcode_error">Passcodes must be 4 digits.</string>
     <string name="export_json_key">EXPORT_KEY</string>
     <string name="share">Share</string>
     <string name="cant_export_json_error">"Trouble finding a way to export JSON. "</string>
     <string name="cant_export_json_permissions_error">"Unable to create JSON file due to permissions. "</string>
-    <string name="export_text_key">EXPORT_EMAIL_KEY</string>
+    <string name="export_text_key">EXPORT_TEXT_KEY</string>
+    <string name="edit_prompts_title">Edit Prompts</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="add">Add</string>
+    <string name="edit_prompts_key">EDIT_PROMPTS_KEY</string>
+    <string name="settings_general_title">General</string>
+    <string name="settings_export_title">Export</string>
+    <string name="add_new_prompt">Add New Prompt</string>
+    <string name="edit_prompt_title">Edit Prompt Title</string>
 
     <array name="initial_prompts">
         <item>What did you dream about today?</item>

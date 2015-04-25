@@ -37,8 +37,8 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
         mView.setColor(color);
     }
 
-    public void bind(String prompt, Date date) {
-        mPrompt = mStorage.getPrompt(prompt);
+    public void bind(String promptKey, Date date) {
+        mPrompt = mStorage.getPrompt(promptKey);
         mView.setPromptTitle(mPrompt.getTitle());
         mDate = date;
         mShowKeyboard = Calendar.getInstance().getTime().equals(date);

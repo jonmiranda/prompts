@@ -12,11 +12,19 @@ public interface Storage {
 
     UserResponse save(UserResponse userResponse, String response);
 
+    Prompt save(Prompt prompt, boolean visible);
+
     Prompt getPrompt(String title);
 
     List<UserResponse> getAllResponses();
 
+    void updatePrompt(String originalTitle, String newTitle);
+
+    Prompt createPrompt(String title, boolean visible);
+
     List<Prompt> getPrompts();
+
+    List<Prompt> getAllPrompts();
 
     void initializePrompts(String[] prompts);
 }

@@ -102,7 +102,7 @@ public class MainActivity extends FragmentActivity implements MainView {
                 if (mPresenter.showLogin()) {
                     return new PasscodeFragment().newInstance();
                 }
-                return PromptFragment.newInstance(prompts.get(position).getTitle(),
+                return PromptFragment.newInstance(prompts.get(position).getKey(),
                         mColors[position % mColors.length], mRealmDate);
             }
 

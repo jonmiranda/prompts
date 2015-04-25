@@ -45,20 +45,20 @@ public class PromptFragment extends Fragment implements PromptView {
         View root = inflater.inflate(R.layout.prompt_layout, container, false);
         ButterKnife.inject(this, root);
 
-        String prompt = getString(R.string.untitled);
+        String promptKey = getString(R.string.untitled); // TODO
         Date date = Utils.stripDate(Calendar.getInstance());
         int color = getResources().getColor(R.color.light_gray);
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            prompt = arguments.getString(PromptView.PROMPT_KEY, prompt);
-//            date = (Date) arguments.getSerializable(PromptView.DATE_KEY);
+            promptKey = arguments.getString(PromptView.PROMPT_KEY, promptKey);
+            date = (Date) arguments.getSerializable(PromptView.DATE_KEY);
             color = arguments.getInt(PromptView.COLOR_KEY, color);
         }
 
         mPresenter = new PromptPresenter(this, color);
         ((PromptApplication) getActivity().getApplication()).inject(mPresenter);
-        mPresenter.bind(prompt, date);
+        mPresenter.bind(promptKey, date);
 
         mTextWatcher = new TextWatcher() {
             @Override
@@ -130,10 +130,10 @@ public class PromptFragment extends Fragment implements PromptView {
         super.onPause();
     }
 
-    public static PromptFragment newInstance(String prompt, int color, Date date) {
+    public static PromptFragment newInstance(String promptKey, int color, Date date) {
         PromptFragment fragment = new PromptFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(PROMPT_KEY, prompt);
+        bundle.putString(PROMPT_KEY, promptKey);
         bundle.putInt(COLOR_KEY, color);
         bundle.putSerializable(DATE_KEY, date);
         fragment.setArguments(bundle);

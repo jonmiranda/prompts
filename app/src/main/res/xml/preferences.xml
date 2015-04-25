@@ -1,7 +1,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="@string/security">
+        android:title="@string/settings_general_title">
+
+        <Preference
+            android:key="@string/edit_prompts_key"
+            android:title="@string/edit_prompts_title"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_security_title">
 
         <CheckBoxPreference
             android:key="@string/passcode_enabled_key"
@@ -21,7 +30,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Export">
+        android:title="@string/settings_export_title">
         <Preference
             android:key="@string/export_json_key"
             android:title="Export as JSON"/>

@@ -6,10 +6,15 @@ import net.jonmiranda.prompts.models.UserResponse;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 
+/**
+ *  One of the cool things about Realm is that the queries return live data.
+ *  So RealmResults are updated automagically.
+ */
 public class RealmStorage implements Storage {
 
     final Realm mRealm;
@@ -22,11 +27,9 @@ public class RealmStorage implements Storage {
     public void initializePrompts(String[] titles) {
         RealmResults<Prompt> results = mRealm.allObjects(Prompt.class);
         if (results.size() == 0) {
-            mRealm.beginTransaction();
             for (String title : titles) {
-                mRealm.copyToRealm(Prompt.newInstance(title, true));
+                createPrompt(title, true);
             }
-            mRealm.commitTransaction();
         }
     }
 
@@ -45,15 +48,49 @@ public class RealmStorage implements Storage {
     }
 
     @Override
+    public void updatePrompt(String key, String newTitle) {
+            Prompt prompt = mRealm.where(Prompt.class).equalTo("key", key).findFirst();
+            mRealm.beginTransaction();
+            prompt.setTitle(newTitle);
+            mRealm.commitTransaction();
+    }
+
+    @Override
+    public Prompt createPrompt(String title, boolean visible) {
+        Prompt prompt = Prompt.newInstance(UUID.randomUUID().toString(), title, visible);
+        mRealm.beginTransaction();
+        prompt = mRealm.copyToRealm(prompt);
+        mRealm.commitTransaction();
+        return prompt;
+    }
+
+    @Override
     public List<Prompt> getPrompts() {
         return mRealm.where(Prompt.class).equalTo("isVisible", true).findAll();
     }
 
     @Override
-    public Prompt getPrompt(String title) {
+    public List<Prompt> getAllPrompts() {
+        return mRealm.allObjects(Prompt.class);
+    }
+
+    @Override
+    public Prompt getPrompt(String key) {
         return mRealm.where(Prompt.class)
-                .equalTo("title", title)
+                .equalTo("key", key)
                 .findFirst();
+    }
+
+    @Override
+    public Prompt save(Prompt prompt, boolean visible) {
+        mRealm.beginTransaction();
+        prompt.setIsVisible(visible);
+
+        if (!prompt.isValid()) {
+            prompt = mRealm.copyToRealm(prompt);
+        }
+        mRealm.commitTransaction();
+        return prompt;
     }
 
     @Override
@@ -61,12 +98,10 @@ public class RealmStorage implements Storage {
         mRealm.beginTransaction();
         userResponse.setResponse(response);
         userResponse.setLastModified(Calendar.getInstance().getTime());
-
         if (!userResponse.isValid()) {
             userResponse = mRealm.copyToRealm(userResponse);
         }
         mRealm.commitTransaction();
-
         return userResponse;
     }
 

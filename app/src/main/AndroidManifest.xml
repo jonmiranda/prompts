@@ -29,6 +29,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.jonmiranda.prompts.MainActivity" />
         </activity>
+
+        <activity
+            android:name=".EditPromptsActivity"
+            android:label="@string/edit_prompts_title"
+            android:theme="@style/ActionBarTheme"
+            android:parentActivityName=".SettingsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.jonmiranda.prompts.SettingsActivity" />
+        </activity>
     </application>
 
 </manifest>

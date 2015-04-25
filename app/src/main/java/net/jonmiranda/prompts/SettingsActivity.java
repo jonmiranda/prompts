@@ -69,9 +69,20 @@ public class SettingsActivity extends ActionBarActivity implements SettingsView 
             super.onCreate(savedInstanceState);
 
             addPreferencesFromResource(R.xml.preferences);
-            final EditTextPreference preference =
+
+            final Preference editPromptsPref = findPreference(getString(R.string.edit_prompts_key));
+            editPromptsPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent intent = new Intent(getActivity(), EditPromptsActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+            });
+
+            final EditTextPreference setPasscodePref =
                     (EditTextPreference) findPreference(getString(R.string.set_passcode_key));
-            preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            setPasscodePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     return mPresenter.parsePasscode(newValue.toString());
@@ -115,8 +126,8 @@ public class SettingsActivity extends ActionBarActivity implements SettingsView 
                 }
             });
 
-            final Preference text = findPreference(getString(R.string.export_text_key));
-            text.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            final Preference exportTextKey = findPreference(getString(R.string.export_text_key));
+            exportTextKey.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent sendIntent = new Intent(Intent.ACTION_SEND);

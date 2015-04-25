@@ -21,7 +21,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:minHeight="?android:attr/actionBarSize"
-            android:hint="What's up?"
+            tools:text="What's up?"
             android:textSize="16sp"
             android:fontFamily="monospace"
             android:padding="@dimen/half_spacer"
