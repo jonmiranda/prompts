@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,9 @@ public class PromptFragment extends Fragment implements PromptView {
         View root = inflater.inflate(R.layout.prompt_layout, container, false);
         ButterKnife.inject(this, root);
 
+        mPrompt.setEllipsize(TextUtils.TruncateAt.END);
+        mPrompt.setMaxLines(2);
+        
         String promptKey = getString(R.string.untitled); // TODO
         Date date = Utils.stripDate(Calendar.getInstance());
         int color = getResources().getColor(R.color.light_gray);
