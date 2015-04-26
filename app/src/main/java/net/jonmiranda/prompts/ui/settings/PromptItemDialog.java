@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 
 import com.squareup.otto.Bus;
 
@@ -39,7 +41,6 @@ public class PromptItemDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         setCancelable(false);
-
         String title = null;
         Bundle args = getArguments();
         if (args != null) {
@@ -51,8 +52,19 @@ public class PromptItemDialog extends DialogFragment {
         editText.setText(title);
         editText.setSelection(editText.getText().length());
 
+        final FrameLayout frameLayout = new FrameLayout(getActivity());
+        frameLayout.addView(editText);
+
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        int margin = getResources().getDimensionPixelSize(R.dimen.full_spacer);
+        params.topMargin = margin;
+        params.leftMargin = margin;
+        params.rightMargin = margin;
+        editText.setLayoutParams(params);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(editText)
+        builder.setView(frameLayout)
                 .setTitle(title == null ? getString(R.string.add_new_prompt)
                         : getString(R.string.edit_prompt_title))
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
