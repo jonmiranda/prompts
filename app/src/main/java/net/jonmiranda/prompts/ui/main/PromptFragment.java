@@ -113,13 +113,9 @@ public class PromptFragment extends Fragment implements PromptView {
 
     @Override
     public void setResponse(String response) {
+        mEditor.removeTextChangedListener(mTextWatcher);
         mEditor.setText(response);
         mEditor.setSelection(mEditor.getText().length());
-    }
-
-    @Override
-    public void onDateChanged() {
-        mEditor.removeTextChangedListener(mTextWatcher);
         mEditor.addTextChangedListener(mTextWatcher);
     }
 
