@@ -3,16 +3,16 @@ package net.jonmiranda.prompts.app;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
-import net.jonmiranda.prompts.ui.main.MainActivity;
-import net.jonmiranda.prompts.ui.settings.PromptItemDialog;
-import net.jonmiranda.prompts.ui.settings.EditPromptsActivity;
-import net.jonmiranda.prompts.ui.main.DatePickerFragment;
+import net.jonmiranda.prompts.presenters.EditPromptsPresenter;
 import net.jonmiranda.prompts.presenters.MainPresenter;
 import net.jonmiranda.prompts.presenters.PasscodePresenter;
 import net.jonmiranda.prompts.presenters.PromptPresenter;
 import net.jonmiranda.prompts.presenters.SettingsPresenter;
 import net.jonmiranda.prompts.storage.RealmStorage;
 import net.jonmiranda.prompts.storage.Storage;
+import net.jonmiranda.prompts.ui.main.DatePickerFragment;
+import net.jonmiranda.prompts.ui.main.MainActivity;
+import net.jonmiranda.prompts.ui.settings.PromptItemDialog;
 
 import javax.inject.Singleton;
 
@@ -28,7 +28,7 @@ import io.realm.Realm;
                 DatePickerFragment.class,
                 PasscodePresenter.class,
                 SettingsPresenter.class,
-                EditPromptsActivity.class,
+                EditPromptsPresenter.class,
                 PromptItemDialog.class,
         },
         library = true
