@@ -49,7 +49,7 @@ public class PromptFragment extends Fragment implements PromptView {
 
         mPrompt.setEllipsize(TextUtils.TruncateAt.END);
         mPrompt.setMaxLines(2);
-        
+
         String promptKey = getString(R.string.untitled); // TODO
         Date date = Utils.stripDate(Calendar.getInstance());
         int color = getResources().getColor(R.color.light_gray);
