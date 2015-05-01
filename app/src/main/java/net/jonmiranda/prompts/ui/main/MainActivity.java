@@ -99,7 +99,7 @@ public class MainActivity extends FragmentActivity implements MainView {
             @Override
             public Fragment getItem(int position) {
                 if (mPresenter.showLogin()) {
-                    return new PasscodeFragment().newInstance();
+                    return PasscodeFragment.newInstance();
                 }
                 return PromptFragment.newInstance(prompts.get(position).getKey(), mRealmDate);
             }
