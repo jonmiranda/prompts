@@ -10,7 +10,7 @@ import android.preference.Preference;
 import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.modules.SettingsModule;
-import net.jonmiranda.prompts.presenters.SettingsPresenter;
+import net.jonmiranda.prompts.presenters.main.SettingsPresenter;
 
 import java.io.File;
 

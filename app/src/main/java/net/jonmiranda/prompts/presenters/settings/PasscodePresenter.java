@@ -1,9 +1,10 @@
-package net.jonmiranda.prompts.presenters;
+package net.jonmiranda.prompts.presenters.settings;
 
 import com.squareup.otto.Bus;
 
 import net.jonmiranda.prompts.events.LoggedInEvent;
-import net.jonmiranda.prompts.views.PasscodeView;
+import net.jonmiranda.prompts.presenters.BasePresenter;
+import net.jonmiranda.prompts.views.main.PasscodeView;
 
 public class PasscodePresenter implements BasePresenter {
 

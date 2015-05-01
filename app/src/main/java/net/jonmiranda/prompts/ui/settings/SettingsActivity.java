@@ -10,7 +10,7 @@ import android.view.Window;
 import android.widget.Toast;
 
 import net.jonmiranda.prompts.R;
-import net.jonmiranda.prompts.views.SettingsView;
+import net.jonmiranda.prompts.views.settings.SettingsView;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsView {
 

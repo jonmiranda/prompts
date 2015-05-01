@@ -1,12 +1,13 @@
-package net.jonmiranda.prompts.presenters;
+package net.jonmiranda.prompts.presenters.main;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import net.jonmiranda.prompts.events.PromptUpdateEvent;
 import net.jonmiranda.prompts.models.Prompt;
+import net.jonmiranda.prompts.presenters.BasePresenter;
 import net.jonmiranda.prompts.storage.Storage;
-import net.jonmiranda.prompts.views.EditPromptsView;
+import net.jonmiranda.prompts.views.settings.EditPromptsView;
 
 import java.util.List;
 

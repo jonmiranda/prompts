@@ -19,8 +19,8 @@ import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.modules.PromptModule;
-import net.jonmiranda.prompts.presenters.PromptPresenter;
-import net.jonmiranda.prompts.views.PromptView;
+import net.jonmiranda.prompts.presenters.settings.PromptPresenter;
+import net.jonmiranda.prompts.views.main.PromptView;
 
 import java.util.Calendar;
 import java.util.Date;

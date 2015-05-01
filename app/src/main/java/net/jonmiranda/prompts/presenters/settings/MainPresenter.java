@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts.presenters;
+package net.jonmiranda.prompts.presenters.settings;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
@@ -8,8 +8,9 @@ import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.events.DateEvent;
 import net.jonmiranda.prompts.events.LoggedInEvent;
 import net.jonmiranda.prompts.events.ShowKeyboardEvent;
+import net.jonmiranda.prompts.presenters.BasePresenter;
 import net.jonmiranda.prompts.storage.Storage;
-import net.jonmiranda.prompts.views.MainView;
+import net.jonmiranda.prompts.views.main.MainView;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;

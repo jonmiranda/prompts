@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts.presenters;
+package net.jonmiranda.prompts.presenters.settings;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -8,8 +8,9 @@ import net.jonmiranda.prompts.events.DateEvent;
 import net.jonmiranda.prompts.events.ShowKeyboardEvent;
 import net.jonmiranda.prompts.models.Prompt;
 import net.jonmiranda.prompts.models.UserResponse;
+import net.jonmiranda.prompts.presenters.BasePresenter;
 import net.jonmiranda.prompts.storage.Storage;
-import net.jonmiranda.prompts.views.PromptView;
+import net.jonmiranda.prompts.views.main.PromptView;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -17,7 +18,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 /**
- * Presentation logic for a {@link net.jonmiranda.prompts.views.PromptView}.
+ * Presentation logic for a {@link PromptView}.
  */
 public class PromptPresenter implements BasePresenter, DateEvent.Listener {
 

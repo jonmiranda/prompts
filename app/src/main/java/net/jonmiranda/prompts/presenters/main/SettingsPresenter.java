@@ -1,9 +1,10 @@
-package net.jonmiranda.prompts.presenters;
+package net.jonmiranda.prompts.presenters.main;
 
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.models.UserResponse;
+import net.jonmiranda.prompts.presenters.BasePresenter;
 import net.jonmiranda.prompts.storage.Storage;
-import net.jonmiranda.prompts.views.SettingsView;
+import net.jonmiranda.prompts.views.settings.SettingsView;
 
 import java.io.File;
 import java.io.FileOutputStream;

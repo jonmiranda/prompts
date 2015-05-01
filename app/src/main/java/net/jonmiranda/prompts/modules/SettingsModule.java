@@ -1,10 +1,10 @@
 package net.jonmiranda.prompts.modules;
 
 import net.jonmiranda.prompts.app.AppModule;
-import net.jonmiranda.prompts.presenters.SettingsPresenter;
+import net.jonmiranda.prompts.presenters.main.SettingsPresenter;
 import net.jonmiranda.prompts.storage.Storage;
 import net.jonmiranda.prompts.ui.settings.PrefsFragment;
-import net.jonmiranda.prompts.views.SettingsView;
+import net.jonmiranda.prompts.views.settings.SettingsView;
 
 import javax.inject.Singleton;
 
