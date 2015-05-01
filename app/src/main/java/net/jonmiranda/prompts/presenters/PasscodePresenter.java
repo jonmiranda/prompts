@@ -5,20 +5,19 @@ import com.squareup.otto.Bus;
 import net.jonmiranda.prompts.events.LoggedInEvent;
 import net.jonmiranda.prompts.views.PasscodeView;
 
-import javax.inject.Inject;
-
 public class PasscodePresenter implements BasePresenter {
 
     public static final int PASSCODE_LENGTH = 4;
 
     private PasscodeView mView;
-    @Inject Bus mBus;
+    private Bus mBus;
 
     StringBuilder mInput = null;
     String mPasscode;
 
-    public PasscodePresenter(PasscodeView view, String passcode) {
+    public PasscodePresenter(PasscodeView view, Bus bus, String passcode) {
         mView = view;
+        mBus = bus;
         mInput = new StringBuilder(PASSCODE_LENGTH);
         mPasscode = passcode;
     }
