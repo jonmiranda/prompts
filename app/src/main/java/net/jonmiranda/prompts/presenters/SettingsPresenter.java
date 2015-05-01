@@ -11,15 +11,14 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class SettingsPresenter implements BasePresenter {
 
     private SettingsView mView;
-    @Inject Storage mStorage;
+    private Storage mStorage;
 
-    public SettingsPresenter(SettingsView view) {
+    public SettingsPresenter(SettingsView view, Storage storage) {
         mView = view;
+        mStorage = storage;
     }
 
     /**

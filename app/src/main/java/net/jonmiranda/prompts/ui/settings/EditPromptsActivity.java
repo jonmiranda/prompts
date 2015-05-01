@@ -1,7 +1,7 @@
 package net.jonmiranda.prompts.ui.settings;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +23,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class EditPromptsActivity extends ActionBarActivity implements EditPromptsView {
+public class EditPromptsActivity extends AppCompatActivity implements EditPromptsView {
 
     @InjectView(R.id.list) RecyclerView mListView;
     PromptItemAdapter mAdapter;
