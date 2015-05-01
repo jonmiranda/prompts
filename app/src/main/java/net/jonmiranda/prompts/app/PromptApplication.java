@@ -7,7 +7,6 @@ import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.storage.Storage;
 
 import dagger.ObjectGraph;
-import io.realm.Realm;
 
 public class PromptApplication extends Application {
 
@@ -18,8 +17,7 @@ public class PromptApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Realm.deleteRealmFile(this); // TODO: Remove this before merging to master
-        PromptModule module = new PromptModule(this);
+        AppModule module = new AppModule(this);
         mObjectGraph = ObjectGraph.create(module);
         mStorage = module.provideStorage();
 

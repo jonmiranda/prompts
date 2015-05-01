@@ -33,11 +33,11 @@ import io.realm.Realm;
         },
         library = true
 )
-public class PromptModule {
+public class AppModule {
 
     final PromptApplication mApplication;
 
-    public PromptModule(PromptApplication application) {
+    public AppModule(PromptApplication application) {
         mApplication = application;
     }
 
