@@ -53,7 +53,7 @@ public class AppModule {
         return new Bus(ThreadEnforcer.MAIN);
     }
 
-    @Provides @Singleton PromptApplication provieApplication() {
+    @Provides @Singleton PromptApplication provideApplication() {
         return mApplication;
     }
 }
