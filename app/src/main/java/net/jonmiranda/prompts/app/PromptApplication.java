@@ -1,6 +1,7 @@
 package net.jonmiranda.prompts.app;
 
 import android.app.Application;
+import android.content.Context;
 import android.preference.PreferenceManager;
 
 import net.jonmiranda.prompts.R;
@@ -40,6 +41,14 @@ public class PromptApplication extends Application {
     public String getPasscode() {
         return PreferenceManager.getDefaultSharedPreferences(this)
                 .getString(getString(R.string.set_passcode_key), "9111");
+    }
+
+    public ObjectGraph createScopedGraph(Object module) {
+        return mObjectGraph.plus(module);
+    }
+
+    public static PromptApplication get(Context context) {
+        return (PromptApplication) context.getApplicationContext();
     }
 }
 
