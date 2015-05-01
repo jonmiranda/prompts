@@ -49,7 +49,6 @@ public class MainActivity extends FragmentActivity implements MainView {
     private Date mRealmDate;
 
     public String[] mPrompts;
-    private int[] mColors;
 
     private static final String DATE_KEY = "DATE_KEY";
     private static final String POSITION_KEY = "POSITION_KEY";
@@ -73,7 +72,6 @@ public class MainActivity extends FragmentActivity implements MainView {
         mApplication.inject(mPresenter);
         mPresenter.bind();
 
-        mColors = getResources().getIntArray(R.array.colors);
         mPrompts = getResources().getStringArray(R.array.initial_prompts);
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -103,8 +101,7 @@ public class MainActivity extends FragmentActivity implements MainView {
                 if (mPresenter.showLogin()) {
                     return new PasscodeFragment().newInstance();
                 }
-                return PromptFragment.newInstance(prompts.get(position).getKey(),
-                        mColors[position % mColors.length], mRealmDate);
+                return PromptFragment.newInstance(prompts.get(position).getKey(), mRealmDate);
             }
 
             @Override
