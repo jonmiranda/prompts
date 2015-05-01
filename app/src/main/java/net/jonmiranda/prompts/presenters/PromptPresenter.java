@@ -32,9 +32,10 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
     // only force-show the keyboard if on today's date
     private boolean mShowKeyboard = true;
 
-    public PromptPresenter(PromptView view, int color) {
+    public PromptPresenter(PromptView view, Bus bus, Storage storage) {
         mView = view;
-        mView.setColor(color);
+        mBus = bus;
+        mStorage = storage;
     }
 
     public void bind(String promptKey, Date date) {

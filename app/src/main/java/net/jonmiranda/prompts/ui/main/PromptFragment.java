@@ -18,15 +18,19 @@ import android.widget.TextView;
 import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
+import net.jonmiranda.prompts.modules.PromptModule;
 import net.jonmiranda.prompts.presenters.PromptPresenter;
 import net.jonmiranda.prompts.views.PromptView;
 
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import dagger.ObjectGraph;
 
 /**
  * Fragment that displays a prompt.
@@ -37,7 +41,8 @@ public class PromptFragment extends Fragment implements PromptView {
     @InjectView(R.id.editor) EditText mEditor;
     @InjectView(R.id.border) View mBorder;
 
-    private PromptPresenter mPresenter;
+    @Inject PromptPresenter mPresenter;
+    ObjectGraph mGraph;
 
     private TextWatcher mTextWatcher;
 
@@ -52,17 +57,15 @@ public class PromptFragment extends Fragment implements PromptView {
 
         String promptKey = getString(R.string.untitled); // TODO
         Date date = Utils.stripDate(Calendar.getInstance());
-        int color = getResources().getColor(R.color.light_gray);
 
         Bundle arguments = getArguments();
         if (arguments != null) {
             promptKey = arguments.getString(PromptView.PROMPT_KEY, promptKey);
             date = (Date) arguments.getSerializable(PromptView.DATE_KEY);
-            color = arguments.getInt(PromptView.COLOR_KEY, color);
         }
 
-        mPresenter = new PromptPresenter(this, color);
-        ((PromptApplication) getActivity().getApplication()).inject(mPresenter);
+        mGraph = PromptApplication.get(getActivity()).createScopedGraph(new PromptModule(this));
+        mGraph.inject(this);
         mPresenter.bind(promptKey, date);
 
         mTextWatcher = new TextWatcher() {
@@ -137,11 +140,16 @@ public class PromptFragment extends Fragment implements PromptView {
         super.onPause();
     }
 
-    public static PromptFragment newInstance(String promptKey, int color, Date date) {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mGraph = null;
+    }
+
+    public static PromptFragment newInstance(String promptKey, Date date) {
         PromptFragment fragment = new PromptFragment();
         Bundle bundle = new Bundle();
         bundle.putString(PROMPT_KEY, promptKey);
-        bundle.putInt(COLOR_KEY, color);
         bundle.putSerializable(DATE_KEY, date);
         fragment.setArguments(bundle);
         return fragment;
