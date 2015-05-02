@@ -48,8 +48,6 @@ public class MainActivity extends FragmentActivity implements MainView {
     private int mPosition = 0;
     private Date mRealmDate;
 
-    public String[] mPrompts;
-
     private static final String DATE_KEY = "DATE_KEY";
     private static final String POSITION_KEY = "POSITION_KEY";
 
@@ -71,8 +69,6 @@ public class MainActivity extends FragmentActivity implements MainView {
         }
         mApplication.inject(mPresenter);
         mPresenter.bind();
-
-        mPrompts = getResources().getStringArray(R.array.initial_prompts);
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
