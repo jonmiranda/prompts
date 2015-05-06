@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts.presenters.main;
+package net.jonmiranda.prompts.presenters.settings;
 
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.models.UserResponse;

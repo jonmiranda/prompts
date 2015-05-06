@@ -4,7 +4,7 @@ import com.squareup.otto.Bus;
 
 import net.jonmiranda.prompts.app.AppModule;
 import net.jonmiranda.prompts.app.PromptApplication;
-import net.jonmiranda.prompts.presenters.settings.PasscodePresenter;
+import net.jonmiranda.prompts.presenters.main.PasscodePresenter;
 import net.jonmiranda.prompts.ui.main.PasscodeFragment;
 import net.jonmiranda.prompts.views.main.PasscodeView;
 

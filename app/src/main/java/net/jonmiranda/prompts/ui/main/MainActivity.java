@@ -18,7 +18,7 @@ import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.models.Prompt;
-import net.jonmiranda.prompts.presenters.settings.MainPresenter;
+import net.jonmiranda.prompts.presenters.main.MainPresenter;
 import net.jonmiranda.prompts.ui.settings.SettingsActivity;
 import net.jonmiranda.prompts.views.main.MainView;
 

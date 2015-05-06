@@ -19,7 +19,7 @@ import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.modules.PromptModule;
-import net.jonmiranda.prompts.presenters.settings.PromptPresenter;
+import net.jonmiranda.prompts.presenters.main.PromptPresenter;
 import net.jonmiranda.prompts.views.main.PromptView;
 
 import java.util.Calendar;

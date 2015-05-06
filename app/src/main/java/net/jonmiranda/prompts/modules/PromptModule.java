@@ -3,7 +3,7 @@ package net.jonmiranda.prompts.modules;
 import com.squareup.otto.Bus;
 
 import net.jonmiranda.prompts.app.AppModule;
-import net.jonmiranda.prompts.presenters.settings.PromptPresenter;
+import net.jonmiranda.prompts.presenters.main.PromptPresenter;
 import net.jonmiranda.prompts.storage.Storage;
 import net.jonmiranda.prompts.ui.main.PromptFragment;
 import net.jonmiranda.prompts.views.main.PromptView;

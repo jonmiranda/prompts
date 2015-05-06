@@ -15,7 +15,7 @@ import android.widget.TextView;
 import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.models.Prompt;
-import net.jonmiranda.prompts.presenters.main.EditPromptsPresenter;
+import net.jonmiranda.prompts.presenters.settings.EditPromptsPresenter;
 import net.jonmiranda.prompts.views.settings.EditPromptsView;
 
 import java.util.List;

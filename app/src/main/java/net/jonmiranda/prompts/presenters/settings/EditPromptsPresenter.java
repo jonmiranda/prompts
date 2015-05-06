@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts.presenters.main;
+package net.jonmiranda.prompts.presenters.settings;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;

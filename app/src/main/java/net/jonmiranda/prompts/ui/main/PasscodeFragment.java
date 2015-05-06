@@ -18,7 +18,7 @@ import android.widget.Toast;
 import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.modules.PasscodeModule;
-import net.jonmiranda.prompts.presenters.settings.PasscodePresenter;
+import net.jonmiranda.prompts.presenters.main.PasscodePresenter;
 import net.jonmiranda.prompts.views.main.PasscodeView;
 
 import java.util.List;
