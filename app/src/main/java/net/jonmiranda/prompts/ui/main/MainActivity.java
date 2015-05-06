@@ -105,7 +105,6 @@ public class MainActivity extends FragmentActivity implements MainView {
                 return mPresenter.showLogin() ? 1 : prompts.size();
             }
         };
-        mViewPager.setAdapter(mPagerAdapter);
     }
 
     @OnClick(R.id.settings)
