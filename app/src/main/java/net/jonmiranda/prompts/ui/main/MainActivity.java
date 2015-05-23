@@ -125,6 +125,7 @@ public class MainActivity extends FragmentActivity implements MainView {
         resetAdapter();
         mSettings.setVisibility(TextView.VISIBLE);
         mNavigation.setVisibility(LinearLayout.VISIBLE);
+        mViewPager.setCurrentItem(mPosition);
     }
 
     @Override
