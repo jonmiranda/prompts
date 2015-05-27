@@ -1,9 +1,10 @@
-package net.jonmiranda.prompts.presenters;
+package net.jonmiranda.prompts.presenters.settings;
 
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.models.UserResponse;
+import net.jonmiranda.prompts.presenters.BasePresenter;
 import net.jonmiranda.prompts.storage.Storage;
-import net.jonmiranda.prompts.views.SettingsView;
+import net.jonmiranda.prompts.views.settings.SettingsView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,15 +12,14 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class SettingsPresenter implements BasePresenter {
 
     private SettingsView mView;
-    @Inject Storage mStorage;
+    private Storage mStorage;
 
-    public SettingsPresenter(SettingsView view) {
+    public SettingsPresenter(SettingsView view, Storage storage) {
         mView = view;
+        mStorage = storage;
     }
 
     /**

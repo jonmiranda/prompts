@@ -7,11 +7,12 @@
     <color name="brand">#5981f4</color>
 
     <color name="light_gray">#eeeeee</color>
+    <color name="dark_gray">#5e5e5e</color>
     <color name="background">@color/light_gray</color>
 
     <color name="primary">@color/brand</color>
     <color name="primary_dark">#ff4f7be4</color>
-    <color name="accent">@color/concrete</color>
+    <color name="accent">@color/brand</color>
 
 
     <color name="midnight_blue_light">#6a7e8f</color>
@@ -23,7 +24,7 @@
     <color name="emerald_light">#6ce4aa</color>
     <color name="carrot_light">#f2b35b</color>
 
-    <array name="blueColors">
+    <array name="colors">
         <item name="90x">#90CAF9</item>
         <item name="64x">#64B5F6</item>
         <item name="42x">#42A5F5</item>
@@ -34,7 +35,7 @@
         <item name="0Dx">#0D47A1</item>
     </array>
 
-    <array name="colors">
+    <array name="blueColors">
         <item name="green_sea_light">#44cab8</item>
         <item name="belize_hole_light">#66b5d9</item>
         <item name="alizarin_light">#f38b7c</item>

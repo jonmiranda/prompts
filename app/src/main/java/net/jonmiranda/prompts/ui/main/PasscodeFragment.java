@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts;
+package net.jonmiranda.prompts.ui.main;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -15,16 +15,21 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
-import net.jonmiranda.prompts.presenters.PasscodePresenter;
-import net.jonmiranda.prompts.views.PasscodeView;
+import net.jonmiranda.prompts.modules.PasscodeModule;
+import net.jonmiranda.prompts.presenters.main.PasscodePresenter;
+import net.jonmiranda.prompts.views.main.PasscodeView;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.InjectViews;
 import butterknife.OnClick;
+import dagger.ObjectGraph;
 
 
 public class PasscodeFragment extends Fragment implements PasscodeView {
@@ -37,16 +42,16 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
 
     @InjectView(R.id.user_input) TextView mUserInput;
 
-    PasscodePresenter mPresenter;
+    ObjectGraph mGraph;
+    @Inject PasscodePresenter mPresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.passcode_layout, container, false);
         ButterKnife.inject(this, root);
-        PromptApplication application = (PromptApplication) getActivity().getApplication();
-        mPresenter = new PasscodePresenter(this, application.getPasscode());
-        application.inject(mPresenter);
+        mGraph = PromptApplication.get(getActivity()).createScopedGraph(new PasscodeModule(this));
+        mGraph.inject(this);
         initListeners();
         return root;
     }
@@ -123,10 +128,11 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
         super.onResume();
         hideKeyboard();
     }
-
+    
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onDestroy() {
+        super.onDestroy();
+        mGraph = null;
     }
 
     public static PasscodeFragment newInstance() {

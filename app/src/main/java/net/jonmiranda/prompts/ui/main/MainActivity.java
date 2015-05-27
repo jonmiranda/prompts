@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts;
+package net.jonmiranda.prompts.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,12 +14,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
-import net.jonmiranda.prompts.datepicker.DatePickerFragment;
 import net.jonmiranda.prompts.models.Prompt;
-import net.jonmiranda.prompts.presenters.MainPresenter;
-import net.jonmiranda.prompts.views.MainView;
+import net.jonmiranda.prompts.presenters.main.MainPresenter;
+import net.jonmiranda.prompts.ui.settings.SettingsActivity;
+import net.jonmiranda.prompts.views.main.MainView;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -47,9 +48,6 @@ public class MainActivity extends FragmentActivity implements MainView {
     private int mPosition = 0;
     private Date mRealmDate;
 
-    public String[] mPrompts;
-    private int[] mColors;
-
     private static final String DATE_KEY = "DATE_KEY";
     private static final String POSITION_KEY = "POSITION_KEY";
 
@@ -71,9 +69,6 @@ public class MainActivity extends FragmentActivity implements MainView {
         }
         mApplication.inject(mPresenter);
         mPresenter.bind();
-
-        mColors = getResources().getIntArray(R.array.colors);
-        mPrompts = getResources().getStringArray(R.array.initial_prompts);
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -100,10 +95,9 @@ public class MainActivity extends FragmentActivity implements MainView {
             @Override
             public Fragment getItem(int position) {
                 if (mPresenter.showLogin()) {
-                    return new PasscodeFragment().newInstance();
+                    return PasscodeFragment.newInstance();
                 }
-                return PromptFragment.newInstance(prompts.get(position).getKey(),
-                        mColors[position % mColors.length], mRealmDate);
+                return PromptFragment.newInstance(prompts.get(position).getKey(), mRealmDate);
             }
 
             @Override
@@ -111,7 +105,6 @@ public class MainActivity extends FragmentActivity implements MainView {
                 return mPresenter.showLogin() ? 1 : prompts.size();
             }
         };
-        mViewPager.setAdapter(mPagerAdapter);
     }
 
     @OnClick(R.id.settings)
@@ -132,6 +125,7 @@ public class MainActivity extends FragmentActivity implements MainView {
         resetAdapter();
         mSettings.setVisibility(TextView.VISIBLE);
         mNavigation.setVisibility(LinearLayout.VISIBLE);
+        mViewPager.setCurrentItem(mPosition);
     }
 
     @Override
