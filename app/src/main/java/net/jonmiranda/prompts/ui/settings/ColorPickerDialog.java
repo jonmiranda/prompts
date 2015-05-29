@@ -111,7 +111,7 @@ public class ColorPickerDialog extends DialogFragment {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.color_picker_view, parent, false);
+                    .inflate(R.layout.color_picker_item, parent, false);
             return new ViewHolder(view);
         }
 
