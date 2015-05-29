@@ -1,5 +1,7 @@
 package net.jonmiranda.prompts.app;
 
+import android.graphics.Color;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -22,5 +24,12 @@ public class Utils {
         date.set(Calendar.SECOND, 0);
         date.set(Calendar.MILLISECOND, 0);
         return date.getTime();
+    }
+
+    public static int darkenColor(int color, float factor) {
+        return Color.rgb(
+                Math.min((int) (Color.red(color) * factor), 255),
+                Math.min((int) (Color.green(color) * factor), 255),
+                Math.min((int) (Color.blue(color) * factor), 255));
     }
 }
