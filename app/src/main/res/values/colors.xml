@@ -35,7 +35,7 @@
         <item name="0Dx">#0D47A1</item>
     </array>
 
-    <array name="blueColors">
+    <array name="colors2">
         <item name="green_sea_light">#44cab8</item>
         <item name="belize_hole_light">#66b5d9</item>
         <item name="alizarin_light">#f38b7c</item>
@@ -46,6 +46,31 @@
         <item name="peter_river_light">#73c5ec</item>
         <item name="pomegranate_light">#dd7969</item>
         <item name="amethyst_light">#c797d7</item>
+    </array>
+
+    <array name="material_colors">
+        <item name="red">#F44336</item>
+        <item name="pink">#E91E63</item>
+        <item name="purple">#9C27B0</item>
+        <item name="deep_purple">#673ab7</item>
+
+        <item name="indigo">#3f51b5</item>
+        <item name="blue">#2196f3</item>
+        <item name="light_blue">#03a9f4</item>
+        <item name="cyan">#00bcd4</item>
+        <item name="teal">#009688</item>
+
+        <item name="green">#4caf50</item>
+        <item name="light_green">#8bc34a</item>
+        <item name="lime">#cddc39</item>
+        <item name="yellow">#ffeb3b</item>
+        <item name="amber">#ffc107</item>
+
+        <item name="orange">#ff9800</item>
+        <item name="deep_orange">#ff5722</item>
+        <item name="brown">#795548</item>
+        <item name="grey">#9e9e9e</item>
+        <item name="blue_grey">#607d8b</item>
     </array>
 </resources>
 
