@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts.views;
+package net.jonmiranda.prompts.views.settings;
 
 public interface SettingsView {
 

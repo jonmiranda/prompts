@@ -3,16 +3,14 @@ package net.jonmiranda.prompts.app;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
-import net.jonmiranda.prompts.MainActivity;
-import net.jonmiranda.prompts.PromptItemDialog;
-import net.jonmiranda.prompts.EditPromptsActivity;
-import net.jonmiranda.prompts.datepicker.DatePickerFragment;
-import net.jonmiranda.prompts.presenters.MainPresenter;
-import net.jonmiranda.prompts.presenters.PasscodePresenter;
-import net.jonmiranda.prompts.presenters.PromptPresenter;
-import net.jonmiranda.prompts.presenters.SettingsPresenter;
+import net.jonmiranda.prompts.presenters.settings.EditPromptsPresenter;
+import net.jonmiranda.prompts.presenters.main.MainPresenter;
+import net.jonmiranda.prompts.presenters.settings.SettingsPresenter;
 import net.jonmiranda.prompts.storage.RealmStorage;
 import net.jonmiranda.prompts.storage.Storage;
+import net.jonmiranda.prompts.ui.main.DatePickerFragment;
+import net.jonmiranda.prompts.ui.main.MainActivity;
+import net.jonmiranda.prompts.ui.settings.PromptItemDialog;
 
 import javax.inject.Singleton;
 
@@ -22,22 +20,20 @@ import io.realm.Realm;
 
 @Module(
         injects = {
-                PromptPresenter.class,
                 MainActivity.class,
                 MainPresenter.class,
                 DatePickerFragment.class,
-                PasscodePresenter.class,
                 SettingsPresenter.class,
-                EditPromptsActivity.class,
+                EditPromptsPresenter.class,
                 PromptItemDialog.class,
         },
         library = true
 )
-public class PromptModule {
+public class AppModule {
 
     final PromptApplication mApplication;
 
-    public PromptModule(PromptApplication application) {
+    public AppModule(PromptApplication application) {
         mApplication = application;
     }
 
@@ -53,7 +49,7 @@ public class PromptModule {
         return new Bus(ThreadEnforcer.MAIN);
     }
 
-    @Provides @Singleton PromptApplication provieApplication() {
+    @Provides @Singleton PromptApplication provideApplication() {
         return mApplication;
     }
 }

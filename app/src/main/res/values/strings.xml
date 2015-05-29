@@ -24,6 +24,7 @@
     <string name="settings_export_title">Export</string>
     <string name="add_new_prompt">Add New Prompt</string>
     <string name="edit_prompt_title">Edit Prompt Title</string>
+    <string name="edit_prompts_instructions">Check the Prompts you want to display.\nClick on the title to edit the prompt.</string>
 
     <array name="initial_prompts">
         <item>What did you dream about today?</item>

@@ -1,4 +1,4 @@
-package net.jonmiranda.prompts.datepicker;
+package net.jonmiranda.prompts.ui.main;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

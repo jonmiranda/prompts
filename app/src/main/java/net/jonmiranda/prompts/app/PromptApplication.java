@@ -1,13 +1,13 @@
 package net.jonmiranda.prompts.app;
 
 import android.app.Application;
+import android.content.Context;
 import android.preference.PreferenceManager;
 
 import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.storage.Storage;
 
 import dagger.ObjectGraph;
-import io.realm.Realm;
 
 public class PromptApplication extends Application {
 
@@ -18,8 +18,7 @@ public class PromptApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Realm.deleteRealmFile(this); // TODO: Remove this before merging to master
-        PromptModule module = new PromptModule(this);
+        AppModule module = new AppModule(this);
         mObjectGraph = ObjectGraph.create(module);
         mStorage = module.provideStorage();
 
@@ -42,6 +41,14 @@ public class PromptApplication extends Application {
     public String getPasscode() {
         return PreferenceManager.getDefaultSharedPreferences(this)
                 .getString(getString(R.string.set_passcode_key), "9111");
+    }
+
+    public ObjectGraph createScopedGraph(Object module) {
+        return mObjectGraph.plus(module);
+    }
+
+    public static PromptApplication get(Context context) {
+        return (PromptApplication) context.getApplicationContext();
     }
 }
 
