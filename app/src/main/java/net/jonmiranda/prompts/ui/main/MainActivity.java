@@ -10,6 +10,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,6 +41,8 @@ public class MainActivity extends FragmentActivity implements MainView {
     @InjectView(R.id.date) TextView mDate;
     @InjectView(R.id.navigation) LinearLayout mNavigation;
     @InjectView(R.id.settings) ImageButton mSettings;
+
+    @InjectView(R.id.header) View mHeader;
 
     @Inject PromptApplication mApplication;
     private MainPresenter mPresenter;
@@ -87,6 +91,17 @@ public class MainActivity extends FragmentActivity implements MainView {
             }
         });
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+    }
+
+    private void applyThemeColor(int color) {
+        mHeader.setBackgroundColor(color);
+
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(Utils.darkenColor(color, 0.90f));
+        }
     }
 
     @Override
@@ -167,6 +182,7 @@ public class MainActivity extends FragmentActivity implements MainView {
     @Override
     public void onResume() {
         super.onResume();
+        applyThemeColor(mApplication.getThemeColor());
         mPresenter.onResume();
     }
 
