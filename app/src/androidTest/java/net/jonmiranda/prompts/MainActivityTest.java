@@ -46,20 +46,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
                 GeneralLocation.CENTER_LEFT, Press.FINGER);
     }
 
-    public void testAllPromptsAreSwipeable() {
-        String[] prompts = getActivity().getResources().getStringArray(R.array.initial_prompts);
-
-        for (String prompt : prompts) {
-            onView(withText(prompt)).check(matches(isDisplayed()));
-            onView(withId(R.id.container)).perform(swipeLeft());
-        }
-
-        for (int i = prompts.length - 1; i >= 0; --i) {
-            onView(withText(prompts[i])).check(matches(isDisplayed()));
-            onView(withId(R.id.container)).perform(swipeRight());
-        }
-    }
-
     private static void clearResponseText() {
         onView(allOf(withId(R.id.editor), isDisplayed())).perform(clearText());
     }
@@ -74,6 +60,20 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
     private static void showNextDate() {
         onView(withId(R.id.arrow_right)).perform(click());
+    }
+
+    public void testAllPromptsAreSwipeable() {
+        String[] prompts = getActivity().getResources().getStringArray(R.array.initial_prompts);
+
+        for (String prompt : prompts) {
+            onView(withText(prompt)).check(matches(isDisplayed()));
+            onView(withId(R.id.container)).perform(swipeLeft());
+        }
+
+        for (int i = prompts.length - 1; i >= 0; --i) {
+            onView(withText(prompts[i])).check(matches(isDisplayed()));
+            onView(withId(R.id.container)).perform(swipeRight());
+        }
     }
 
     public void testSwipingPromptsPreservesResponses() {
