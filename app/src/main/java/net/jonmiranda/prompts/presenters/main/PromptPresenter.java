@@ -15,16 +15,14 @@ import net.jonmiranda.prompts.views.main.PromptView;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.inject.Inject;
-
 /**
  * Presentation logic for a {@link PromptView}.
  */
 public class PromptPresenter implements BasePresenter, DateEvent.Listener {
 
     private PromptView mView;
-    @Inject Bus mBus;
-    @Inject Storage mStorage;
+    Bus mBus;
+    Storage mStorage;
 
     private Prompt mPrompt;
     private UserResponse mResponse;

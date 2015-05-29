@@ -10,6 +10,7 @@ import net.jonmiranda.prompts.storage.RealmStorage;
 import net.jonmiranda.prompts.storage.Storage;
 import net.jonmiranda.prompts.ui.main.DatePickerFragment;
 import net.jonmiranda.prompts.ui.main.MainActivity;
+import net.jonmiranda.prompts.ui.settings.ColorPickerDialog;
 import net.jonmiranda.prompts.ui.settings.PromptItemDialog;
 
 import javax.inject.Singleton;
@@ -26,6 +27,7 @@ import io.realm.Realm;
                 SettingsPresenter.class,
                 EditPromptsPresenter.class,
                 PromptItemDialog.class,
+                ColorPickerDialog.class,
         },
         library = true
 )

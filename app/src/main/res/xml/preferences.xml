@@ -7,6 +7,10 @@
             android:key="@string/edit_prompts_key"
             android:title="@string/edit_prompts_title"/>
 
+        <Preference
+            android:key="@string/set_theme_key"
+            android:title="@string/set_theme_color_title"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

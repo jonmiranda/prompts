@@ -1,14 +1,20 @@
 package net.jonmiranda.prompts.ui.settings;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
+
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
+import net.jonmiranda.prompts.events.ThemeChangeEvent;
 import net.jonmiranda.prompts.modules.SettingsModule;
 import net.jonmiranda.prompts.presenters.settings.SettingsPresenter;
 
@@ -18,9 +24,12 @@ import javax.inject.Inject;
 
 import dagger.ObjectGraph;
 
-public class PrefsFragment extends android.preference.PreferenceFragment {
+public class PrefsFragment extends android.preference.PreferenceFragment implements ThemeChangeEvent.Listener {
 
     @Inject SettingsPresenter mPresenter;
+    @Inject Bus mBus;
+
+    @Inject PromptApplication mApplication;
     ObjectGraph mGraph;
 
     @Override
@@ -39,6 +48,18 @@ public class PrefsFragment extends android.preference.PreferenceFragment {
             public boolean onPreferenceClick(Preference preference) {
                 Intent intent = new Intent(getActivity(), EditPromptsActivity.class);
                 startActivity(intent);
+                return true;
+            }
+        });
+
+        final Preference setThemesPref = findPreference(getString(R.string.set_theme_key));
+        setThemesPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                ColorPickerDialog dialog = ColorPickerDialog.newInstance(mApplication.getThemeColor());
+                ((PromptApplication) getActivity().getApplication()).inject(dialog);
+                dialog.show(getFragmentManager(), ColorPickerDialog.TAG);
                 return true;
             }
         });
@@ -104,6 +125,26 @@ public class PrefsFragment extends android.preference.PreferenceFragment {
                 return error;
             }
         });
+    }
+
+    @Subscribe @Override
+    public void onThemeChanged(ThemeChangeEvent event) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(getString(R.string.set_theme_key), event.themeColor);
+        editor.apply();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mBus.register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mBus.unregister(this);
     }
 
     @Override
