@@ -15,7 +15,7 @@ public interface MainView {
 
     void showDatePicker();
 
-    void initializeAdapter(List<Prompt> prompts);
+    void setPrompts(List<Prompt> prompts);
 
     void showPrompts();
 
