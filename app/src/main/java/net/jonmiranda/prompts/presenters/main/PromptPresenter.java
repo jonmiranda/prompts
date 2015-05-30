@@ -38,7 +38,7 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
         mPrompt = mStorage.getPrompt(promptKey);
         mView.setPromptTitle(mPrompt.getTitle());
         mDate = date;
-        mShowKeyboard = Calendar.getInstance().getTime().equals(date);
+        mShowKeyboard = Utils.stripDate(Calendar.getInstance()).equals(date);
     }
 
     /**
