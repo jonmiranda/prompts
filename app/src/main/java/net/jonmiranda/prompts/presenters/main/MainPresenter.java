@@ -38,6 +38,8 @@ public class MainPresenter implements BasePresenter, DateEvent.Listener, LoggedI
         mCalendarDate = date;
         mPasscodeEnabled = passcodeEnabled;
         mView.setPrompts(mStorage.getPrompts());
+        mView.showDate(mCalendarDate);
+        tryShowLogin();
     }
 
     @Override @Subscribe
@@ -78,17 +80,6 @@ public class MainPresenter implements BasePresenter, DateEvent.Listener, LoggedI
     @Override
     public void onResume() {
         mBus.register(this);
-        mView.showDate(mCalendarDate);
-
-        if (!mShowLogin) {
-            long now = Calendar.getInstance().getTimeInMillis();
-            mShowLogin = now - mLastOnPause > TIMEOUT_MILLISECONDS;
-        }
-        if (mPasscodeEnabled && mShowLogin) {
-            mView.showLogin();
-        } else {
-            mView.showPrompts();
-        }
     }
 
     @Override

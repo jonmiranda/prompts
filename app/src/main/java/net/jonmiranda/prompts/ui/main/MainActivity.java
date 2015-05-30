@@ -55,6 +55,9 @@ public class MainActivity extends FragmentActivity implements MainView {
     private int mPosition = 0;
     private Date mRealmDate;
 
+    private List<Prompt> mPrompts;
+    private boolean mShowLogin = true;
+
     private static final String DATE_KEY = "DATE_KEY";
     private static final String POSITION_KEY = "POSITION_KEY";
 
@@ -74,6 +77,20 @@ public class MainActivity extends FragmentActivity implements MainView {
         mGraph = PromptApplication.get(this).createScopedGraph(new MainModule(this, date));
         mGraph.inject(this);
 
+        mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                if (mShowLogin) {
+                    return PasscodeFragment.newInstance();
+                }
+                return PromptFragment.newInstance(mPrompts.get(position).getKey(), mRealmDate);
+            }
+
+            @Override
+            public int getCount() {
+                return mShowLogin ? 1 : mPrompts.size();
+            }
+        };
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -106,20 +123,7 @@ public class MainActivity extends FragmentActivity implements MainView {
 
     @Override
     public void setPrompts(final List<Prompt> prompts) {
-        mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                if (mPresenter.showLogin()) {
-                    return PasscodeFragment.newInstance();
-                }
-                return PromptFragment.newInstance(prompts.get(position).getKey(), mRealmDate);
-            }
-
-            @Override
-            public int getCount() {
-                return mPresenter.showLogin() ? 1 : prompts.size();
-            }
-        };
+        mPrompts = prompts;
     }
 
     @OnClick(R.id.settings)
@@ -137,6 +141,7 @@ public class MainActivity extends FragmentActivity implements MainView {
 
     @Override
     public void showPrompts() {
+        mShowLogin = false;
         resetAdapter();
         mSettings.setVisibility(TextView.VISIBLE);
         mNavigation.setVisibility(LinearLayout.VISIBLE);
@@ -145,6 +150,7 @@ public class MainActivity extends FragmentActivity implements MainView {
 
     @Override
     public void showLogin() {
+        mShowLogin = true;
         resetAdapter();
         mSettings.setVisibility(TextView.INVISIBLE);
         mNavigation.setVisibility(LinearLayout.INVISIBLE);
