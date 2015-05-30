@@ -65,9 +65,9 @@ public class PromptFragment extends Fragment implements PromptView {
             date = (Date) arguments.getSerializable(PromptView.DATE_KEY);
         }
 
-        mGraph = PromptApplication.get(getActivity()).createScopedGraph(new PromptModule(this));
+        mGraph = PromptApplication.get(getActivity()).createScopedGraph(
+                new PromptModule(this, promptKey, date));
         mGraph.inject(this);
-        mPresenter.bind(promptKey, date);
 
         mTextWatcher = new TextWatcher() {
             @Override

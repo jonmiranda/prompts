@@ -31,13 +31,10 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
     // only force-show the keyboard if on today's date
     private boolean mShowKeyboard = true;
 
-    public PromptPresenter(PromptView view, Bus bus, Storage storage) {
+    public PromptPresenter(PromptView view, Bus bus, Storage storage, String promptKey, Date date) {
         mView = view;
         mBus = bus;
         mStorage = storage;
-    }
-
-    public void bind(String promptKey, Date date) {
         mPrompt = mStorage.getPrompt(promptKey);
         mView.setPromptTitle(mPrompt.getTitle());
         mDate = date;
