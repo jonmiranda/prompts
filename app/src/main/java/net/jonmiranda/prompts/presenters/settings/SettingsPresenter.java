@@ -45,19 +45,19 @@ public class SettingsPresenter implements BasePresenter {
 
     public String createTextBody() {
         StringBuilder jsonBuilder = new StringBuilder();
-        List<UserResponse> prompts = mStorage.getAllResponses();
+        List<UserResponse> responses = mStorage.getAllResponses();
 
-        if (prompts.size() > 0) {
+        if (responses.size() > 0) {
             Date date = null;
-            for (UserResponse prompt : prompts) {
-                if (date == null || !date.equals(prompt.getCreated())) {
-                    date = prompt.getCreated();
-                    jsonBuilder.append(Utils.getPrettyDateString(prompt.getCreated()) + "\n");
+            for (UserResponse response : responses) {
+                if (date == null || !date.equals(response.getCreated())) {
+                    date = response.getCreated();
+                    jsonBuilder.append(Utils.getPrettyDateString(response.getCreated())).append("\n");
                 }
-                if (prompt.getResponse() != null && !prompt.getResponse().isEmpty()) {
+                if (response.getPrompt() != null && response.getResponse() != null && !response.getResponse().isEmpty()) {
                     jsonBuilder.append(String.format("\n%s\n%s\n",
-                            prompt.getPrompt().getTitle(),
-                            prompt.getResponse()));
+                            response.getPrompt().getTitle(),
+                            response.getResponse()));
                 }
             }
         }
@@ -65,13 +65,15 @@ public class SettingsPresenter implements BasePresenter {
     }
 
     public File createJsonFile(File root) {
-        List<UserResponse> prompts = mStorage.getAllResponses();
+        List<UserResponse> responses = mStorage.getAllResponses();
         StringBuilder jsonBuilder = new StringBuilder();
         jsonBuilder.append("[");
-        for (UserResponse prompt : prompts) {
-            jsonBuilder.append(
-                    String.format("\n  {\n    \"date\" : \"%s\",\n    \"prompt\" : \"%s\",\n    \"response\" : \"%s\"\n  },",
-                    prompt.getCreated(), prompt.getPrompt().getTitle(), prompt.getResponse().replace("\n", "\\n").replace("\"", "\\\"")));
+        for (UserResponse response : responses) {
+            if (response.getPrompt() != null) {
+                jsonBuilder.append(
+                        String.format("\n  {\n    \"date\" : \"%s\",\n    \"prompt\" : \"%s\",\n    \"response\" : \"%s\"\n  },",
+                                response.getCreated(), response.getPrompt().getTitle(), response.getResponse().replace("\n", "\\n").replace("\"", "\\\"")));
+            }
         }
         if (jsonBuilder.lastIndexOf(",") >= 0) {
             jsonBuilder.deleteCharAt(jsonBuilder.lastIndexOf(","));
