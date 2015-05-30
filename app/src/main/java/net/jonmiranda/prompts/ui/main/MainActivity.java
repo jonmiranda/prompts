@@ -100,7 +100,7 @@ public class MainActivity extends FragmentActivity implements MainView {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(Utils.darkenColor(color, 0.90f));
+            window.setStatusBarColor(Utils.modifyColor(color, 0.90f));
         }
     }
 
