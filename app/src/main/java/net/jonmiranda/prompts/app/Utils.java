@@ -26,7 +26,11 @@ public class Utils {
         return date.getTime();
     }
 
-    public static int darkenColor(int color, float factor) {
+    /*
+     * To lighten: use a factor > 1
+     * To darken: use a factor < 1
+     */
+    public static int modifyColor(int color, float factor) {
         return Color.rgb(
                 Math.min((int) (Color.red(color) * factor), 255),
                 Math.min((int) (Color.green(color) * factor), 255),

@@ -129,6 +129,7 @@ public class PromptFragment extends Fragment implements PromptView {
 
     private void applyThemeColor(int color) {
         mBorder.setBackgroundColor(color);
+        mEditor.setHighlightColor(Utils.modifyColor(color, 1.7f));
     }
 
     @Override
@@ -148,8 +149,8 @@ public class PromptFragment extends Fragment implements PromptView {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mGraph = null;
+        super.onDestroy();
     }
 
     public static PromptFragment newInstance(String promptKey, Date date) {

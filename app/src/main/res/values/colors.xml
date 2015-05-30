@@ -6,13 +6,14 @@
 
     <color name="brand">#5981f4</color>
 
+    <color name="medium_gray">#aaaaaa</color>
     <color name="light_gray">#eeeeee</color>
     <color name="dark_gray">#5e5e5e</color>
     <color name="background">@color/light_gray</color>
 
     <color name="primary">@color/brand</color>
     <color name="primary_dark">#ff4f7be4</color>
-    <color name="accent">@color/brand</color>
+    <color name="accent">@color/medium_gray</color>
 
 
     <color name="midnight_blue_light">#6a7e8f</color>
@@ -55,6 +56,7 @@
         <item name="deep_purple">#673ab7</item>
 
         <item name="indigo">#3f51b5</item>
+        <item name="brand">@color/brand</item>
         <item name="blue">#2196f3</item>
         <item name="light_blue">#03a9f4</item>
         <item name="cyan">#00bcd4</item>

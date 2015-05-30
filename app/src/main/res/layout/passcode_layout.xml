@@ -18,10 +18,11 @@
             android:hint="@string/enter_passcode_instructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/brand"
+            android:textColor="@color/dark_gray"
             android:textSize="30sp"/>
 
         <View
+            android:id="@+id/border"
             android:background="@color/brand"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>

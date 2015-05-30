@@ -21,8 +21,6 @@ import io.realm.Realm;
 
 @Module(
         injects = {
-                MainActivity.class,
-                MainPresenter.class,
                 DatePickerFragment.class,
                 SettingsPresenter.class,
                 EditPromptsPresenter.class,
