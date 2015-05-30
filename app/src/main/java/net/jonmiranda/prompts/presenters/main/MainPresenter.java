@@ -17,7 +17,7 @@ import java.util.GregorianCalendar;
 
 public class MainPresenter implements BasePresenter, DateEvent.Listener, LoggedInEvent.Listener {
 
-    private static final int TIMEOUT_MILLISECONDS = 300000; // 5 minutes
+    public static int TIMEOUT_MILLISECONDS = 300000; // 5 minutes
 
     Bus mBus;
     Storage mStorage;
@@ -26,7 +26,7 @@ public class MainPresenter implements BasePresenter, DateEvent.Listener, LoggedI
 
     private MainView mView;
 
-    private long mLastOnPause = 0;
+    private long mLastCheckForShowLogin = 0;
 
     private boolean mPasscodeEnabled = false;
     private boolean mShowLogin = false;
@@ -38,6 +38,8 @@ public class MainPresenter implements BasePresenter, DateEvent.Listener, LoggedI
         mCalendarDate = date;
         mPasscodeEnabled = passcodeEnabled;
         mView.setPrompts(mStorage.getPrompts());
+        mView.showDate(mCalendarDate);
+        tryShowLogin();
     }
 
     @Override @Subscribe
@@ -65,35 +67,41 @@ public class MainPresenter implements BasePresenter, DateEvent.Listener, LoggedI
         mBus.post(new ShowKeyboardEvent());
     }
 
-    public boolean showLogin() {
+    public boolean shouldShowLogin() {
+        if (mPasscodeEnabled && !mShowLogin) {
+            long now = Calendar.getInstance().getTimeInMillis();
+            mShowLogin = now - mLastCheckForShowLogin > TIMEOUT_MILLISECONDS;
+            if (mShowLogin) {
+                mLastCheckForShowLogin = now;
+            }
+        }
+
         return mPasscodeEnabled && mShowLogin;
     }
 
-    @Override @Subscribe
-    public void onLoggedIn(LoggedInEvent event) {
-        mShowLogin = false;
-        mView.showPrompts();
-    }
-
-    @Override
-    public void onResume() {
-        mBus.register(this);
-        mView.showDate(mCalendarDate);
-
-        if (!mShowLogin) {
-            long now = Calendar.getInstance().getTimeInMillis();
-            mShowLogin = now - mLastOnPause > TIMEOUT_MILLISECONDS;
-        }
-        if (mPasscodeEnabled && mShowLogin) {
+    public void tryShowLogin() {
+        if (shouldShowLogin()) {
             mView.showLogin();
         } else {
             mView.showPrompts();
         }
     }
 
+    @Override @Subscribe
+    public void onLoggedIn(LoggedInEvent event) {
+        mShowLogin = false;
+        mLastCheckForShowLogin = Calendar.getInstance().getTimeInMillis();
+        mView.showPrompts();
+    }
+
+    @Override
+    public void onResume() {
+        mBus.register(this);
+        tryShowLogin();
+    }
+
     @Override
     public void onPause() {
-        mLastOnPause = Calendar.getInstance().getTimeInMillis();
         mBus.unregister(this);
     }
 }
