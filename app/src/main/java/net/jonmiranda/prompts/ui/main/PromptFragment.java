@@ -129,6 +129,7 @@ public class PromptFragment extends Fragment implements PromptView {
 
     private void applyThemeColor(int color) {
         mBorder.setBackgroundColor(color);
+        mEditor.setHighlightColor(Utils.modifyColor(color, 1.7f));
     }
 
     @Override
