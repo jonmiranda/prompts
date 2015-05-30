@@ -24,8 +24,8 @@
         <item name="actionModeBackground">@color/medium_gray</item>
         <item name="android:actionModeBackground">@color/medium_gray</item>
 
-        <item name="android:windowBackground">@color/primary_dark</item>
-        <item name="android:colorBackground">@color/primary_dark</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:colorBackground">@color/background</item>
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">
