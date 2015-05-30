@@ -31,17 +31,14 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
     // only force-show the keyboard if on today's date
     private boolean mShowKeyboard = true;
 
-    public PromptPresenter(PromptView view, Bus bus, Storage storage) {
+    public PromptPresenter(PromptView view, Bus bus, Storage storage, String promptKey, Date date) {
         mView = view;
         mBus = bus;
         mStorage = storage;
-    }
-
-    public void bind(String promptKey, Date date) {
         mPrompt = mStorage.getPrompt(promptKey);
         mView.setPromptTitle(mPrompt.getTitle());
         mDate = date;
-        mShowKeyboard = Calendar.getInstance().getTime().equals(date);
+        mShowKeyboard = Utils.stripDate(Calendar.getInstance()).equals(date);
     }
 
     /**
@@ -65,10 +62,11 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
     }
 
     @Subscribe
-    public void showKeyboard(ShowKeyboardEvent event) {
+    public boolean showKeyboard(ShowKeyboardEvent event) {
         if (mShowKeyboard) {
             mView.showKeyboard();
         }
+        return mShowKeyboard;
     }
 
     @Override
