@@ -17,8 +17,8 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/full_spacer"
-        android:gravity="center"
+        android:layout_marginTop="@dimen/half_spacer"
+        android:gravity="center|top"
         android:orientation="horizontal">
 
         <ImageView
@@ -49,11 +49,13 @@
         android:id="@+id/settings"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginTop="@dimen/half_spacer"
         android:src="@drawable/settings_white"
         android:background="@null"
         android:scaleType="centerInside"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
