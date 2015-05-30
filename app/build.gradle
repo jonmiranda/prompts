@@ -31,6 +31,9 @@ dependencies {
     compile group: 'com.squareup.dagger', name: 'dagger', version: '1.2.2'
     provided group: 'com.squareup.dagger', name: 'dagger-compiler', version: '1.2.2'
 
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.10.17'
+
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
     androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.0') {

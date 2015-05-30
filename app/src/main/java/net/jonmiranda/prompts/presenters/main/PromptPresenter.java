@@ -62,10 +62,11 @@ public class PromptPresenter implements BasePresenter, DateEvent.Listener {
     }
 
     @Subscribe
-    public void showKeyboard(ShowKeyboardEvent event) {
+    public boolean showKeyboard(ShowKeyboardEvent event) {
         if (mShowKeyboard) {
             mView.showKeyboard();
         }
+        return mShowKeyboard;
     }
 
     @Override
