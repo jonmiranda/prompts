@@ -14,7 +14,7 @@ public interface Storage {
 
     Prompt save(Prompt prompt, boolean visible);
 
-    Prompt getPrompt(String title);
+    Prompt getPrompt(String key);
 
     List<UserResponse> getAllResponses();
 
