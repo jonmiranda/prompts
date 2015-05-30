@@ -41,8 +41,10 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
     List<TextView> mKeys;
 
     @InjectView(R.id.user_input) TextView mUserInput;
+    @InjectView(R.id.border) View mBorder;
 
     ObjectGraph mGraph;
+    @Inject PromptApplication mApplication;
     @Inject PasscodePresenter mPresenter;
 
     @Override
@@ -123,9 +125,15 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
             im.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
+
+    private void applyThemeColor(int color) {
+        mBorder.setBackgroundColor(color);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+        applyThemeColor(mApplication.getThemeColor());
         hideKeyboard();
     }
     
