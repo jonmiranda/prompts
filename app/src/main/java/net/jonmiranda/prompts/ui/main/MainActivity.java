@@ -10,6 +10,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.models.Prompt;
+import net.jonmiranda.prompts.modules.MainModule;
 import net.jonmiranda.prompts.presenters.main.MainPresenter;
 import net.jonmiranda.prompts.ui.settings.SettingsActivity;
 import net.jonmiranda.prompts.views.main.MainView;
@@ -31,6 +34,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import dagger.ObjectGraph;
 
 
 public class MainActivity extends FragmentActivity implements MainView {
@@ -40,8 +44,11 @@ public class MainActivity extends FragmentActivity implements MainView {
     @InjectView(R.id.navigation) LinearLayout mNavigation;
     @InjectView(R.id.settings) ImageButton mSettings;
 
+    @InjectView(R.id.header) View mHeader;
+
+    ObjectGraph mGraph;
     @Inject PromptApplication mApplication;
-    private MainPresenter mPresenter;
+    @Inject MainPresenter mPresenter;
 
     private PagerAdapter mPagerAdapter;
 
@@ -56,19 +63,16 @@ public class MainActivity extends FragmentActivity implements MainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         ButterKnife.inject(this);
-        ((PromptApplication) getApplication()).inject(this);
-        if (savedInstanceState == null) {
-            mPresenter = new MainPresenter(this, Calendar.getInstance(), mApplication.hasPasscodeEnabled());
-        } else {
-            Calendar date = Calendar.getInstance();
+
+        Calendar date = Calendar.getInstance();
+        if (savedInstanceState != null) {
             mPosition = savedInstanceState.getInt(POSITION_KEY, 0);
             if (savedInstanceState.getSerializable(DATE_KEY) != null) {
                 date = (Calendar) savedInstanceState.getSerializable(DATE_KEY);
             }
-            mPresenter = new MainPresenter(this, date, mApplication.hasPasscodeEnabled());
         }
-        mApplication.inject(mPresenter);
-        mPresenter.bind();
+        mGraph = PromptApplication.get(this).createScopedGraph(new MainModule(this, date));
+        mGraph.inject(this);
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -89,8 +93,19 @@ public class MainActivity extends FragmentActivity implements MainView {
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
     }
 
+    private void applyThemeColor(int color) {
+        mHeader.setBackgroundColor(color);
+
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(Utils.modifyColor(color, 0.90f));
+        }
+    }
+
     @Override
-    public void initializeAdapter(final List<Prompt> prompts) {
+    public void setPrompts(final List<Prompt> prompts) {
         mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -167,6 +182,7 @@ public class MainActivity extends FragmentActivity implements MainView {
     @Override
     public void onResume() {
         super.onResume();
+        applyThemeColor(mApplication.getThemeColor());
         mPresenter.onResume();
     }
 
@@ -174,6 +190,12 @@ public class MainActivity extends FragmentActivity implements MainView {
     public void onPause() {
         super.onPause();
         mPresenter.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mGraph = null;
+        super.onDestroy();
     }
 
     @Override

@@ -15,14 +15,12 @@ import net.jonmiranda.prompts.views.main.MainView;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.inject.Inject;
-
 public class MainPresenter implements BasePresenter, DateEvent.Listener, LoggedInEvent.Listener {
 
     private static final int TIMEOUT_MILLISECONDS = 300000; // 5 minutes
 
-    @Inject Bus mBus;
-    @Inject Storage mStorage;
+    Bus mBus;
+    Storage mStorage;
 
     private Calendar mCalendarDate;
 
@@ -33,14 +31,13 @@ public class MainPresenter implements BasePresenter, DateEvent.Listener, LoggedI
     private boolean mPasscodeEnabled = false;
     private boolean mShowLogin = false;
 
-    public MainPresenter(MainView view, Calendar date, boolean passcodeEnabled) {
+    public MainPresenter(MainView view, Bus bus, Storage storage, Calendar date, boolean passcodeEnabled) {
         mView = view;
+        mBus = bus;
+        mStorage = storage;
         mCalendarDate = date;
         mPasscodeEnabled = passcodeEnabled;
-    }
-
-    public void bind() { // TODO: Move this
-        mView.initializeAdapter(mStorage.getPrompts());
+        mView.setPrompts(mStorage.getPrompts());
     }
 
     @Override @Subscribe

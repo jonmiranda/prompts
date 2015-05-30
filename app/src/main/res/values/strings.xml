@@ -25,6 +25,10 @@
     <string name="add_new_prompt">Add New Prompt</string>
     <string name="edit_prompt_title">Edit Prompt Title</string>
     <string name="edit_prompts_instructions">Check the Prompts you want to display.\nClick on the title to edit the prompt.</string>
+    <string name="set_theme_key">SET_THEME_KEY</string>
+    <string name="set_theme_color_title">Set Theme Color</string>
+    <string name="set_theme_color_message">Customize the color of the Prompt screen.</string>
+    <string name="settings">Settings</string>
 
     <array name="initial_prompts">
         <item>What did you dream about today?</item>

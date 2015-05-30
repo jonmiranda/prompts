@@ -43,6 +43,11 @@ public class PromptApplication extends Application {
                 .getString(getString(R.string.set_passcode_key), "9111");
     }
 
+    public int getThemeColor() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getInt(getString(R.string.set_theme_key), getResources().getColor(R.color.brand));
+    }
+
     public ObjectGraph createScopedGraph(Object module) {
         return mObjectGraph.plus(module);
     }

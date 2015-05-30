@@ -41,6 +41,7 @@ public class PromptFragment extends Fragment implements PromptView {
     @InjectView(R.id.editor) EditText mEditor;
     @InjectView(R.id.border) View mBorder;
 
+    @Inject PromptApplication mApplication;
     @Inject PromptPresenter mPresenter;
     ObjectGraph mGraph;
 
@@ -126,8 +127,14 @@ public class PromptFragment extends Fragment implements PromptView {
         mEditor.addTextChangedListener(mTextWatcher);
     }
 
+    private void applyThemeColor(int color) {
+        mBorder.setBackgroundColor(color);
+        mEditor.setHighlightColor(Utils.modifyColor(color, 1.7f));
+    }
+
     @Override
     public void onResume() {
+        applyThemeColor(mApplication.getThemeColor());
         mPresenter.onResume();
         mEditor.addTextChangedListener(mTextWatcher);
         super.onResume();
@@ -142,8 +149,8 @@ public class PromptFragment extends Fragment implements PromptView {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mGraph = null;
+        super.onDestroy();
     }
 
     public static PromptFragment newInstance(String promptKey, Date date) {
