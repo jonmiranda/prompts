@@ -149,8 +149,8 @@ public class PromptFragment extends Fragment implements PromptView {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mGraph = null;
+        super.onDestroy();
     }
 
     public static PromptFragment newInstance(String promptKey, Date date) {

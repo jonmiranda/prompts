@@ -149,7 +149,7 @@ public class PrefsFragment extends android.preference.PreferenceFragment impleme
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mGraph = null;
+        super.onDestroy();
     }
 }

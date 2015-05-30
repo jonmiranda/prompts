@@ -139,8 +139,8 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
     
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mGraph = null;
+        super.onDestroy();
     }
 
     public static PasscodeFragment newInstance() {
