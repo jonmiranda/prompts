@@ -39,9 +39,16 @@ public class PromptPresenterTest extends TestCase {
         return Utils.stripDate(yesterday);
     }
 
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         MockitoAnnotations.initMocks(this);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        mPresenter = null;
+        super.tearDown();
     }
 
     /**
