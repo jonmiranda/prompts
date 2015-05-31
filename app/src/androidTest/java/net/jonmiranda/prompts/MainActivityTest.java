@@ -33,7 +33,17 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        getActivity(); // Launching the activity is required
+        getActivity();
+        try {
+            runTestOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    getActivity().showPrompts();
+                }
+            });
+        } catch (Throwable e) {
+
+        }
     }
 
     public static ViewAction swipeRight() {
