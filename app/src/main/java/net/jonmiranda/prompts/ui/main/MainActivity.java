@@ -2,7 +2,6 @@ package net.jonmiranda.prompts.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -164,10 +163,10 @@ public class MainActivity extends FragmentActivity implements MainView {
 
     @Override @OnClick(R.id.date)
     public void showDatePicker() {
-        DialogFragment datePickerFragment = new DatePickerFragment();
+        DatePickerFragment datePickerFragment = new DatePickerFragment();
         datePickerFragment.setCancelable(true);
         mApplication.inject(datePickerFragment);
-        datePickerFragment.show(getSupportFragmentManager(), "DatePicker");
+        datePickerFragment.show(getSupportFragmentManager(), DatePickerFragment.TAG);
     }
 
     @Override @OnClick(R.id.arrow_left)

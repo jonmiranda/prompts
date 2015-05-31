@@ -17,6 +17,8 @@ import javax.inject.Inject;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
+    public static final String TAG = DatePickerFragment.class.getCanonicalName();
+
     @Inject Bus mBus;
 
     @Override
