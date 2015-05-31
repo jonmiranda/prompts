@@ -10,6 +10,10 @@ An app that prompts you to write everyday (a work in progress).
 ## Current features:
 
 * Swipe between prompts.
+* Customize prompts.
+* Set theme color.
+* Set a passcode.
+* Share/Export prompts as JSON or text.
 * Persists prompt responses using Realm.io as a datastore.
 * Switch between different dates using arrows or date text.
 
