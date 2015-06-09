@@ -118,9 +118,8 @@ public class ColorPickerDialog extends DialogFragment {
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
             ((GradientDrawable) holder.circle.getBackground()).setColor(mColors[position]);
-            if (mColors[position] == mCurrentColor) {
-                holder.root.setBackgroundColor(Color.LTGRAY);
-            }
+            holder.root.setBackgroundColor(mColors[position] == mCurrentColor ?
+                    Color.LTGRAY : Color.TRANSPARENT);
 
             holder.circle.setOnClickListener(new View.OnClickListener() {
                 @Override
