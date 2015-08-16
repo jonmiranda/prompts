@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.InjectViews;
 import butterknife.OnClick;
+import butterknife.Optional;
 import dagger.ObjectGraph;
 
 
@@ -41,7 +42,7 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
     List<TextView> mKeys;
 
     @InjectView(R.id.user_input) TextView mUserInput;
-    @InjectView(R.id.border) View mBorder;
+    @Optional @InjectView(R.id.border) View mBorder;
 
     ObjectGraph mGraph;
     @Inject PromptApplication mApplication;
@@ -127,7 +128,9 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
     }
 
     private void applyThemeColor(int color) {
-        mBorder.setBackgroundColor(color);
+        if (mBorder != null) {
+            mBorder.setBackgroundColor(color);
+        }
     }
 
     @Override
