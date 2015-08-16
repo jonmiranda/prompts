@@ -36,7 +36,9 @@ import butterknife.OnClick;
 import dagger.ObjectGraph;
 
 
-public class MainActivity extends FragmentActivity implements MainView {
+public class MainActivity
+    extends FragmentActivity
+    implements MainView, ViewPager.OnPageChangeListener {
 
     @InjectView(R.id.container) ViewPager mViewPager;
     @InjectView(R.id.date) TextView mDate;
@@ -90,22 +92,6 @@ public class MainActivity extends FragmentActivity implements MainView {
                 return mShowLogin ? 1 : mPrompts.size();
             }
         };
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mPosition = position;
-                mPresenter.onPageSelected();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
     }
 
@@ -189,12 +175,14 @@ public class MainActivity extends FragmentActivity implements MainView {
         super.onResume();
         applyThemeColor(mApplication.getThemeColor());
         mPresenter.onResume();
+        mViewPager.addOnPageChangeListener(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mPresenter.onPause();
+        mViewPager.removeOnPageChangeListener(this);
     }
 
     @Override
@@ -208,6 +196,18 @@ public class MainActivity extends FragmentActivity implements MainView {
         outState.putSerializable(DATE_KEY, mPresenter.getDate());
         outState.putInt(POSITION_KEY, mPosition);
     }
+
+    @Override
+    public void onPageSelected(int position) {
+        mPosition = position;
+        mPresenter.onPageSelected();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+    @Override
+    public void onPageScrollStateChanged(int state) {}
 
     // http://developer.android.com/training/animation/screen-slide.html
     public static class ZoomOutPageTransformer implements ViewPager.PageTransformer {
