@@ -39,6 +39,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.settings.SettingsActivity" />
         </activity>
+
+        <service android:enabled="true" android:name=".services.SyncToDriveService" />
+
     </application>
 
 </manifest>

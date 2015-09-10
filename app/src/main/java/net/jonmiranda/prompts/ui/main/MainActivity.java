@@ -21,6 +21,7 @@ import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.models.Prompt;
 import net.jonmiranda.prompts.modules.MainModule;
 import net.jonmiranda.prompts.presenters.main.MainPresenter;
+import net.jonmiranda.prompts.services.SyncToDriveService;
 import net.jonmiranda.prompts.ui.settings.SettingsActivity;
 import net.jonmiranda.prompts.views.main.MainView;
 
@@ -93,6 +94,8 @@ public class MainActivity
             }
         };
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+
+        startService(new Intent(this, SyncToDriveService.class));
     }
 
     private void applyThemeColor(int color) {
@@ -179,7 +182,7 @@ public class MainActivity
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
         mPresenter.onPause();
         mViewPager.removeOnPageChangeListener(this);
