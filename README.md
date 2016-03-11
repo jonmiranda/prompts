@@ -1,5 +1,7 @@
 An app that prompts you to write everyday (a work in progress).
 
+[YouTube Walkthrough](https://www.youtube.com/watch?v=31YwTt8sIGg)
+
 ## Material Redesign
 ![Material Redesign](http://jonmiranda.net/content/images/2015/03/demo2.gif)
 
