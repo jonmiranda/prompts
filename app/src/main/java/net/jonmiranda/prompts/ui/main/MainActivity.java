@@ -45,6 +45,7 @@ public class MainActivity
     @InjectView(R.id.date) TextView mDate;
     @InjectView(R.id.navigation) LinearLayout mNavigation;
     @InjectView(R.id.settings) ImageButton mSettings;
+    @InjectView(R.id.sync) ImageButton mSync;
 
     @InjectView(R.id.header) View mHeader;
 
@@ -116,8 +117,12 @@ public class MainActivity
 
     @OnClick(R.id.settings)
     public void openSettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, SettingsActivity.class));
+    }
+
+    @OnClick(R.id.sync)
+    public void startSync() {
+        startActivity(new Intent(this, GoogleDriveActivity.class));
     }
 
     private void resetAdapter() {
@@ -131,7 +136,8 @@ public class MainActivity
     public void showPrompts() {
         mShowLogin = false;
         resetAdapter();
-        mSettings.setVisibility(TextView.VISIBLE);
+        mSettings.setVisibility(View.VISIBLE);
+        mSync.setVisibility(View.VISIBLE);
         mNavigation.setVisibility(LinearLayout.VISIBLE);
         mViewPager.setCurrentItem(mPosition);
     }
@@ -141,7 +147,8 @@ public class MainActivity
         Utils.hideKeyboard(this);
         mShowLogin = true;
         resetAdapter();
-        mSettings.setVisibility(TextView.INVISIBLE);
+        mSettings.setVisibility(View.INVISIBLE);
+        mSync.setVisibility(View.INVISIBLE);
         mNavigation.setVisibility(LinearLayout.INVISIBLE);
     }
 
