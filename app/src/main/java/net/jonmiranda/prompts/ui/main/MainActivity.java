@@ -138,6 +138,7 @@ public class MainActivity
 
     @Override
     public void showLogin() {
+        Utils.hideKeyboard(this);
         mShowLogin = true;
         resetAdapter();
         mSettings.setVisibility(TextView.INVISIBLE);
