@@ -10,7 +10,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -112,8 +111,6 @@ public class PromptFragment extends Fragment implements PromptView {
     public void showKeyboard() {
         mEditor.requestFocus();
         FragmentActivity context = getActivity();
-        context.getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         InputMethodManager imm = (InputMethodManager)
                 context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(mEditor, InputMethodManager.SHOW_IMPLICIT);

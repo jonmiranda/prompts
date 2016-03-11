@@ -56,9 +56,7 @@ public class PrefsFragment extends android.preference.PreferenceFragment impleme
         setThemesPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-
                 ColorPickerDialog dialog = ColorPickerDialog.newInstance(mApplication.getThemeColor());
-                ((PromptApplication) getActivity().getApplication()).inject(dialog);
                 dialog.show(getFragmentManager(), ColorPickerDialog.TAG);
                 return true;
             }

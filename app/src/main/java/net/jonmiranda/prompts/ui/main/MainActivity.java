@@ -21,6 +21,7 @@ import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.models.Prompt;
 import net.jonmiranda.prompts.modules.MainModule;
 import net.jonmiranda.prompts.presenters.main.MainPresenter;
+import net.jonmiranda.prompts.services.SyncToDriveService;
 import net.jonmiranda.prompts.ui.settings.SettingsActivity;
 import net.jonmiranda.prompts.views.main.MainView;
 
@@ -36,7 +37,9 @@ import butterknife.OnClick;
 import dagger.ObjectGraph;
 
 
-public class MainActivity extends FragmentActivity implements MainView {
+public class MainActivity
+    extends FragmentActivity
+    implements MainView, ViewPager.OnPageChangeListener {
 
     @InjectView(R.id.container) ViewPager mViewPager;
     @InjectView(R.id.date) TextView mDate;
@@ -90,23 +93,9 @@ public class MainActivity extends FragmentActivity implements MainView {
                 return mShowLogin ? 1 : mPrompts.size();
             }
         };
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mPosition = position;
-                mPresenter.onPageSelected();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+
+        startService(new Intent(this, SyncToDriveService.class));
     }
 
     private void applyThemeColor(int color) {
@@ -149,6 +138,7 @@ public class MainActivity extends FragmentActivity implements MainView {
 
     @Override
     public void showLogin() {
+        Utils.hideKeyboard(this);
         mShowLogin = true;
         resetAdapter();
         mSettings.setVisibility(TextView.INVISIBLE);
@@ -189,12 +179,14 @@ public class MainActivity extends FragmentActivity implements MainView {
         super.onResume();
         applyThemeColor(mApplication.getThemeColor());
         mPresenter.onResume();
+        mViewPager.addOnPageChangeListener(this);
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
         mPresenter.onPause();
+        mViewPager.removeOnPageChangeListener(this);
     }
 
     @Override
@@ -208,6 +200,18 @@ public class MainActivity extends FragmentActivity implements MainView {
         outState.putSerializable(DATE_KEY, mPresenter.getDate());
         outState.putInt(POSITION_KEY, mPosition);
     }
+
+    @Override
+    public void onPageSelected(int position) {
+        mPosition = position;
+        mPresenter.onPageSelected();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+    @Override
+    public void onPageScrollStateChanged(int state) {}
 
     // http://developer.android.com/training/animation/screen-slide.html
     public static class ZoomOutPageTransformer implements ViewPager.PageTransformer {

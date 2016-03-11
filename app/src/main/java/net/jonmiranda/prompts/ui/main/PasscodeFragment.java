@@ -2,7 +2,6 @@ package net.jonmiranda.prompts.ui.main;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
-import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,12 +10,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import net.jonmiranda.prompts.R;
 import net.jonmiranda.prompts.app.PromptApplication;
+import net.jonmiranda.prompts.app.Utils;
 import net.jonmiranda.prompts.modules.PasscodeModule;
 import net.jonmiranda.prompts.presenters.main.PasscodePresenter;
 import net.jonmiranda.prompts.views.main.PasscodeView;
@@ -29,6 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.InjectViews;
 import butterknife.OnClick;
+import butterknife.Optional;
 import dagger.ObjectGraph;
 
 
@@ -41,7 +41,7 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
     List<TextView> mKeys;
 
     @InjectView(R.id.user_input) TextView mUserInput;
-    @InjectView(R.id.border) View mBorder;
+    @Optional @InjectView(R.id.border) View mBorder;
 
     ObjectGraph mGraph;
     @Inject PromptApplication mApplication;
@@ -117,24 +117,17 @@ public class PasscodeFragment extends Fragment implements PasscodeView {
                 Toast.LENGTH_SHORT).show();
     }
 
-    private void hideKeyboard() {
-        View view = getActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager im = (InputMethodManager)
-                    getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            im.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-    }
-
     private void applyThemeColor(int color) {
-        mBorder.setBackgroundColor(color);
+        if (mBorder != null) {
+            mBorder.setBackgroundColor(color);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Utils.hideKeyboard(getActivity());
         applyThemeColor(mApplication.getThemeColor());
-        hideKeyboard();
     }
     
     @Override

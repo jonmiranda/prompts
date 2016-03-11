@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/half_spacer"
+            android:background="@drawable/round_background"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="@dimen/half_spacer"
+            android:layout_toLeftOf="@+id/passcode_entry">
+
+            <TextView
+                android:id="@+id/user_input"
+                tools:hint="1234"
+                android:hint="@string/enter_passcode_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/brand"
+                android:textSize="30sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/passcode_entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/half_spacer"
+            android:background="@drawable/round_background"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/one"
+                    style="@style/PasscodeStyle"
+                    android:text="1"/>
+
+                <TextView
+                    android:id="@+id/two"
+                    style="@style/PasscodeStyle"
+                    android:text="2"/>
+                <TextView
+                    android:id="@+id/three"
+                    style="@style/PasscodeStyle"
+                    android:text="3"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/four"
+                    style="@style/PasscodeStyle"
+                    android:text="4"/>
+
+                <TextView
+                    android:id="@+id/five"
+                    style="@style/PasscodeStyle"
+                    android:text="5"/>
+
+                <TextView
+                    android:id="@+id/six"
+                    style="@style/PasscodeStyle"
+                    android:text="6"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/seven"
+                    style="@style/PasscodeStyle"
+                    android:text="7"/>
+
+                <TextView
+                    android:id="@+id/eight"
+                    style="@style/PasscodeStyle"
+                    android:text="8"/>
+                <TextView
+                    android:id="@+id/nine"
+                    style="@style/PasscodeStyle"
+                    android:text="9"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <View
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_margin="@dimen/half_spacer"/>
+
+                <TextView
+                    android:id="@+id/zero"
+                    style="@style/PasscodeStyle"
+                    android:text="0"/>
+
+                <TextView
+                    android:id="@+id/clear"
+                    style="@style/PasscodeStyle"
+                    android:text="CLR"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.squareup.otto.Bus;
 
 import net.jonmiranda.prompts.R;
+import net.jonmiranda.prompts.app.PromptApplication;
 import net.jonmiranda.prompts.events.ThemeChangeEvent;
 
 import javax.inject.Inject;
@@ -53,6 +54,8 @@ public class ColorPickerDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        ((PromptApplication) getActivity().getApplication()).inject(this);
+
         setCancelable(true);
 
         final RecyclerView recyclerView = new RecyclerView(getActivity());
@@ -118,9 +121,8 @@ public class ColorPickerDialog extends DialogFragment {
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
             ((GradientDrawable) holder.circle.getBackground()).setColor(mColors[position]);
-            if (mColors[position] == mCurrentColor) {
-                holder.root.setBackgroundColor(Color.LTGRAY);
-            }
+            holder.root.setBackgroundColor(mColors[position] == mCurrentColor ?
+                    Color.LTGRAY : Color.TRANSPARENT);
 
             holder.circle.setOnClickListener(new View.OnClickListener() {
                 @Override

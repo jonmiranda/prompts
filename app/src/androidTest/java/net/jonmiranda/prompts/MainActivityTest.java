@@ -18,6 +18,8 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -104,6 +106,11 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
             onView(withText(prompts[i] + RESPONSE_SUFFIX)).check(matches(isDisplayed()));
             onView(withId(R.id.container)).perform(swipeRight());
         }
+    }
+
+    public void testClickingSettingsOpensSettings() {
+        onView(withId(R.id.settings)).perform(click());
+        intended(toPackage("net.jonmiranda.prompts.ui.settings"));
     }
 
     public void testChangingDatePreservesResponses() {
